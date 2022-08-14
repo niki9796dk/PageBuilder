@@ -24,7 +24,7 @@ export default class App extends React.Component<AppProps, AppState> {
 
     componentDidMount() {
         axios
-            .get('/ast.json')
+            .get('/ast-example-bridge.json')
             .then((response) => {
                 this.setState({
                     ast: response.data,

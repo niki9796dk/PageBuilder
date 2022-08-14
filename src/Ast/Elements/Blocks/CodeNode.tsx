@@ -12,9 +12,9 @@ export default class CodeNode extends BlockNode<CodeNodeAst> {
         hljs.registerLanguage('javascript', javascript);
         hljs.registerLanguage('php', php);
 
+        // TODO: Figure out how to do this the react way, instead of "dangerouslySetInnerHTML"
         let renderedCode = hljs.highlightAuto(this.props.ast.value).value;
-
-        let code = <code className="hljs">${renderedCode}</code>;
+        let code = <code className="hljs" dangerouslySetInnerHTML={{__html: renderedCode}}/>;
 
         return (
             <pre

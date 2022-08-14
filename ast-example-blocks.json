@@ -54,12 +54,12 @@
                 {
                     "type": "block",
                     "subType": "image",
-                    "src": "https://upload.wikimedia.org/wikipedia/commons/b/bd/Test.svg",
+                    "src": "https://iotwiki.dk/images/3/3b/Test_billede.jpg",
                     "alt": "The Alt",
                     "position": {
                         "height": 8,
-                        "width": 10,
-                        "left": 8,
+                        "width": 7,
+                        "left": 11,
                         "top": 0
                     }
                 },
