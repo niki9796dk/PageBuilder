@@ -1,0 +1,109 @@
+{
+    "type": "document",
+    "version": "1.0.0",
+    "style": {
+        "font-family": "'Nunito', sans-serif",
+        "line-height": "1.5"
+    },
+    "sections": [
+        {
+            "type": "section",
+            "grid": {
+                "type": "gridSettings",
+                "gap": {
+                    "type": "gridSettings",
+                    "subType": "gap",
+                    "column": "0",
+                    "row": "0"
+                }
+            },
+            "style": {
+                "background-color": "#313131",
+                "color": "#c7c7c7",
+                "padding-top": "2em",
+                "padding-bottom": "2em"
+            },
+            "blocks": [
+                {
+                    "type": "block",
+                    "subType": "text",
+                    "value": "A beautiful bridge",
+                    "style": {
+                        "font-size": "2em",
+                        "color": "white"
+                    },
+                    "position": {
+                        "height": 2,
+                        "width": 12,
+                        "left": 0,
+                        "top": 0
+                    }
+                },
+                {
+                    "type": "block",
+                    "subType": "text",
+                    "value": "Provide more detail here",
+                    "style": {
+                        "font-size": "1.5em"
+                    },
+                    "position": {
+                        "height": 2,
+                        "width": 12,
+                        "left": 0,
+                        "top": 2
+                    }
+                },
+                {
+                    "type": "block",
+                    "subType": "text",
+                    "value": "The golden gate is a suspension bridge spanning the Golden Gate, the opening of the San Fransisco Bay into the Pacific Ocean.",
+                    "position": {
+                        "height": 2,
+                        "width": 12,
+                        "left": 0,
+                        "top": 5
+                    }
+                },
+                {
+                    "type": "block",
+                    "subType": "image",
+                    "src": "https://bridgeproject.cc/static/media/home_bridge.0ceb7a32.png",
+                    "position": {
+                        "height": 7,
+                        "width": 12,
+                        "left": 12,
+                        "top": 0
+                    }
+                }
+            ]
+        },
+        {
+            "type": "section",
+            "grid": {
+                "type": "gridSettings",
+                "gap": {
+                    "type": "gridSettings",
+                    "subType": "gap",
+                    "column": "0",
+                    "row": "0"
+                }
+            },
+            "style": {
+                "color": "#464646"
+            },
+            "blocks": [
+                {
+                    "type": "block",
+                    "subType": "text",
+                    "value": "Lorem ipsum dolor sit amet, ad has nostro quaeque tibique. Meis dicunt percipitur mel in, mea ad platonem conceptam voluptaria. Per viris solet aliquip at, illum omnesque deterruisset id nec. Tantas lucilius in vel. Copiosae posidonium eos ut. Agam delicata forensibus has eu, in nec praesent periculis. Id vix prompta fierent adipisci, vim quodsi instructior ut.\n\n            Duo eu imperdiet democritum, ne veniam sapientem imperdiet usu. Accusata quaerendum ius cu, has ferri cetero repudiare at. No nullam molestiae his. Cum ne quis graecis, vim in reque soluta oblique. Doctus cetero at cum, at per idque tantas nostrum. Doctus quaeque eam ex, diam everti appareat ne quo, mutat oporteat deseruisse mea in.\n\n            Tritani albucius eos in. Ex nihil aliquam vis. Populo possim instructior est ut. Mei utinam voluptua pericula an. Mea an audiam luptatum.\n\n            Mea melius bonorum adipiscing et, no eius nobis mea. No mazim debet nusquam vel. Per eu omnis nobis, duo ea integre appareat neglegentur. Unum omittantur consectetuer ea qui, ex vidisse dissentias vel. Viris ridens temporibus ei vel, ut vidit justo nec.\n\n            Vel ex duis maiorum liberavisse, veri utinam mnesarchum ius ut, id est minim aliquid. Quando munere assueverit an quo, nam ex brute movet. Eu viris primis mediocritatem vis, at senserit accusamus cum. Sed rationibus philosophia ne, ad duo nullam definitiones conclusionemque, vel veri mazim epicurei ne. Et timeam equidem quaerendum quo, mel elit everti abhorreant no.\n\n            Ex ius mucius equidem accusamus, hinc paulo oportere eam ne. Minim verear ad nam, eum te error congue expetenda, vidisse referrentur id usu. Utamur alienum deserunt ei per. At ridens semper dolorum vim, usu natum efficiendi definitiones id. Eu eos aliquip persecuti dissentiet.\n\n            Ei dolorem antiopam mei, habeo melius est et. No mel habeo aliquando, te vide delicata his, qui soleat consulatu an. Prima scaevola urbanitas et vim, et regione sententiae vel, ius ex nibh interpretaris. Mea an nostro philosophia, liber blandit rationibus duo ea, ad mei mucius latine. In agam vocent appellantur qui, et quas commodo veritus est.\n\n            Sint laoreet at sed. Cibo populo latine vim an. Sint omnes aliquam ne eos. Purto aeque ut nam, pro delicata electram te. At mel alia assum, sea nostrum mediocrem cotidieque cu, no vis omittam facilisis sadipscing.\n\n            Tota mutat oratio vel ex, detracto facilisi his ad. Eos id eirmod docendi hendrerit, quando maluisset his ex, eu eirmod dignissim mel. Ferri justo omnes ne mei, cu tale iusto minimum mea, vis no laudem efficiendi. Vero harum cu mel, graeco mediocritatem vel et, nonumy tempor te nam. Id quis augue vim.\n\n            Et stet doming mei, sit in modo labore incorrupte, nam habeo tamquam sensibus ne. Eos consul eligendi an, has no dolores eleifend evertitur, vim dicit argumentum at. Altera moderatius omittantur duo ei. Id essent tacimates eam, consul feugiat te quo, mei an bonorum explicari instructior. Ea corpora oportere nam, vis numquam dignissim omittantur ei. Aliquid aliquando sea in. Pro ne eros melius, sed autem feugait voluptua ne.",
+                    "position": {
+                        "height": 32,
+                        "width": 24,
+                        "left": 0,
+                        "top": 0
+                    }
+                }
+            ]
+        }
+    ]
+}

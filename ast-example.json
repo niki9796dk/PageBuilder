@@ -1,0 +1,116 @@
+{
+    "type": "document",
+    "version": "1.0.0",
+    "sections": [
+        {
+            "type": "section",
+            "grid": {
+                "type": "gridSettings",
+                "gap": {
+                    "type": "gridSettings",
+                    "subType": "gap",
+                    "column": "0px",
+                    "row": "0px"
+                }
+            },
+            "style": {
+                "background-color": "lightgray"
+            },
+            "blocks": [
+                {
+                    "type": "block",
+                    "subType": "quote",
+                    "quote": "We cannot solve our problems with the same thinking we used when we created them.",
+                    "author": "Albert Einstein",
+                    "position": {
+                        "height": 3,
+                        "width": 10,
+                        "left": 0,
+                        "top": 9
+                    }
+                },
+                {
+                    "type": "block",
+                    "subType": "code",
+                    "value": "let hello = 'world';\nconsole.log(hello);",
+                    "position": {
+                        "height": 4,
+                        "width": 5,
+                        "left": 5,
+                        "top": 0
+                    }
+                },
+                {
+                    "type": "block",
+                    "subType": "code",
+                    "value": "$hello = 'world';\necho $hello;",
+                    "position": {
+                        "height": 4,
+                        "width": 5,
+                        "left": 5,
+                        "top": 4
+                    }
+                },
+                {
+                    "type": "block",
+                    "subType": "image",
+                    "src": "https://upload.wikimedia.org/wikipedia/commons/b/bd/Test.svg",
+                    "alt": "The Alt",
+                    "position": {
+                        "height": 8,
+                        "width": 10,
+                        "left": 8,
+                        "top": 0
+                    }
+                },
+                {
+                    "type": "block",
+                    "subType": "line",
+                    "position": {
+                        "height": 2,
+                        "width": 4,
+                        "left": 0,
+                        "top": 2
+                    }
+                },
+                {
+                    "type": "block",
+                    "subType": "text",
+                    "value": "1x1",
+                    "position": {
+                        "height": 1,
+                        "width": 1,
+                        "left": 0,
+                        "top": 0
+                    }
+                },
+                {
+                    "type": "block",
+                    "subType": "text",
+                    "value": "A beautiful bridge",
+                    "position": {
+                        "type": "position",
+                        "height": 2,
+                        "width": 5,
+                        "left": 1,
+                        "top": 0
+                    },
+                    "style": {
+                        "color": "red"
+                    }
+                },
+                {
+                    "type": "block",
+                    "subType": "text",
+                    "value": "Provide more detail here",
+                    "position": {
+                        "height": 2,
+                        "width": 5,
+                        "left": 0,
+                        "top": 2
+                    }
+                }
+            ]
+        }
+    ]
+}
