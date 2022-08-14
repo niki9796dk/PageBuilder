@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<!-- saved from url=(0022)http://localhost:5173/ -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <script type="module">
+import RefreshRuntime from "/@react-refresh"
+RefreshRuntime.injectIntoGlobalHook(window)
+window.$RefreshReg$ = () => {}
+window.$RefreshSig$ = () => (type) => type
+window.__vite_plugin_react_preamble_installed__ = true
+</script>
+
+  <script type="module" src="./ast-example-bridge_files/client"></script>
+
+    
+    <link rel="icon" type="image/svg+xml" href="http://localhost:5173/vite.svg">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vite + React + TS</title>
+<style type="text/css">/***
+    The new CSS reset - version 1.7.3 (last updated 7.8.2022)
+    GitHub page: https://github.com/elad2412/the-new-css-reset
+***/
+
+/*
+    Remove all the styles of the "User-Agent-Stylesheet", except for the 'display' property
+    - The "symbol *" part is to solve Firefox SVG sprite bug
+ */
+*:where(:not(html, iframe, canvas, img, svg, video, audio):not(svg *, symbol *)) {
+    all: unset;
+    display: revert;
+}
+
+/* Preferred box-sizing value */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+/* Reapply the pointer cursor for anchor tags */
+a, button {
+    cursor: revert;
+}
+
+/* Remove list styles (bullets/numbers) */
+ol, ul, menu {
+    list-style: none;
+}
+
+/* For images to not be able to exceed their container */
+img {
+    max-width: 100%;
+}
+
+/* removes spacing between cells in tables */
+table {
+    border-collapse: collapse;
+}
+
+/* Safari - solving issue when using user-select:none on the <body> text input doesn't working */
+input, textarea {
+    -webkit-user-select: auto;
+}
+
+/* revert the 'white-space' property for textarea elements on Safari */
+textarea {
+    white-space: revert;
+}
+
+/* minimum style to allow to style meter element */
+meter {
+    -webkit-appearance: revert;
+    appearance: revert;
+}
+
+/* reset default text opacity of input placeholder */
+::placeholder {
+    color: unset;
+}
+
+/* fix the feature of 'hidden' attribute.
+   display:revert; revert to element instead of attribute */
+:where([hidden]) {
+    display: none;
+}
+
+/* revert for bug in Chromium browsers
+   - fix for the content editable attribute will work properly.
+   - webkit-user-select: auto; added for Safari in case of using user-select:none on wrapper element*/
+:where([contenteditable]:not([contenteditable="false"])) {
+    -moz-user-modify: read-write;
+    -webkit-user-modify: read-write;
+    overflow-wrap: break-word;
+    -webkit-line-break: after-white-space;
+    -webkit-user-select: auto;
+}
+
+/* apply back the draggable feature - exist only in Chromium and Safari */
+:where([draggable="true"]) {
+    -webkit-user-drag: element;
+}
+
+pre {
+    all: revert;
+}
+</style><style type="text/css">/*!
+  Theme: Material Palenight
+  Author: Nate Peterson
+  License: ~ MIT (or more permissive) [via base16-schemes-source]
+  Maintainer: @highlightjs/core-team
+  Version: 2021.09.0
+*/
+pre code.hljs {
+    display: block;
+    overflow-x: auto;
+    padding: 1em
+}
+
+code.hljs {
+    padding: 3px 5px
+}
+
+.hljs {
+    color: #959dcb;
+    background: #292d3e
+}
+
+.hljs ::selection, .hljs::selection {
+    background-color: #32374d;
+    color: #959dcb
+}
+
+.hljs-comment {
+    color: #676e95
+}
+
+.hljs-tag {
+    color: #8796b0
+}
+
+.hljs-operator, .hljs-punctuation, .hljs-subst {
+    color: #959dcb
+}
+
+.hljs-operator {
+    opacity: .7
+}
+
+.hljs-bullet, .hljs-deletion, .hljs-name, .hljs-selector-tag, .hljs-template-variable, .hljs-variable {
+    color: #EEFFE3
+}
+
+.hljs-attr, .hljs-link, .hljs-literal, .hljs-number, .hljs-symbol, .hljs-variable.constant_ {
+    color: #f78c6c
+}
+
+.hljs-class .hljs-title, .hljs-title, .hljs-title.class_ {
+    color: #ffcb6b
+}
+
+.hljs-strong {
+    font-weight: 700;
+    color: #ffcb6b
+}
+
+.hljs-addition, .hljs-code, .hljs-string, .hljs-title.class_.inherited__ {
+    color: #c3e88d
+}
+
+.hljs-built_in, .hljs-doctag, .hljs-keyword.hljs-atrule, .hljs-quote, .hljs-regexp {
+    color: #89ddff
+}
+
+.hljs-attribute, .hljs-function .hljs-title, .hljs-section, .hljs-title.function_, .ruby .hljs-property {
+    color: #82aaff
+}
+
+.diff .hljs-meta, .hljs-keyword, .hljs-template-tag, .hljs-type {
+    color: #c792ea
+}
+
+.hljs-emphasis {
+    color: #c792ea;
+    font-style: italic
+}
+
+.hljs-meta, .hljs-meta .hljs-keyword, .hljs-meta .hljs-string {
+    color: #ff5370
+}
+
+.hljs-meta .hljs-keyword, .hljs-meta-keyword {
+    font-weight: 700
+}
+</style><style type="text/css">.node-document {
+    width: 100vw;
+    min-height: 100vh;
+}
+
+.node-section {
+    width: 100%;
+    padding-top: 3em;
+    padding-bottom: 3em;
+}
+
+.node-section > div {
+    margin-left: auto;
+    margin-right: auto;
+    width: 1200px;
+    display: grid;
+    grid-template-columns: repeat(24, minmax(0, 1fr));
+    grid-auto-rows: 25px;
+}
+
+.node-section img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    cursor: auto;
+    object-position: 50% 50%;
+}
+
+.node-line {
+    display: flex;
+    flex-direction: column;
+}
+
+.node-line > hr {
+    background-color: black;
+    height: 1px;
+    width: 100%;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.node-code code {
+    line-height: 1.75;
+}
+
+.node-quote blockquote {
+    font: 1.4rem/1.4 Georgia, serif;
+    quotes: "\201C""\201D""\2018""\2019";
+    text-indent: -0.50em;
+}
+
+@supports ( hanging-punctuation: first) {
+    .node-quote blockquote {
+        text-indent: 0;
+        hanging-punctuation: first;
+    }
+}
+
+.node-quote blockquote::before {
+    content: open-quote;
+}
+
+.node-quote blockquote::after {
+    content: close-quote;
+}
+
+.grid-pattern {
+    transition: opacity 0.15s ease-in-out;
+}
+</style><style type="text/css">body {
+    background-color: whitesmoke;
+}
+</style><link rel="preconnect" href="https://fonts.googleapis.com/" crossorigin="true"><link rel="preconnect" href="https://fonts.gstatic.com/"><link rel="stylesheet" href="./ast-example-bridge_files/css2"></head>
+<body>
+    <div id="root"><div class="node-document" style="font-family: Nunito, sans-serif; line-height: 1.5;"><div class="node-section" style="background-color: rgb(49, 49, 49); color: rgb(199, 199, 199); padding-top: 2em; padding-bottom: 2em;"><div><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" class="grid-pattern" style="opacity: 0; position: relative; grid-area: 1 / 1 / 8 / 25; z-index: 0;"><defs><pattern id="grid-pattern-0259c80a-15d1-47f2-8d5e-7d930e3eed71" patternUnits="userSpaceOnUse" height="25px" width="50px"><rect x="0.5" y="0.5" rx="3" width="49px" height="24px" style="fill: gainsboro; stroke: gray; stroke-width: 1; opacity: 0.3;"></rect></pattern></defs><rect width="100%" height="100%" fill="url(#grid-pattern-0259c80a-15d1-47f2-8d5e-7d930e3eed71)"></rect></svg><p class="node-text" style="font-size: 2em; color: white; grid-area: 1 / 1 / 3 / 13; z-index: 1;">A beautiful bridge</p><p class="node-text" style="font-size: 1.5em; grid-area: 3 / 1 / 5 / 13; z-index: 1;">Provide more detail here</p><p class="node-text" style="grid-area: 6 / 1 / 8 / 13; z-index: 1;">The golden gate is a suspension bridge spanning the Golden Gate, the opening of the San Fransisco Bay into the Pacific Ocean.</p><img class="node-image" src="./ast-example-bridge_files/home_bridge.0ceb7a32.png" alt="" style="grid-area: 1 / 13 / 8 / 25; z-index: 1;"></div></div><div class="node-section" style="color: rgb(70, 70, 70);"><div><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" class="grid-pattern" style="opacity: 0; position: relative; grid-area: 1 / 1 / 33 / 25; z-index: 0;"><defs><pattern id="grid-pattern-506482c5-298c-4db5-bb2c-cc5c1d992e48" patternUnits="userSpaceOnUse" height="25px" width="50px"><rect x="0.5" y="0.5" rx="3" width="49px" height="24px" style="fill: gainsboro; stroke: gray; stroke-width: 1; opacity: 0.3;"></rect></pattern></defs><rect width="100%" height="100%" fill="url(#grid-pattern-506482c5-298c-4db5-bb2c-cc5c1d992e48)"></rect></svg><p class="node-text" style="grid-area: 1 / 1 / 33 / 25; z-index: 1;">Lorem ipsum dolor sit amet, ad has nostro quaeque tibique. Meis dicunt percipitur mel in, mea ad platonem conceptam voluptaria. Per viris solet aliquip at, illum omnesque deterruisset id nec. Tantas lucilius in vel. Copiosae posidonium eos ut. Agam delicata forensibus has eu, in nec praesent periculis. Id vix prompta fierent adipisci, vim quodsi instructior ut.<br><br>            Duo eu imperdiet democritum, ne veniam sapientem imperdiet usu. Accusata quaerendum ius cu, has ferri cetero repudiare at. No nullam molestiae his. Cum ne quis graecis, vim in reque soluta oblique. Doctus cetero at cum, at per idque tantas nostrum. Doctus quaeque eam ex, diam everti appareat ne quo, mutat oporteat deseruisse mea in.<br><br>            Tritani albucius eos in. Ex nihil aliquam vis. Populo possim instructior est ut. Mei utinam voluptua pericula an. Mea an audiam luptatum.<br><br>            Mea melius bonorum adipiscing et, no eius nobis mea. No mazim debet nusquam vel. Per eu omnis nobis, duo ea integre appareat neglegentur. Unum omittantur consectetuer ea qui, ex vidisse dissentias vel. Viris ridens temporibus ei vel, ut vidit justo nec.<br><br>            Vel ex duis maiorum liberavisse, veri utinam mnesarchum ius ut, id est minim aliquid. Quando munere assueverit an quo, nam ex brute movet. Eu viris primis mediocritatem vis, at senserit accusamus cum. Sed rationibus philosophia ne, ad duo nullam definitiones conclusionemque, vel veri mazim epicurei ne. Et timeam equidem quaerendum quo, mel elit everti abhorreant no.<br><br>            Ex ius mucius equidem accusamus, hinc paulo oportere eam ne. Minim verear ad nam, eum te error congue expetenda, vidisse referrentur id usu. Utamur alienum deserunt ei per. At ridens semper dolorum vim, usu natum efficiendi definitiones id. Eu eos aliquip persecuti dissentiet.<br><br>            Ei dolorem antiopam mei, habeo melius est et. No mel habeo aliquando, te vide delicata his, qui soleat consulatu an. Prima scaevola urbanitas et vim, et regione sententiae vel, ius ex nibh interpretaris. Mea an nostro philosophia, liber blandit rationibus duo ea, ad mei mucius latine. In agam vocent appellantur qui, et quas commodo veritus est.<br><br>            Sint laoreet at sed. Cibo populo latine vim an. Sint omnes aliquam ne eos. Purto aeque ut nam, pro delicata electram te. At mel alia assum, sea nostrum mediocrem cotidieque cu, no vis omittam facilisis sadipscing.<br><br>            Tota mutat oratio vel ex, detracto facilisi his ad. Eos id eirmod docendi hendrerit, quando maluisset his ex, eu eirmod dignissim mel. Ferri justo omnes ne mei, cu tale iusto minimum mea, vis no laudem efficiendi. Vero harum cu mel, graeco mediocritatem vel et, nonumy tempor te nam. Id quis augue vim.<br><br>            Et stet doming mei, sit in modo labore incorrupte, nam habeo tamquam sensibus ne. Eos consul eligendi an, has no dolores eleifend evertitur, vim dicit argumentum at. Altera moderatius omittantur duo ei. Id essent tacimates eam, consul feugiat te quo, mei an bonorum explicari instructior. Ea corpora oportere nam, vis numquam dignissim omittantur ei. Aliquid aliquando sea in. Pro ne eros melius, sed autem feugait voluptua ne.</p></div></div></div></div>
+        <script type="module" src="./ast-example-bridge_files/main.tsx"></script>
+    
+
+
+<div style="position: static !important;"></div></body></html>
