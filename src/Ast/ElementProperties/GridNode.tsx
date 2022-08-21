@@ -1,9 +1,9 @@
-import GridGap from "./GridGap";
-import {AST} from "../types";
+import GridGap from './GridGap';
+import {AST} from '../types';
 import { v4 as uuidv4 } from 'uuid';
-import React from "react";
-import {AstNode} from "../../types";
-import GridPattern from "./GridPattern";
+import React from 'react';
+import {AstNode} from '../../types';
+import GridPattern from './GridPattern';
 
 interface GridNodeAst {
     type: string;
@@ -16,7 +16,7 @@ interface GridNodeProps extends AstNode<GridNodeAst> {
 }
 
 export default class GridNode extends React.Component<GridNodeProps, any> implements AST {
-    public readonly id: string
+    public readonly id: string;
     public gap: GridGap;
 
     constructor(props: GridNodeProps, context: any) {

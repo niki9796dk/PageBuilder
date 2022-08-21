@@ -1,7 +1,8 @@
-import {BlockNodeAst, BlockNodeProps} from "./PositionalBlock";
-import StyleMap from "../../StyleMap";
-import {useState} from "react";
-import {PositionalBlock} from "./PositionalBlock";
+import {BlockNodeAst, BlockNodeProps} from './PositionalBlock';
+import StyleMap from '../../StyleMap';
+import {useState} from 'react';
+import {PositionalBlock} from './PositionalBlock';
+import React from 'react';
 
 interface ImageNodeAst extends BlockNodeAst {
     src: string;
@@ -10,8 +11,8 @@ interface ImageNodeAst extends BlockNodeAst {
 
 export default function ImageNode (props: BlockNodeProps<ImageNodeAst>) {
     const style = new StyleMap(props.ast.style ?? {});
-    const [src, setSrc] = useState(props.ast.src);
-    const [alt, setAlt] = useState(props.ast.alt);
+    const [src] = useState(props.ast.src);
+    const [alt] = useState(props.ast.alt);
 
     return (
         <PositionalBlock position={props.ast.position} zIndex={props.zIndex} gridSize={props.gridSize} editorMode={props.editorMode}>
@@ -22,5 +23,5 @@ export default function ImageNode (props: BlockNodeProps<ImageNodeAst>) {
                 alt={alt}
             />
         </PositionalBlock>
-    )
+    );
 }

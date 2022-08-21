@@ -1,7 +1,7 @@
-import axios from "axios";
-import React, {useEffect, useRef, useState} from "react";
-import DocumentNode from './Ast/Elements/DocumentNode'
-import {Validator} from "./Ast/Validator";
+import axios from 'axios';
+import React, {useEffect, useState} from 'react';
+import DocumentNode from './Ast/Elements/DocumentNode';
+import {Validator} from './Ast/Validator';
 
 export default function App () {
     const [ast, setAst] = useState<any | null>(null);
@@ -14,14 +14,14 @@ export default function App () {
                     const ast = response.data;
 
                     Validator.validate(ast);
-                    setAst(ast)
+                    setAst(ast);
                 });
         }
-    })
+    });
 
     if (! ast) {
-        return <div className="page">Loading...</div>
+        return <div className="page">Loading...</div>;
     }
 
-    return <DocumentNode ast={ast} editorMode={true}></DocumentNode>
+    return <DocumentNode ast={ast} editorMode={true}></DocumentNode>;
 }

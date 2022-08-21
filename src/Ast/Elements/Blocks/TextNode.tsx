@@ -1,8 +1,9 @@
 import {useState} from 'react';
-import {BlockNodeAst, BlockNodeProps} from "./PositionalBlock";
+import {BlockNodeAst, BlockNodeProps} from './PositionalBlock';
 import './TextNode.css';
-import StyleMap from "../../StyleMap";
-import {PositionalBlock} from "./PositionalBlock";
+import StyleMap from '../../StyleMap';
+import {PositionalBlock} from './PositionalBlock';
+import React from 'react';
 
 interface TextNodeAst extends BlockNodeAst {
     value: string;
@@ -10,7 +11,7 @@ interface TextNodeAst extends BlockNodeAst {
 
 export function TextNode (props: BlockNodeProps<TextNodeAst>) {
     const style = new StyleMap(props.ast.style ?? {});
-    const [text, setText] = useState(props.ast.value);
+    const [text] = useState(props.ast.value);
 
     return (
         <PositionalBlock position={props.ast.position} zIndex={props.zIndex} gridSize={props.gridSize} editorMode={props.editorMode}>

@@ -1,5 +1,4 @@
-import * as _ from "lodash";
-import {AST} from "../types";
+import {AST} from '../types';
 
 export default class GridGap implements AST{
     public type: string;

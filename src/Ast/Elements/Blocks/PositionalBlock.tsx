@@ -1,11 +1,12 @@
 import { animated, useSpring } from '@react-spring/web';
 import { useDrag } from '@use-gesture/react';
-import BlockPosition from "./BlockPosition";
-import {useRef, useState} from "react";
+import BlockPosition from './BlockPosition';
+import {useRef, useState} from 'react';
 import './PositionalBlock.css';
-import {DragState} from "@use-gesture/core/src/types/state";
-import {clamp, round} from "lodash";
-import {AstNode} from "../../../types";
+import {DragState} from '@use-gesture/core/src/types/state';
+import {clamp, round} from 'lodash';
+import {AstNode} from '../../../types';
+import React from 'react';
 
 export interface BlockNodeAst {
     type: string;
@@ -58,7 +59,7 @@ export function PositionalBlock (props: props) {
         handleDrag(state);
 
         if (! state.dragging) {
-            handleDragDone(state);
+            handleDragDone();
         }
     }, {
         from: () => {
@@ -66,7 +67,7 @@ export function PositionalBlock (props: props) {
             // But if the "from" state is exactly equal to [0, 0],
             // then the animated transform will not reset to a "none" state upon end of dragging.
             // Therefor a very small number is chosen, since it is not visible by the user and fixes the problem :shrug:
-            return [1e-10, 1e-10]
+            return [1e-10, 1e-10];
         }
     });
 
@@ -79,7 +80,7 @@ export function PositionalBlock (props: props) {
         setPreviewPosition(() => calculateDragPosition(position));
     };
 
-    const handleDragDone = (state: DragState) => {
+    const handleDragDone = () => {
         setPosition(calculateDragPosition(position));
 
         api.set({x: 0, y: 0});
@@ -98,7 +99,7 @@ export function PositionalBlock (props: props) {
             top: Math.max(0, position.top + moveY),
             left: clamp(position.left + moveX, 0, 24 - position.width)
         });
-    }
+    };
 
     return (
         <>

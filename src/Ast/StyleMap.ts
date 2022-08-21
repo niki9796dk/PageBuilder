@@ -1,5 +1,5 @@
-import * as _ from "lodash";
-import {camelCase} from "change-case";
+import * as _ from 'lodash';
+import {camelCase} from 'change-case';
 
 export default class StyleMap {
     private readonly styles: any;

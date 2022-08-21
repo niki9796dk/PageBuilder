@@ -1,7 +1,7 @@
-import React from "react";
+import React from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import GridGap from "./GridGap";
-import "./GridPattern.css";
+import GridGap from './GridGap';
+import './GridPattern.css';
 
 interface GridPatternProps {
     gap: GridGap
@@ -36,7 +36,7 @@ export default class GridPattern extends React.Component<GridPatternProps, any> 
     }
 
     getId(): string {
-        return `grid-pattern-${this.id}`
+        return `grid-pattern-${this.id}`;
     }
 
     getSvgStyle(): any {
@@ -45,7 +45,7 @@ export default class GridPattern extends React.Component<GridPatternProps, any> 
             position: 'relative',
             gridArea: `1 / 1 / ${this.props.gridHeight} / 25`,
             zIndex: 0,
-        }
+        };
     }
 
     getRectStyle(): any {
@@ -54,6 +54,6 @@ export default class GridPattern extends React.Component<GridPatternProps, any> 
             stroke: 'gray',
             strokeWidth: 1,
             opacity: 0.3,
-        }
+        };
     }
 }

@@ -1,11 +1,11 @@
-import {SectionNode} from "./SectionNode";
-import StyleMap from "../StyleMap";
-import './../Styles/reset.css'
-import './../Styles/obsidian.css'
-import React from "react";
-import {AstNode} from "../../types";
-import _ from "lodash";
-import "./DocumentNode.css";
+import {SectionNode} from './SectionNode';
+import StyleMap from '../StyleMap';
+import './../Styles/reset.css';
+import './../Styles/obsidian.css';
+import React from 'react';
+import {AstNode} from '../../types';
+import _ from 'lodash';
+import './DocumentNode.css';
 
 interface DocumentNodeAst {
     type: string;
@@ -23,13 +23,13 @@ export default function DocumentNode (props: AstNode<DocumentNodeAst>) {
                 key={key}
                 ast={section}
                 editorMode={props.editorMode}
-            />
-        })
-    }
+            />;
+        });
+    };
 
     return <div
         className="node-document"
         style={style.getStyleMap()}
         children={renderSections()}
-    />
+    />;
 }

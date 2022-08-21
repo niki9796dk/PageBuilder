@@ -1,5 +1,5 @@
-import * as _ from "lodash";
-import {assert} from "./Assert";
+import * as _ from 'lodash';
+import {assert} from './Assert';
 
 export class Validator {
     public static validate(ast: any): void {
@@ -60,7 +60,7 @@ export class Validator {
             baseSchema,
             typeBaseSchema,
             subTypeSchema,
-        )
+        );
     }
 
     /**

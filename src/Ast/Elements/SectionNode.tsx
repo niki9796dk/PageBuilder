@@ -1,11 +1,11 @@
-import {BlockFactory} from "../BlockFactory";
-import StyleMap from "../StyleMap";
-import GridNode from "../ElementProperties/GridNode";
-import React, {useRef} from "react";
-import {AstNode} from "../../types";
-import _ from "lodash";
-import {BlockNodeAst} from "./Blocks/PositionalBlock";
-import "./SectionNode.css";
+import {BlockFactory} from '../BlockFactory';
+import StyleMap from '../StyleMap';
+import GridNode from '../ElementProperties/GridNode';
+import React, {useRef} from 'react';
+import {AstNode} from '../../types';
+import _ from 'lodash';
+import {BlockNodeAst} from './Blocks/PositionalBlock';
+import './SectionNode.css';
 
 interface SectionNodeAst {
     type: string;
@@ -23,14 +23,14 @@ export function SectionNode (props: AstNode<SectionNodeAst>) {
             props.ast.blocks,
             (blockNode) => blockNode.position.top + blockNode.position.height + 1),
         );
-    }
+    };
 
     const getGridSize = () => {
         return {
             cellWidth: 1200 / 24,
             cellHeight: 25,
-        }
-    }
+        };
+    };
 
     const renderBlocks = () => {
         return _.map(props.ast.blocks, (block: any, key: string) => {
@@ -41,8 +41,8 @@ export function SectionNode (props: AstNode<SectionNodeAst>) {
                 props.editorMode,
                 getGridSize(),
             );
-        })
-    }
+        });
+    };
 
     return <div className="node-section" style={style.getStyleMap()}>
         <GridNode
@@ -52,5 +52,5 @@ export function SectionNode (props: AstNode<SectionNodeAst>) {
             children={renderBlocks()}
             ref={grid}
         />
-    </div>
+    </div>;
 }
