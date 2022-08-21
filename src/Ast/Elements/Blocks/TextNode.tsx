@@ -1,5 +1,5 @@
 import {useState} from 'react';
-import {BlockNodeAst, BlockNodeProps} from "../BlockNode";
+import {BlockNodeAst, BlockNodeProps} from "./PositionalBlock";
 import './TextNode.css';
 import StyleMap from "../../StyleMap";
 import {PositionalBlock} from "./PositionalBlock";

@@ -1,11 +1,33 @@
 import { animated, useSpring } from '@react-spring/web';
 import { useDrag } from '@use-gesture/react';
 import BlockPosition from "../BlockPosition";
-import {GridSize} from "../BlockNode";
-import {useEffect, useRef, useState} from "react";
+import {useRef, useState} from "react";
 import './PositionalBlock.css';
 import {DragState} from "@use-gesture/core/src/types/state";
 import {clamp, round} from "lodash";
+import {AstNode} from "../../../types";
+
+export interface BlockNodeAst {
+    type: string;
+    subType: string;
+    position: {
+        height: number;
+        width: number;
+        left: number;
+        top: number;
+    };
+    style: any;
+}
+
+export interface GridSize {
+    cellWidth: number,
+    cellHeight: number,
+}
+
+export interface BlockNodeProps<BlockSubTypeAst extends BlockNodeAst> extends AstNode<BlockSubTypeAst> {
+    zIndex: number;
+    gridSize: GridSize,
+}
 
 interface props {
     zIndex: number,

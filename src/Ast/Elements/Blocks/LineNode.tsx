@@ -1,4 +1,4 @@
-import {BlockNode, BlockNodeAst, BlockNodeProps} from "../BlockNode";
+import {BlockNodeAst, BlockNodeProps} from "./PositionalBlock";
 import StyleMap from "../../StyleMap";
 import {useState} from "react";
 import {PositionalBlock} from "./PositionalBlock";
