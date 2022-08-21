@@ -1,34 +1,36 @@
-import {BlockNode, BlockNodeAst} from "../BlockNode";
+import {BlockNode, BlockNodeAst, BlockNodeProps} from "../BlockNode";
 import hljs from 'highlight.js/lib/core';
 import javascript from 'highlight.js/lib/languages/javascript';
 import php from 'highlight.js/lib/languages/php';
+import StyleMap from "../../StyleMap";
+import {useState} from "react";
+import {PositionalBlock} from "./PositionalBlock";
+
+hljs.registerLanguage('javascript', javascript);
+hljs.registerLanguage('php', php);
 
 interface CodeNodeAst extends BlockNodeAst{
     value: string;
 }
 
-export default class CodeNode extends BlockNode<CodeNodeAst> {
-    render(): JSX.Element {
-        hljs.registerLanguage('javascript', javascript);
-        hljs.registerLanguage('php', php);
+export default function CodeNode (props: BlockNodeProps<CodeNodeAst>) {
+    const style = new StyleMap(props.ast.style ?? {});
+    const [code, setCode] = useState(props.ast.value);
+
+    const getRenderedCode = () => {
+        let renderedCode = hljs.highlightAuto(code).value;
 
         // TODO: Figure out how to do this the react way, instead of "dangerouslySetInnerHTML"
-        let renderedCode = hljs.highlightAuto(this.props.ast.value).value;
-        let code = <code className="hljs" dangerouslySetInnerHTML={{__html: renderedCode}}/>;
+        return <code className="hljs" dangerouslySetInnerHTML={{__html: renderedCode}}/>;
+    }
 
-        return (
+    return (
+        <PositionalBlock position={props.ast.position} zIndex={props.zIndex} gridSize={props.gridSize} editorMode={props.editorMode}>
             <pre
                 className="node-code"
-                style={this.getStyleMap()}
-                children={code}
+                style={style.getStyleMap()}
+                children={getRenderedCode()}
             />
-        );
-    }
-
-    toJson(): object {
-        return {
-            value: this.props.ast.value,
-            ...super.toJson(),
-        };
-    }
+        </PositionalBlock>
+    );
 }
