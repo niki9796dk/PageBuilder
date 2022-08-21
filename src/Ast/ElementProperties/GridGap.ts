@@ -25,7 +25,7 @@ export default class GridGap implements AST{
 
     getStyleMap(): any {
         return {
-            gap: `${this.row}px ${this.column}px;`,
+            gap: `${this.row}px ${this.column}px`,
         };
     }
 }
