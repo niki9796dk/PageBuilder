@@ -1,9 +1,9 @@
 import { animated, useSpring } from '@react-spring/web';
 import { useDrag } from '@use-gesture/react';
 import BlockPosition from './BlockPosition';
-import {useRef, useState} from 'react';
+import {ReactElement, useRef, useState} from 'react';
 import './PositionalBlock.css';
-import {DragState} from '@use-gesture/core/src/types/state';
+import {DragState, SharedGestureState} from '@use-gesture/core/src/types/state';
 import {clamp, round} from 'lodash';
 import {AstNode} from '../../../types';
 import React from 'react';
@@ -39,14 +39,17 @@ interface props {
         top: number;
     };
     gridSize: GridSize,
-    children: any;
+    children: ReactElement;
     editorMode: boolean;
 }
 
 export function PositionalBlock(props: props) {
-    const [{x, y}, api] = useSpring(() => ({ x: 0, y: 0}));
-    const [dragging, setDragging] = useState(false);
+    const [{x, y, width, height}, api] = useSpring(() => ({ x: 0, y: 0, width: 0, height: 0}));
+    const [moving, setMoving] = useState(false);
+    const [resizing, setResizing] = useState(false);
     const preview = useRef<HTMLDivElement | null>(null);
+    const resizer = useRef<HTMLDivElement | null>(null);
+    const block = useRef<HTMLDivElement | null>(null);
     const [position, setPosition] = useState(new BlockPosition(props.position));
     const [previewPosition, setPreviewPosition] = useState(new BlockPosition(props.position));
 
@@ -55,39 +58,55 @@ export function PositionalBlock(props: props) {
             return;
         }
 
-        setDragging(state.dragging ?? true);
-        handleDrag(state);
-
-        if (! state.dragging) {
-            handleDragDone();
+        if (state.event.target == resizer.current) {
+            handleResize(state);
+        } else {
+            handleMove(state);
         }
     }, {
-        from: () => {
-            // I have absolutely no idea why...
-            // But if the "from" state is exactly equal to [0, 0],
-            // then the animated transform will not reset to a "none" state upon end of dragging.
-            // Therefor a very small number is chosen, since it is not visible by the user and fixes the problem :shrug:
-            return [1e-10, 1e-10];
+        from: (event) => {
+            if (event.target === resizer.current) {
+                return [block?.current?.clientWidth ?? 0, block?.current?.clientHeight ?? 0];
+            } else {
+                return [0, 0];
+            }
         }
     });
 
-    const handleDrag = (state: DragState) => {
+    const handleMove = (state: DragState&SharedGestureState) => {
+        setMoving(state.dragging ?? true);
+
         api.set({
             x: state.offset[0],
             y: state.offset[1],
         });
 
-        setPreviewPosition(() => calculateDragPosition(position));
+        setPreviewPosition(() => calculateMovePosition(position));
+
+        if (! state.dragging) {
+            setPosition(calculateMovePosition(position));
+        }
     };
 
-    const handleDragDone = () => {
-        setPosition(calculateDragPosition(position));
+    const handleResize = (state: DragState&SharedGestureState) => {
+        setResizing(state.dragging ?? true);
 
-        api.set({x: 0, y: 0});
+        api.set({
+            width: state.offset[0],
+            height: state.offset[1],
+        });
+
+        const delta = [state.xy[0] - state.initial[0], state.xy[1] - state.initial[1]];
+
+        setPreviewPosition(() => calculateResizePosition(position, delta));
+
+        if (! state.dragging) {
+            setPosition(calculateResizePosition(position, delta));
+        }
     };
 
-    const calculateDragPosition = (position: BlockPosition) => {
-        if (! dragging) {
+    const calculateMovePosition = (position: BlockPosition) => {
+        if (! moving) {
             return position;
         }
 
@@ -96,33 +115,64 @@ export function PositionalBlock(props: props) {
 
         return new BlockPosition({
             ...position,
-            top: Math.max(0, position.top + moveY),
-            left: clamp(position.left + moveX, 0, 24 - position.width)
+            left: clamp(position.left + moveX, 0, 24 - position.width),
+            top: Math.max(0, position.top + moveY)
         });
+    };
+
+    const calculateResizePosition = (position: BlockPosition, delta : Array<number>) => {
+        if (! resizing) {
+            return position;
+        }
+
+        const moveX = round(delta[0] / props.gridSize.cellWidth);
+        const moveY = round(delta[1] / props.gridSize.cellHeight);
+
+        return new BlockPosition({
+            ...position,
+            width: clamp(position.width + moveX, 2, 24 - position.left),
+            height: Math.max(0, position.height + moveY)
+        });
+    };
+
+    const styleThing = () => {
+        if (resizing) {
+            return {width, height};
+        }
+
+        if (moving) {
+            return {x, y};
+        }
+
+        return {};
     };
 
     return (
         <>
             {props.editorMode &&
-                <div
-                    ref={preview}
-                    className={`block-drag-preview ${dragging ? '' : 'hidden'}`}
-                    style={previewPosition.getStyleMap()}
-                />
+                <>
+                    <div
+                        ref={preview}
+                        className={`block-drag-preview ${resizing || moving ? '' : 'hidden'}`}
+                        style={previewPosition.getStyleMap()}
+                    />
+                </>
             }
             <animated.div
+                ref={block}
                 className={`
                     positional-block 
-                    ${dragging ? 'noSelect' : ''} 
+                    ${resizing || moving ? 'noSelect' : ''} 
                     ${props.editorMode ? 'editorMode' : ''}
                 `}
                 style={{
                     ...position.getStyleMap(),
                     zIndex: props.zIndex,
-                    ...{x, y},
+                    ...styleThing()
                 }}
                 {...bind()}
             >
+                <div className="resizer" ref={resizer}/>
                 {props.children}
             </animated.div>
         </>

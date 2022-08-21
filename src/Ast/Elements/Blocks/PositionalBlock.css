@@ -1,5 +1,6 @@
 .positional-block {
     touch-action: none;
+    position: relative;
 }
 
 .block-drag-preview {
@@ -24,4 +25,20 @@
     -ms-user-select: none; /* Internet Explorer/Edge */
     user-select: none; /* Non-prefixed version, currently  supported by Chrome, Edge, Opera and Firefox */
     pointer-events: none;
+}
+
+.resizer {
+    z-index: 100;
+}
+
+.positional-block.editorMode:hover .resizer,
+.resizer:hover  {
+    position: absolute;
+    bottom: -10px;
+    right: -10px;
+    width: 20px;
+    height: 20px;
+    background-color: #0097df;
+    cursor: nwse-resize;
+    touch-action: none;
 }
