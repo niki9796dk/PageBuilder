@@ -1,29 +1,21 @@
-import {BlockNode, BlockNodeAst} from "../BlockNode";
+import {BlockNode, BlockNodeAst, BlockNodeProps} from "../BlockNode";
+import StyleMap from "../../StyleMap";
+import {useState} from "react";
+import {PositionalBlock} from "./PositionalBlock";
 
 interface LineNodeAst extends BlockNodeAst {
     color?: string
 }
 
-export default class LineNode extends BlockNode<LineNodeAst> {
-    render(): JSX.Element {
-        return (
-            <div className="node-line" style={this.getStyleMap()}>
-                <hr/>
+export default function CodeNode (props: BlockNodeProps<LineNodeAst>) {
+    const style = new StyleMap(props.ast.style ?? {});
+    const [color, setColor] = useState(props.ast.color);
+
+    return (
+        <PositionalBlock position={props.ast.position} zIndex={props.zIndex} gridSize={props.gridSize} editorMode={props.editorMode}>
+            <div className="node-line" style={style.getStyleMap()}>
+                <hr style={{backgroundColor: color ?? 'black'}}/>
             </div>
-        );
-    }
-
-    protected getStyleMap(): any {
-        return {
-            ...super.getStyleMap(),
-            borderColor: this.props.ast.color ?? 'black',
-        }
-    }
-
-    toJson(): object {
-        return {
-            color: this.props.ast.color,
-            ...super.toJson(),
-        };
-    }
+        </PositionalBlock>
+    );
 }
