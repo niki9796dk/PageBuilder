@@ -5,7 +5,7 @@ import LineNode from "./Elements/Blocks/LineNode";
 import CodeNode from "./Elements/Blocks/CodeNode";
 import QuoteNode from "./Elements/Blocks/QuoteNode";
 import {TextNode} from "./Elements/Blocks/TextNode";
-import {GridSize} from "./Elements/BlockNode";
+import {GridSize} from "./Elements/Blocks/PositionalBlock";
 
 export class BlockFactory {
     static create(key: string, block: any, zIndex: number, editorMode: boolean, gridSize: GridSize): JSX.Element {
