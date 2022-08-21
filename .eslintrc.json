@@ -28,6 +28,7 @@
     "rules": {
         "@typescript-eslint/no-explicit-any": "off",
         "react/no-children-prop": "off",
+        "no-multiple-empty-lines": ["error", { "max": 1, "maxBOF": 0, "maxEOF": 1 }],
         "space-before-function-paren": ["error", {
             "anonymous": "always",
             "named": "never",

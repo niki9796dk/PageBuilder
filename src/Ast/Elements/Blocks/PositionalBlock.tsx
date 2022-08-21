@@ -55,10 +55,6 @@ export function PositionalBlock(props: props) {
             return;
         }
 
-
-
-
-
         setDragging(state.dragging ?? true);
         handleDrag(state);
 

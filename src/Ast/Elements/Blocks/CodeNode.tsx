@@ -8,7 +8,6 @@ import {PositionalBlock} from './PositionalBlock';
 import './CodeNode.css';
 import React from 'react';
 
-
 hljs.registerLanguage('javascript', javascript);
 hljs.registerLanguage('php', php);
 

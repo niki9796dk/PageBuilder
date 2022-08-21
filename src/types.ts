@@ -1,5 +1,3 @@
-
-
 interface AstNode<astType> {
     ast: astType;
     editorMode: boolean;
