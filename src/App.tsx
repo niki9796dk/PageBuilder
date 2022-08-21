@@ -1,17 +1,20 @@
 import axios from "axios";
 import React, {useEffect, useRef, useState} from "react";
 import DocumentNode from './Ast/Elements/DocumentNode'
+import {Validator} from "./Ast/Validator";
 
 export default function App () {
     const [ast, setAst] = useState<any | null>(null);
-    const documentNode = useRef<DocumentNode | null>(null);
 
     useEffect(() => {
         if (! ast) {
             axios
                 .get('/ast-example-blocks.json')
                 .then((response) => {
-                    setAst(response.data)
+                    const ast = response.data;
+
+                    Validator.validate(ast);
+                    setAst(ast)
                 });
         }
     })
@@ -20,5 +23,5 @@ export default function App () {
         return <div className="page">Loading...</div>
     }
 
-    return <DocumentNode ref={documentNode} ast={ast} editorMode={true}></DocumentNode>
+    return <DocumentNode ast={ast} editorMode={true}></DocumentNode>
 }
