@@ -1,0 +1,20 @@
+.node-quote blockquote {
+    font: 1.4rem/1.4 Georgia, serif;
+    quotes: "\201C""\201D""\2018""\2019";
+    text-indent: -0.50em;
+}
+
+@supports ( hanging-punctuation: first) {
+    .node-quote blockquote {
+        text-indent: 0;
+        hanging-punctuation: first;
+    }
+}
+
+.node-quote blockquote::before {
+    content: open-quote;
+}
+
+.node-quote blockquote::after {
+    content: close-quote;
+}

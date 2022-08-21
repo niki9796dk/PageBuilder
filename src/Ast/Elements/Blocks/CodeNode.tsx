@@ -5,6 +5,7 @@ import php from 'highlight.js/lib/languages/php';
 import StyleMap from "../../StyleMap";
 import {useState} from "react";
 import {PositionalBlock} from "./PositionalBlock";
+import "./CodeNode.css";
 
 hljs.registerLanguage('javascript', javascript);
 hljs.registerLanguage('php', php);

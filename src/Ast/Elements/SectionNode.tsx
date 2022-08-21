@@ -5,6 +5,7 @@ import React, {useRef} from "react";
 import {AstNode} from "../../types";
 import _ from "lodash";
 import {BlockNodeAst} from "./Blocks/PositionalBlock";
+import "./SectionNode.css";
 
 interface SectionNodeAst {
     type: string;

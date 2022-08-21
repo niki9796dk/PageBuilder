@@ -1,13 +1,11 @@
-import {AST} from "../types";
 import {SectionNode} from "./SectionNode";
-import {Validator} from "../Validator";
 import StyleMap from "../StyleMap";
 import './../Styles/reset.css'
 import './../Styles/obsidian.css'
-import './../Styles/style.css'
 import React from "react";
 import {AstNode} from "../../types";
 import _ from "lodash";
+import "./DocumentNode.css";
 
 interface DocumentNodeAst {
     type: string;

@@ -2,6 +2,7 @@ import {BlockNodeAst, BlockNodeProps} from "./PositionalBlock";
 import StyleMap from "../../StyleMap";
 import {useState} from "react";
 import {PositionalBlock} from "./PositionalBlock";
+import "./LineNode.css";
 
 interface LineNodeAst extends BlockNodeAst {
     color?: string

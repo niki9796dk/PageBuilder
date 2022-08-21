@@ -1,9 +1,7 @@
-import './../Styles/reset.css'
-import './../Styles/obsidian.css'
-import './../Styles/style.css'
 import React from "react";
 import { v4 as uuidv4 } from 'uuid';
 import GridGap from "./GridGap";
+import "./GridPattern.css";
 
 interface GridPatternProps {
     gap: GridGap
