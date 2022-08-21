@@ -2,8 +2,8 @@ import './../Styles/reset.css'
 import './../Styles/obsidian.css'
 import './../Styles/style.css'
 import React from "react";
-import GridGap from "./Gap";
 import { v4 as uuidv4 } from 'uuid';
+import GridGap from "./GridGap";
 
 interface GridPatternProps {
     gap: GridGap
@@ -13,7 +13,6 @@ interface GridPatternProps {
 
 export default class GridPattern extends React.Component<GridPatternProps, any> {
     readonly id: string;
-
 
     constructor(props: GridPatternProps, context: any) {
         super(props, context);
