@@ -1,4 +1,3 @@
-import {ComponentClass} from "react";
 import {BlockNodeProps} from "./Elements/BlockNode";
 
 interface AST {
@@ -6,7 +5,7 @@ interface AST {
 }
 
 interface BlockFactoryList {
-    [key: string]: ComponentClass<BlockNodeProps<any>, any>;
+    [key: string]: (props: BlockNodeProps<any>) => JSX.Element;
 }
 
 export type {AST, BlockFactoryList};
