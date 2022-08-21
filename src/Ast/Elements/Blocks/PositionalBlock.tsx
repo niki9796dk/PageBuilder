@@ -1,6 +1,6 @@
 import { animated, useSpring } from '@react-spring/web';
 import { useDrag } from '@use-gesture/react';
-import BlockPosition from "../BlockPosition";
+import BlockPosition from "./BlockPosition";
 import {useRef, useState} from "react";
 import './PositionalBlock.css';
 import {DragState} from "@use-gesture/core/src/types/state";
