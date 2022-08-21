@@ -1,27 +1,26 @@
-import {BlockNode, BlockNodeAst} from "../BlockNode";
+import {BlockNodeAst, BlockNodeProps} from "../BlockNode";
+import StyleMap from "../../StyleMap";
+import {useState} from "react";
+import {PositionalBlock} from "./PositionalBlock";
 
 interface ImageNodeAst extends BlockNodeAst {
     src: string;
     alt?: string;
 }
 
-export default class ImageNode extends BlockNode<ImageNodeAst>  {
-    render(): JSX.Element {
-        return (
+export default function ImageNode (props: BlockNodeProps<ImageNodeAst>) {
+    const style = new StyleMap(props.ast.style ?? {});
+    const [src, setSrc] = useState(props.ast.src);
+    const [alt, setAlt] = useState(props.ast.alt);
+
+    return (
+        <PositionalBlock position={props.ast.position} zIndex={props.zIndex} gridSize={props.gridSize} editorMode={props.editorMode}>
             <img
                 className="node-image"
-                style={this.getStyleMap()}
-                src={this.props.ast.src}
-                alt={this.props.ast.alt ?? ''}
+                style={style.getStyleMap()}
+                src={src}
+                alt={alt}
             />
-        )
-    }
-
-    toJson(): object {
-        return {
-            src: this.props.ast.src,
-            alt: this.props.ast.alt,
-            ...super.toJson(),
-        };
-    }
+        </PositionalBlock>
+    )
 }
