@@ -1,0 +1,27 @@
+.positional-block {
+    touch-action: none;
+}
+
+.block-drag-preview {
+    background-color: gray;
+}
+
+.positional-block.editorMode:hover {
+    background-color: rgba(128, 128, 128, 0.25);
+    outline: black dashed 1px;
+    cursor: move;
+}
+
+.hidden {
+    /*visibility: hidden;*/
+    display: none;
+}
+
+.noSelect {
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Old versions of Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently  supported by Chrome, Edge, Opera and Firefox */
+}
