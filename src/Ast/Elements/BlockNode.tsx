@@ -17,8 +17,14 @@ interface BlockNodeAst {
     style: any;
 }
 
+export interface GridSize {
+    cellWidth: number,
+    cellHeight: number,
+}
+
 interface BlockNodeProps<BlockSubTypeAst extends BlockNodeAst> extends AstNode<BlockSubTypeAst> {
     zIndex: number;
+    gridSize: GridSize,
 }
 
 abstract class BlockNode<NodeAst extends BlockNodeAst> extends React.Component<BlockNodeProps<NodeAst>, any> implements AST {
