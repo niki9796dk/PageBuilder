@@ -9,7 +9,7 @@ interface LineNodeAst extends BlockNodeAst {
     color?: string
 }
 
-export default function CodeNode (props: BlockNodeProps<LineNodeAst>) {
+export default function CodeNode(props: BlockNodeProps<LineNodeAst>) {
     const style = new StyleMap(props.ast.style ?? {});
     const [color] = useState(props.ast.color);
 

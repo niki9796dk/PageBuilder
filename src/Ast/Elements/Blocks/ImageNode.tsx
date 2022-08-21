@@ -9,7 +9,7 @@ interface ImageNodeAst extends BlockNodeAst {
     alt?: string;
 }
 
-export default function ImageNode (props: BlockNodeProps<ImageNodeAst>) {
+export default function ImageNode(props: BlockNodeProps<ImageNodeAst>) {
     const style = new StyleMap(props.ast.style ?? {});
     const [src] = useState(props.ast.src);
     const [alt] = useState(props.ast.alt);

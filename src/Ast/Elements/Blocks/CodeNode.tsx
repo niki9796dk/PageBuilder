@@ -16,7 +16,7 @@ interface CodeNodeAst extends BlockNodeAst{
     value: string;
 }
 
-export default function CodeNode (props: BlockNodeProps<CodeNodeAst>) {
+export default function CodeNode(props: BlockNodeProps<CodeNodeAst>) {
     const style = new StyleMap(props.ast.style ?? {});
     const [code] = useState(props.ast.value);
 

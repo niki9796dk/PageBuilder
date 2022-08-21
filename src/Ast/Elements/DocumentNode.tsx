@@ -14,7 +14,7 @@ interface DocumentNodeAst {
     style: any;
 }
 
-export default function DocumentNode (props: AstNode<DocumentNodeAst>) {
+export default function DocumentNode(props: AstNode<DocumentNodeAst>) {
     const style = new StyleMap(props.ast.style);
 
     const renderSections = () => {

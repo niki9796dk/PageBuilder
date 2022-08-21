@@ -3,7 +3,7 @@ import React, {useEffect, useState} from 'react';
 import DocumentNode from './Ast/Elements/DocumentNode';
 import {Validator} from './Ast/Validator';
 
-export default function App () {
+export default function App() {
     const [ast, setAst] = useState<any | null>(null);
 
     useEffect(() => {

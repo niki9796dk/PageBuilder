@@ -43,7 +43,7 @@ interface props {
     editorMode: boolean;
 }
 
-export function PositionalBlock (props: props) {
+export function PositionalBlock(props: props) {
     const [{x, y}, api] = useSpring(() => ({ x: 0, y: 0}));
     const [dragging, setDragging] = useState(false);
     const preview = useRef<HTMLDivElement | null>(null);
@@ -54,6 +54,10 @@ export function PositionalBlock (props: props) {
         if (! props.editorMode) {
             return;
         }
+
+
+
+
 
         setDragging(state.dragging ?? true);
         handleDrag(state);

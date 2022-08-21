@@ -10,7 +10,7 @@ interface QuoteNodeAst extends BlockNodeAst {
     author: string;
 }
 
-export default function QuoteNode (props: BlockNodeProps<QuoteNodeAst>) {
+export default function QuoteNode(props: BlockNodeProps<QuoteNodeAst>) {
     const style = new StyleMap(props.ast.style ?? {});
     const [quote] = useState(props.ast.quote);
     const [author] = useState(props.ast.author);

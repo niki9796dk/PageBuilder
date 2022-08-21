@@ -9,7 +9,7 @@ interface TextNodeAst extends BlockNodeAst {
     value: string;
 }
 
-export function TextNode (props: BlockNodeProps<TextNodeAst>) {
+export function TextNode(props: BlockNodeProps<TextNodeAst>) {
     const style = new StyleMap(props.ast.style ?? {});
     const [text] = useState(props.ast.value);
 

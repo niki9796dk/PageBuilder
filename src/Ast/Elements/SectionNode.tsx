@@ -14,7 +14,7 @@ interface SectionNodeAst {
     grid: any;
 }
 
-export function SectionNode (props: AstNode<SectionNodeAst>) {
+export function SectionNode(props: AstNode<SectionNodeAst>) {
     const grid = useRef<GridNode | null>(null);
     const style = new StyleMap(props.ast.style);
 
