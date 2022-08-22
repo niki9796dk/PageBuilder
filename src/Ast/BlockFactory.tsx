@@ -9,7 +9,7 @@ import {GridSize} from './Elements/Blocks/PositionalBlock';
 import React from 'react';
 
 export class BlockFactory {
-    static create(key: string, block: any, zIndex: number, editorMode: boolean, gridSize: GridSize): JSX.Element {
+    static create(key: number, block: any, zIndex: number, editorMode: boolean, gridSize: GridSize, astUpdater: (updatedAst: any) => void): JSX.Element {
         const factories: BlockFactoryList = {
             text: TextNode,
             image: ImageNode,
@@ -28,6 +28,7 @@ export class BlockFactory {
             editorMode={editorMode}
             zIndex={zIndex}
             gridSize={gridSize}
+            astUpdater={astUpdater}
         />;
     }
 }

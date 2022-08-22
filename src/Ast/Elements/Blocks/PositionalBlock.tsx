@@ -1,22 +1,24 @@
 import { animated, useSpring } from '@react-spring/web';
 import { useDrag } from '@use-gesture/react';
 import BlockPosition from './BlockPosition';
-import {ReactElement, useRef, useState} from 'react';
+import {ReactElement, useEffect, useRef, useState} from 'react';
 import './PositionalBlock.css';
 import {DragState, SharedGestureState} from '@use-gesture/core/src/types/state';
 import {clamp, round} from 'lodash';
 import {AstNode} from '../../../types';
 import React from 'react';
 
+export interface Position {
+    height: number;
+    width: number;
+    left: number;
+    top: number;
+}
+
 export interface BlockNodeAst {
     type: string;
     subType: string;
-    position: {
-        height: number;
-        width: number;
-        left: number;
-        top: number;
-    };
+    position: Position;
     style: any;
 }
 
@@ -30,28 +32,24 @@ export interface BlockNodeProps<BlockSubTypeAst extends BlockNodeAst> extends As
     gridSize: GridSize,
 }
 
-interface props {
-    zIndex: number,
-    position: {
-        height: number;
-        width: number;
-        left: number;
-        top: number;
-    };
-    gridSize: GridSize,
+interface Props extends BlockNodeProps<any> {
     children: ReactElement;
-    editorMode: boolean;
 }
 
-export function PositionalBlock(props: props) {
+export function PositionalBlock(props: Props) {
     const [{x, y, width, height}, api] = useSpring(() => ({ x: 0, y: 0, width: 0, height: 0}));
     const [moving, setMoving] = useState(false);
     const [resizing, setResizing] = useState(false);
     const preview = useRef<HTMLDivElement | null>(null);
     const resizer = useRef<HTMLDivElement | null>(null);
     const block = useRef<HTMLDivElement | null>(null);
-    const [position, setPosition] = useState(new BlockPosition(props.position));
-    const [previewPosition, setPreviewPosition] = useState(new BlockPosition(props.position));
+    const [position, setPosition] = useState(new BlockPosition(props.ast.position));
+    const [previewPosition, setPreviewPosition] = useState(new BlockPosition(props.ast.position));
+
+    useEffect(() => {
+        props.ast.position = position;
+        props.astUpdater(props.ast);
+    }, [position]);
 
     const bind = useDrag(async (state) => {
         if (! props.editorMode) {

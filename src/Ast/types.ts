@@ -1,4 +1,4 @@
-import {BlockNodeProps} from './Elements/BlockNode';
+import {BlockNodeProps} from './Elements/Blocks/PositionalBlock';
 
 interface AST {
     toJson(): object

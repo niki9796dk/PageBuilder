@@ -1,4 +1,6 @@
-export default class BlockPosition {
+import {Position} from './PositionalBlock';
+
+export default class BlockPosition implements Position{
     public left: number;
     public top: number;
     public width: number;

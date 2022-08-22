@@ -9,12 +9,12 @@ interface LineNodeAst extends BlockNodeAst {
     color?: string
 }
 
-export default function CodeNode(props: BlockNodeProps<LineNodeAst>) {
+export default function LineNode(props: BlockNodeProps<LineNodeAst>) {
     const style = new StyleMap(props.ast.style ?? {});
     const [color] = useState(props.ast.color);
 
     return (
-        <PositionalBlock position={props.ast.position} zIndex={props.zIndex} gridSize={props.gridSize} editorMode={props.editorMode}>
+        <PositionalBlock {...props}>
             <div className="node-line" style={style.getStyleMap()}>
                 <hr style={{backgroundColor: color ?? 'black'}}/>
             </div>

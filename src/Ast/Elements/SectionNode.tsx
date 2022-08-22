@@ -1,7 +1,7 @@
 import {BlockFactory} from '../BlockFactory';
 import StyleMap from '../StyleMap';
 import GridNode from '../ElementProperties/GridNode';
-import React, {useRef} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {AstNode} from '../../types';
 import _ from 'lodash';
 import {BlockNodeAst} from './Blocks/PositionalBlock';
@@ -17,6 +17,13 @@ export interface SectionNodeAst {
 export function SectionNode(props: AstNode<SectionNodeAst>) {
     const grid = useRef<GridNode | null>(null);
     const style = new StyleMap(props.ast.style);
+    const [sectionHeight, setSectionHeight] = useState(-1);
+
+    useEffect(() => {
+        if (sectionHeight == -1) {
+            setSectionHeight(getSectionHeight());
+        }
+    }, [sectionHeight]);
 
     const getSectionHeight = () => {
         return Math.max(..._.map(
@@ -32,14 +39,22 @@ export function SectionNode(props: AstNode<SectionNodeAst>) {
         };
     };
 
+    const updateBlockAst = (key: number, updatedAst: any) => {
+        props.ast.blocks[key] = updatedAst;
+        setSectionHeight(getSectionHeight());
+
+        props.astUpdater(props.ast);
+    };
+
     const renderBlocks = () => {
-        return _.map(props.ast.blocks, (block: any, key: string) => {
+        return _.map(props.ast.blocks, (block: any, key: number) => {
             return BlockFactory.create(
                 key,
                 block,
                 1,
                 props.editorMode,
                 getGridSize(),
+                updatedAst => updateBlockAst(key, updatedAst)
             );
         });
     };
@@ -48,9 +63,10 @@ export function SectionNode(props: AstNode<SectionNodeAst>) {
         <GridNode
             ast={props.ast.grid}
             editorMode={props.editorMode}
-            gridHeight={getSectionHeight()}
+            gridHeight={sectionHeight}
             children={renderBlocks()}
             ref={grid}
+            astUpdater={() => {}} // eslint-disable-line
         />
     </div>;
 }

@@ -27,7 +27,7 @@ export default function CodeNode(props: BlockNodeProps<CodeNodeAst>) {
     };
 
     return (
-        <PositionalBlock position={props.ast.position} zIndex={props.zIndex} gridSize={props.gridSize} editorMode={props.editorMode}>
+        <PositionalBlock {...props}>
             <pre
                 className="node-code"
                 style={style.getStyleMap()}

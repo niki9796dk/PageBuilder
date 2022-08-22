@@ -7,7 +7,7 @@ import {AstNode} from '../../types';
 import _ from 'lodash';
 import './DocumentNode.css';
 
-interface DocumentNodeAst {
+export interface DocumentNodeAst {
     type: string;
     version: string;
     sections: Array<SectionNodeAst>;
@@ -17,12 +17,19 @@ interface DocumentNodeAst {
 export default function DocumentNode(props: AstNode<DocumentNodeAst>) {
     const style = new StyleMap(props.ast.style);
 
+    const updateSectionAst = (key: number, updatedAst: any) => {
+        props.ast.sections[key] = updatedAst;
+
+        props.astUpdater(props.ast);
+    };
+
     const renderSections = () => {
-        return _.map(props.ast.sections, (section: SectionNodeAst, key: string) => {
+        return _.map(props.ast.sections, (section: SectionNodeAst, key: number) => {
             return <SectionNode
                 key={key}
                 ast={section}
                 editorMode={props.editorMode}
+                astUpdater={(updatedAst) => updateSectionAst(key, updatedAst)}
             />;
         });
     };

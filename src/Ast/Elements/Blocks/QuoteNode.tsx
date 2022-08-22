@@ -16,7 +16,7 @@ export default function QuoteNode(props: BlockNodeProps<QuoteNodeAst>) {
     const [author] = useState(props.ast.author);
 
     return (
-        <PositionalBlock position={props.ast.position} zIndex={props.zIndex} gridSize={props.gridSize} editorMode={props.editorMode}>
+        <PositionalBlock {...props}>
             <figure className="node-quote" style={style.getStyleMap()}>
                 <blockquote>{quote}</blockquote>
                 <figcaption style={{float: 'right'}}>

@@ -14,7 +14,7 @@ export function TextNode(props: BlockNodeProps<TextNodeAst>) {
     const [text] = useState(props.ast.value);
 
     return (
-        <PositionalBlock position={props.ast.position} zIndex={props.zIndex} gridSize={props.gridSize} editorMode={props.editorMode}>
+        <PositionalBlock {...props}>
             <p
                 className="node-text"
                 style={style.getStyleMap()}
