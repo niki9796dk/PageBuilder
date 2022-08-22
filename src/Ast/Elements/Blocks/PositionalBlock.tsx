@@ -150,13 +150,11 @@ export function PositionalBlock(props: props) {
     return (
         <>
             {props.editorMode &&
-                <>
-                    <div
-                        ref={preview}
-                        className={`block-drag-preview ${resizing || moving ? '' : 'hidden'}`}
-                        style={previewPosition.getStyleMap()}
-                    />
-                </>
+                <div
+                    ref={preview}
+                    className={`block-drag-preview ${resizing || moving ? '' : 'hidden'}`}
+                    style={previewPosition.getStyleMap()}
+                />
             }
             <animated.div
                 ref={block}
