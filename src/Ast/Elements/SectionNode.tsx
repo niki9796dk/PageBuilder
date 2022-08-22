@@ -7,7 +7,7 @@ import _ from 'lodash';
 import {BlockNodeAst} from './Blocks/PositionalBlock';
 import './SectionNode.css';
 
-interface SectionNodeAst {
+export interface SectionNodeAst {
     type: string;
     style: any;
     blocks: Array<BlockNodeAst>;
