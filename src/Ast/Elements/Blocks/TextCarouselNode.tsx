@@ -65,9 +65,8 @@ export default function TextCarouselNode(props: BlockNodeProps<TextCarouselNodeA
     return (
         <PositionalBlock {...props}>
             <div className="node-text-carousel" style={style.getStyleMap()}>
-                <div className="static-text" style={{color: staticColor}}>
-                    {staticText} <span className="dynamic-text" style={{color: dynamicColor, borderColor: dynamicColor}}>{dynamicText[textIndex].substring(0, typedTextLength)}</span>
-                </div>
+                <span className="static-text" style={{color: staticColor}}>{staticText}</span>
+                <span className="dynamic-text" style={{color: dynamicColor, borderColor: dynamicColor}}>{dynamicText[textIndex].substring(0, typedTextLength)}</span>
             </div>
         </PositionalBlock>
     );

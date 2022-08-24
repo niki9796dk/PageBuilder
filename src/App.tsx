@@ -35,5 +35,5 @@ export default function App() {
         return <div className="page">Loading...</div>;
     }
 
-    return <DocumentNode ast={ast} editorMode={true} astUpdater={(ast: DocumentNodeAst) => updateAst({...ast})}></DocumentNode>;
+    return <DocumentNode ast={ast} editorMode={false} astUpdater={(ast: DocumentNodeAst) => updateAst({...ast})}></DocumentNode>;
 }

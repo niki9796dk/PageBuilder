@@ -1,12 +1,9 @@
-.node-text-carousel {
-    display: flex;
-}
-
-.node-text-carousel .dynamic-text span {
+.node-text-carousel .dynamic-text {
     border-width: 0;
     border-style: solid;
     border-right-width: 2px;
     animation: blink 1s infinite;
+    margin-left: 0.80rem;
 }
 
 @keyframes blink {
