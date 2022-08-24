@@ -23,7 +23,7 @@ export default function App() {
         const savedAst = localStorage.getItem('saved_ast');
 
         if (savedAst !== null) {
-            return JSON.parse(savedAst);
+            // return JSON.parse(savedAst); TODO: enable again some day
         }
 
         const response = await axios.get('/ast-example-blocks.json');

@@ -7,11 +7,13 @@ import QuoteNode from './Elements/Blocks/QuoteNode';
 import {TextNode} from './Elements/Blocks/TextNode';
 import {GridSize} from './Elements/Blocks/PositionalBlock';
 import React from 'react';
+import TextCarouselNode from './Elements/Blocks/TextCarouselNode';
 
 export class BlockFactory {
     static create(key: number, block: any, zIndex: number, editorMode: boolean, gridSize: GridSize, astUpdater: (updatedAst: any) => void): JSX.Element {
         const factories: BlockFactoryList = {
             text: TextNode,
+            textCarousel: TextCarouselNode,
             image: ImageNode,
             line: LineNode,
             code: CodeNode,

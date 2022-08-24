@@ -166,15 +166,38 @@ export class Validator {
                 },
 
                 quote: {
-                    'quote': {
+                    quote: {
                         required: true,
                         type: 'string',
                     },
-                    'author': {
+                    author: {
                         required: true,
                         type: 'string',
                     },
-                }
+                },
+
+                textCarousel: {
+                    time: {
+                        required: true,
+                        type: 'number',
+                    },
+                    staticText: {
+                        required: true,
+                        type: 'string',
+                    },
+                    staticColor: {
+                        required: true,
+                        type: 'string',
+                    },
+                    dynamicText: {
+                        required: true,
+                        type: 'array',
+                    },
+                    dynamicColor: {
+                        required: true,
+                        type: 'string',
+                    },
+                },
             },
 
             gridSettings: {

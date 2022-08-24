@@ -1,0 +1,20 @@
+.node-text-carousel {
+    display: flex;
+}
+
+.node-text-carousel .dynamic-text span {
+    border-width: 0;
+    border-style: solid;
+    border-right-width: 2px;
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+    0%, 50% {
+        border-style: hidden;
+    }
+
+    51%, 100% {
+        border-style: solid;
+    }
+}
