@@ -1,6 +1,7 @@
 import {BlockNodeAst, BlockNodeProps, PositionalBlock} from './PositionalBlock';
 import StyleMap from '../../StyleMap';
 import React, {useState} from 'react';
+import './ImageNode.css';
 
 interface ImageNodeAst extends BlockNodeAst {
     src: string;
@@ -22,4 +23,19 @@ export default function ImageNode(props: BlockNodeProps<ImageNodeAst>) {
             />
         </PositionalBlock>
     );
+}
+
+export function defaultImageNodeAst(): ImageNodeAst {
+    return {
+        'type': 'block',
+        'subType': 'image',
+        'src': '/public/DefaultImage.jpg',
+        'alt': '',
+        'position': {
+            'height': 9,
+            'width': 8,
+            'left': 0,
+            'top': 0
+        }
+    };
 }

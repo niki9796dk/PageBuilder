@@ -36,3 +36,17 @@ export default function CodeNode(props: BlockNodeProps<CodeNodeAst>) {
         </PositionalBlock>
     );
 }
+
+export function defaultCodeNodeAst(): CodeNodeAst {
+    return {
+        'type': 'block',
+        'subType': 'code',
+        'value': 'console.log(\'Hello World!\');',
+        'position': {
+            'height': 3,
+            'width': 5,
+            'left': 0,
+            'top': 0
+        }
+    };
+}

@@ -14,7 +14,11 @@ export interface DocumentNodeAst {
     style: any;
 }
 
-export default function DocumentNode(props: AstNode<DocumentNodeAst>) {
+interface Props extends AstNode<DocumentNodeAst>{
+    style?: any;
+}
+
+export default function DocumentNode(props: Props) {
     const style = new StyleMap(props.ast.style);
 
     const updateSectionAst = (key: number, updatedAst: any) => {
@@ -34,9 +38,13 @@ export default function DocumentNode(props: AstNode<DocumentNodeAst>) {
         });
     };
 
-    return <div
-        className="node-document"
-        style={style.getStyleMap()}
-        children={renderSections()}
-    />;
+    return (
+        <div style={props.style ?? {}}>
+            <div
+                className="node-document"
+                style={style.getStyleMap()}
+                children={renderSections()}
+            />
+        </div>
+    );
 }

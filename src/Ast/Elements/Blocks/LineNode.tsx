@@ -21,3 +21,16 @@ export default function LineNode(props: BlockNodeProps<LineNodeAst>) {
         </PositionalBlock>
     );
 }
+
+export function defaultLineNodeAst(): LineNodeAst {
+    return {
+        'type': 'block',
+        'subType': 'line',
+        'position': {
+            'height': 2,
+            'width': 4,
+            'left': 0,
+            'top': 0
+        }
+    };
+}

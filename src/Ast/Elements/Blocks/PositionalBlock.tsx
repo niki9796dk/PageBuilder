@@ -19,7 +19,7 @@ export interface BlockNodeAst {
     type: string;
     subType: string;
     position: Position;
-    style: any;
+    style?: any;
 }
 
 export interface GridSize {

@@ -1,0 +1,51 @@
+
+.editor {
+    background-color: #eff0f3;
+    border-color: black;
+    border-style: solid;
+    border-width: 0 2px 0 0;
+    padding: 0.5rem;
+}
+
+.editor .element-group-title {
+    font-size: 1.25em;
+}
+
+.editor .element-group:not(:last-child) {
+    margin-bottom: 2em;
+}
+
+.editor .element-group-items {
+    border-color: black;
+    border-style: solid;
+    border-width: 0;
+    border-top-width: 1px;
+    padding: 1em 0.2em 0.2em 0.2em;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+
+    display: grid;
+    justify-content: center;
+    align-content: center;
+    gap: 0.30em;
+}
+
+.editor .element-group-items .element-item {
+    border: black solid 1px;
+    border-radius: 2px;
+    padding: 0.1em;
+    box-sizing: border-box;
+    height: 50px;
+    text-align: center;
+
+    display: grid;
+    grid-auto-flow: column;
+    gap: 4px;
+    align-items: center;
+    justify-items: center;
+}
+
+.editor .element-group-items .element-item:hover {
+    background-color: #e2e3ea;
+    cursor: pointer;
+    user-select: none;
+}

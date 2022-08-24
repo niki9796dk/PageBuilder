@@ -71,3 +71,24 @@ export default function TextCarouselNode(props: BlockNodeProps<TextCarouselNodeA
         </PositionalBlock>
     );
 }
+
+export function defaultTextCarouselNodeAst(): TextCarouselNodeAst {
+    return {
+        'type': 'block',
+        'subType': 'textCarousel',
+        'staticText': 'I\'m a',
+        'staticColor': 'black',
+        'dynamicColor': 'green',
+        'dynamicText': ['Youtuber', 'Designer', 'Developer', 'Freelancer'],
+        'time': 150,
+        'style': {
+            'font-size': '2em'
+        },
+        'position': {
+            'height': 2,
+            'width': 7,
+            'left': 0,
+            'top': 0
+        }
+    };
+}

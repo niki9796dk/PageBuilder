@@ -26,3 +26,18 @@ export default function QuoteNode(props: BlockNodeProps<QuoteNodeAst>) {
         </PositionalBlock>
     );
 }
+
+export function defaultQuoteNodeAst(): QuoteNodeAst {
+    return {
+        'type': 'block',
+        'subType': 'quote',
+        'quote': 'We cannot solve our problems with the same thinking we used when we created them.',
+        'author': 'Albert Einstein',
+        'position': {
+            'height': 3,
+            'width': 10,
+            'left': 0,
+            'top': 0
+        }
+    };
+}

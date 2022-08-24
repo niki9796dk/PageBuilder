@@ -5,7 +5,7 @@ import StyleMap from '../../StyleMap';
 import {PositionalBlock} from './PositionalBlock';
 import React from 'react';
 
-interface TextNodeAst extends BlockNodeAst {
+export interface TextNodeAst extends BlockNodeAst {
     value: string;
 }
 
@@ -23,4 +23,18 @@ export function TextNode(props: BlockNodeProps<TextNodeAst>) {
             />
         </PositionalBlock>
     );
+}
+
+export function defaultTextNodeAst(): TextNodeAst {
+    return {
+        'type': 'block',
+        'subType': 'text',
+        'value': 'Inspire your audience',
+        'position': {
+            'height': 1,
+            'width': 4,
+            'left': 0,
+            'top': 0
+        }
+    };
 }
