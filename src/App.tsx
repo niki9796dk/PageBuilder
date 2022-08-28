@@ -50,11 +50,8 @@ export default function App() {
                 <Editor
                     ast={ast}
                     astUpdater={(ast: DocumentNodeAst) => updateAst({...ast})}
-                    style={{
-                        width: '350px',
-                        float: 'left',
-                        height: '100%',
-                    }}
+                    className="fixed top-0 left-0 h-screen"
+                    style={{width: '350px'}}
                 />
             }
 
@@ -63,8 +60,10 @@ export default function App() {
                 editorMode={editorMode}
                 astUpdater={(ast: DocumentNodeAst) => updateAst({...ast})}
                 style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: editorMode ? '350px' : '0',
                     width: editorMode ? 'calc(100% - 350px)' : '100%',
-                    float: 'left',
                     height: '100%',
                 }}
             />
@@ -72,7 +71,7 @@ export default function App() {
             {/* TODO: Remove in the future - Only for development*/}
             <button
                 style={{
-                    position: 'absolute',
+                    position: 'fixed',
                     bottom: '1em',
                     left: '1em',
                     backgroundColor: editorMode ? 'lightblue' : 'gray',

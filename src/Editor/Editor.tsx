@@ -19,6 +19,7 @@ interface Props {
     style?: any,
     ast: DocumentNodeAst;
     astUpdater: (updatedAst: DocumentNodeAst) => void;
+    className?: string;
 }
 
 export default function Editor(props: Props) {
@@ -134,7 +135,7 @@ export default function Editor(props: Props) {
     return (
         <>
             {newBlock}
-            <div className="editor" style={props.style ?? {}}>
+            <div className={"editor " + props.className ?? ""} style={props.style ?? {}}>
                 <div className="element-group">
                     <div className="element-group-title">Textual</div>
                     <div className="element-group-items">
