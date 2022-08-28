@@ -3,7 +3,12 @@ import DocumentNode, {DocumentNodeAst} from './Ast/Elements/DocumentNode';
 import {Validator} from './Ast/Validator';
 import axios from 'axios';
 import './App.css';
-import Editor from './Editor';
+import Editor from './Editor/Editor';
+import '@fortawesome/fontawesome-free/css/fontawesome.min.css';
+import '@fortawesome/fontawesome-free/css/brands.min.css';
+import '@fortawesome/fontawesome-free/css/regular.min.css';
+import '@fortawesome/fontawesome-free/css/solid.min.css';
+import '@fortawesome/fontawesome-free/css/v4-shims.min.css';
 
 export default function App() {
     const [ast, setAst] = useState<DocumentNodeAst | null>(null);
@@ -34,18 +39,22 @@ export default function App() {
         return response.data;
     };
 
-    if (! ast) {
+    if (!ast) {
         return <div className="page">Loading...</div>;
     }
 
     return (
-        <div style={{height: '100%'}}>
+        <div className="h-full">
 
             {editorMode &&
                 <Editor
                     ast={ast}
                     astUpdater={(ast: DocumentNodeAst) => updateAst({...ast})}
-                    style={{width: '500px', float: 'left', height: '100%'}}
+                    style={{
+                        width: '350px',
+                        float: 'left',
+                        height: '100%',
+                    }}
                 />
             }
 
@@ -54,7 +63,7 @@ export default function App() {
                 editorMode={editorMode}
                 astUpdater={(ast: DocumentNodeAst) => updateAst({...ast})}
                 style={{
-                    width: editorMode ? 'calc(100% - 500px)' : '100%',
+                    width: editorMode ? 'calc(100% - 350px)' : '100%',
                     float: 'left',
                     height: '100%',
                 }}
@@ -62,8 +71,16 @@ export default function App() {
 
             {/* TODO: Remove in the future - Only for development*/}
             <button
-                style={{position: 'absolute', bottom: '1em', left: '1em', backgroundColor: editorMode ? 'lightblue' : 'gray', padding: '5px', borderRadius: '5px', cursor: 'pointer'}}
-                onClick={() => setEditorMode(! editorMode)}
+                style={{
+                    position: 'absolute',
+                    bottom: '1em',
+                    left: '1em',
+                    backgroundColor: editorMode ? 'lightblue' : 'gray',
+                    padding: '5px',
+                    borderRadius: '5px',
+                    cursor: 'pointer'
+                }}
+                onClick={() => setEditorMode(!editorMode)}
             >
                 Editor Mode
             </button>

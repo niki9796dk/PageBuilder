@@ -44,7 +44,7 @@ export function defaultCodeNodeAst(): CodeNodeAst {
         'value': 'console.log(\'Hello World!\');',
         'position': {
             'height': 3,
-            'width': 5,
+            'width': 7,
             'left': 0,
             'top': 0
         }
