@@ -4,7 +4,7 @@ import BlockPosition from './BlockPosition';
 import {ReactElement, useEffect, useRef, useState} from 'react';
 import './PositionalBlock.css';
 import {DragState, SharedGestureState} from '@use-gesture/core/src/types/state';
-import {clamp, round} from 'lodash';
+import {ceil, clamp, round} from 'lodash';
 import {AstNode} from '../../../types';
 import React from 'react';
 
@@ -41,6 +41,7 @@ export function PositionalBlock(props: Props) {
     const [moving, setMoving] = useState(false);
     const [resizing, setResizing] = useState(false);
     const preview = useRef<HTMLDivElement | null>(null);
+    const childWrapper = useRef<HTMLDivElement | null>(null);
     const resizer = useRef<HTMLDivElement | null>(null);
     const block = useRef<HTMLDivElement | null>(null);
     const [position, setPosition] = useState(new BlockPosition(props.ast.position));
@@ -126,10 +127,12 @@ export function PositionalBlock(props: Props) {
         const moveX = round(delta[0] / props.gridSize.cellWidth);
         const moveY = round(delta[1] / props.gridSize.cellHeight);
 
+        const contentHeight = ceil((childWrapper.current?.clientHeight ?? 0) / props.gridSize.cellHeight)
+
         return new BlockPosition({
             ...position,
             width: clamp(position.width + moveX, 2, 24 - position.left),
-            height: Math.max(0, position.height + moveY)
+            height: Math.max(0, position.height + moveY, contentHeight),
         });
     };
 
@@ -169,7 +172,9 @@ export function PositionalBlock(props: Props) {
                 {...bind()}
             >
                 <div className="resizer" ref={resizer}/>
-                {props.children}
+                <div ref={childWrapper}>
+                    {props.children}
+                </div>
             </animated.div>
         </>
     );
