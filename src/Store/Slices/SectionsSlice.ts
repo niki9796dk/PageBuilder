@@ -1,6 +1,6 @@
 import {createSlice, Draft, PayloadAction} from '@reduxjs/toolkit';
 
-interface Section {
+export interface Section {
     index: number,
     left: number;
     top: number;

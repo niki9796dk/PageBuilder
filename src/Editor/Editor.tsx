@@ -13,6 +13,7 @@ import MouseTracker, {TrackedPosition} from './MouseTracker';
 import {useAppSelector} from '../Store/hooks';
 import {round} from 'lodash';
 import {BlockFactory} from '../Ast/BlockFactory';
+import {Section} from "../Store/Slices/SectionsSlice";
 
 interface Props {
     style?: any,
@@ -31,8 +32,7 @@ export default function Editor(props: Props) {
         cellHeight: 25,
     };
 
-    const spawnBlock = (nodeSpawner: () => BlockNodeAst, event: React.MouseEvent) => {
-        const nodeToSpawn = nodeSpawner();
+    const spawnBlock = (nodeToSpawn: BlockNodeAst, event: React.MouseEvent) => {
         setNodeToSpawn(nodeToSpawn);
 
         const width = nodeToSpawn.position.width * gridSize.cellWidth;
@@ -76,24 +76,58 @@ export default function Editor(props: Props) {
             return;
         }
 
-        // TODO: Make this more dynamic, and dont hardcode grid size locally like this...
-        const elementPos = trackedPosition;
-        const sectionPos = sections[0];
+        function findRelevantSection(): Section|null {
+            if (! trackedPosition) {
+                return null;
+            }
 
-        const top = round(Math.max((elementPos.top - sectionPos.top) / gridSize.cellHeight, 0));
-        const left = round(Math.max((elementPos.left - sectionPos.left) / gridSize.cellWidth, 0));
+            let relevantSection : Section|null = null;
+            let minDistance = Number.MAX_VALUE;
+
+            for (const [key, section] of Object.entries(sections)) {
+                let distance = trackedPosition.top - section.top;
+
+                console.log(section, distance);
+
+                // We do not care about negative distances
+                // since this means our element is released above this section
+                if (distance < -gridSize.cellHeight) {
+                    continue;
+                }
+
+                distance = Math.abs(distance);
+
+                // If this section is closer to our drop point,
+                // then remember this section for later return
+                if (distance < minDistance) {
+                    console.log(key);
+                    relevantSection = section;
+                }
+            }
+
+            return relevantSection;
+        }
+
+        const section = findRelevantSection();
+
+        // Do nothing if no section is located
+        if (section == null) {
+            return;
+        }
+
+        const top = round(Math.max((trackedPosition.top - section.top) / gridSize.cellHeight, 0));
+        const left = round(Math.max((trackedPosition.left - section.left) / gridSize.cellWidth, 0));
 
         // If outside of grid then do nothing
         if (
-            elementPos.top < sectionPos.top ||
-            elementPos.left < sectionPos.left ||
+            trackedPosition.left < section.left ||
             left > 23
         ) {
             return;
         }
 
         nodeToSpawn.position = {...nodeToSpawn.position, left, top};
-        props.ast.sections[0].blocks.push(nodeToSpawn);
+        props.ast.sections[section.index].blocks.push(nodeToSpawn);
         props.astUpdater(props.ast);
     };
 
@@ -104,19 +138,19 @@ export default function Editor(props: Props) {
                 <div className="element-group">
                     <div className="element-group-title">Textual</div>
                     <div className="element-group-items">
-                        <EditorItem onMouseDown={(event) => spawnBlock(defaultTextNodeAst, event)}>
+                        <EditorItem onMouseDown={(event) => spawnBlock(defaultTextNodeAst(), event)}>
                             <i className="fa-solid fa-font icon"/>
                             <span className="icon-text">Text</span>
                         </EditorItem>
-                        <EditorItem onMouseDown={(event) => spawnBlock(defaultQuoteNodeAst, event)}>
+                        <EditorItem onMouseDown={(event) => spawnBlock(defaultQuoteNodeAst(), event)}>
                             <i className="fa-solid fa-quote-left icon"/>
                             <span className="icon-text">Quote</span>
                         </EditorItem>
-                        <EditorItem onMouseDown={(event) => spawnBlock(defaultCodeNodeAst, event)}>
+                        <EditorItem onMouseDown={(event) => spawnBlock(defaultCodeNodeAst(), event)}>
                             <i className="fa-solid fa-code icon"/>
                             <span className="icon-text">Code</span>
                         </EditorItem>
-                        <EditorItem onMouseDown={(event) => spawnBlock(defaultTextCarouselNodeAst, event)}>
+                        <EditorItem onMouseDown={(event) => spawnBlock(defaultTextCarouselNodeAst(), event)}>
                             <i className="fa-regular fa-keyboard icon"/>
                             <span className="icon-text">Text Carousel</span>
                         </EditorItem>
@@ -126,11 +160,11 @@ export default function Editor(props: Props) {
                 <div className="element-group">
                     <div className="element-group-title">Graphical</div>
                     <div className="element-group-items">
-                        <EditorItem onMouseDown={(event) => spawnBlock(defaultImageNodeAst, event)}>
+                        <EditorItem onMouseDown={(event) => spawnBlock(defaultImageNodeAst(), event)}>
                             <i className="fa-regular fa-image icon"/>
                             <span className="icon-text">Image</span>
                         </EditorItem>
-                        <EditorItem onMouseDown={(event) => spawnBlock(defaultLineNodeAst, event)}>
+                        <EditorItem onMouseDown={(event) => spawnBlock(defaultLineNodeAst(), event)}>
                             <i className="fa-regular fa-window-minimize icon" style={{position: 'relative', top: '-33%'}}/>
                             <span className="icon-text">Line</span>
                         </EditorItem>

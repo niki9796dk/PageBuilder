@@ -132,7 +132,7 @@ export function PositionalBlock(props: Props) {
         const moveX = round(delta[0] / props.gridSize.cellWidth);
         const moveY = round(delta[1] / props.gridSize.cellHeight);
 
-        const contentHeight = ceil((childWrapper.current?.clientHeight ?? 0) / props.gridSize.cellHeight);
+        const contentHeight = ceil((childWrapper.current?.children[0]?.clientHeight ?? 0) / props.gridSize.cellHeight);
 
         return new BlockPosition({
             ...position,
