@@ -16,7 +16,7 @@ export default function LineNode(props: BlockNodeProps<LineNodeAst>) {
     return (
         <PositionalBlock {...props}>
             <div className="node-line" style={style.getStyleMap()}>
-                <hr style={{backgroundColor: color ?? 'black'}}/>
+                <hr style={{borderColor: color ?? 'black'}}/>
             </div>
         </PositionalBlock>
     );

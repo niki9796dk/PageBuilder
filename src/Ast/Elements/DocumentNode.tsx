@@ -1,6 +1,5 @@
 import {SectionNode, SectionNodeAst} from './SectionNode';
 import StyleMap from '../StyleMap';
-import './../Styles/reset.css';
 import './../Styles/obsidian.css';
 import React from 'react';
 import {AstNode} from '../../types';

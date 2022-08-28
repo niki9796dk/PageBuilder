@@ -1,12 +1,11 @@
 .node-line {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
+    @apply h-full;
+    @apply flex;
+    @apply flex-col;
 }
 
 .node-line > hr {
+    @apply w-full;
+    @apply my-auto;
     height: 1px;
-    width: 100%;
-    margin-top: auto;
-    margin-bottom: auto;
 }

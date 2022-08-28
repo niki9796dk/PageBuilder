@@ -119,7 +119,7 @@
                     "dynamicText": ["Youtuber", "Designer", "Developer", "Freelancer"],
                     "time": 150,
                     "style": {
-                        "font-size": "3em"
+                        "font-size": "2em"
                     },
                     "position": {
                         "height": 2,

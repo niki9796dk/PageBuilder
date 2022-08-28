@@ -1,7 +1,7 @@
 .node-text-carousel .dynamic-text {
-    border-width: 0;
-    border-style: solid;
-    border-right-width: 2px;
+    @apply border-0;
+    @apply border-solid;
+    @apply border-r-2;
     animation: blink 1s infinite;
     margin-left: 0.80rem;
 }

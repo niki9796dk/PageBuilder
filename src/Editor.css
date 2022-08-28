@@ -1,10 +1,10 @@
 
 .editor {
-    background-color: #eff0f3;
-    border-color: black;
-    border-style: solid;
-    border-width: 0 2px 0 0;
-    padding: 0.5rem;
+    @apply bg-gray-100;
+    @apply border-black;
+    @apply border-solid;
+    @apply border-r-2;
+    @apply p-2;
 }
 
 .editor .element-group-title {
@@ -12,40 +12,39 @@
 }
 
 .editor .element-group:not(:last-child) {
-    margin-bottom: 2em;
+    @apply mb-4;
 }
 
 .editor .element-group-items {
-    border-color: black;
-    border-style: solid;
-    border-width: 0;
-    border-top-width: 1px;
-    padding: 1em 0.2em 0.2em 0.2em;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-
-    display: grid;
-    justify-content: center;
-    align-content: center;
-    gap: 0.30em;
+    @apply border-black;
+    @apply border-solid;
+    @apply border-0;
+    @apply border-t;
+    @apply p-1;
+    @apply pt-4;
+    @apply grid;
+    @apply grid-cols-4;
+    @apply justify-center;
+    @apply gap-2;
 }
 
 .editor .element-group-items .element-item {
-    border: black solid 1px;
-    border-radius: 2px;
-    padding: 0.1em;
-    box-sizing: border-box;
-    height: 50px;
-    text-align: center;
-
-    display: grid;
-    grid-auto-flow: column;
-    gap: 4px;
-    align-items: center;
-    justify-items: center;
+    @apply border-black;
+    @apply border-solid;
+    @apply border;
+    @apply rounded;
+    @apply p-0.5;
+    @apply box-border;
+    @apply h-12;
+    @apply grid;
+    @apply grid-flow-col;
+    @apply gap-2;
+    @apply justify-center;
+    @apply content-center;
 }
 
 .editor .element-group-items .element-item:hover {
-    background-color: #e2e3ea;
-    cursor: pointer;
-    user-select: none;
+    @apply cursor-pointer;
+    @apply select-none;
+    @apply bg-gray-200;
 }

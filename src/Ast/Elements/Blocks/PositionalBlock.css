@@ -1,6 +1,6 @@
 .positional-block {
-    touch-action: none;
-    position: relative;
+    @apply touch-none;
+    @apply relative;
 }
 
 .block-drag-preview {
@@ -9,8 +9,10 @@
 
 .positional-block.editorMode:hover {
     background-color: rgba(128, 128, 128, 0.25);
-    outline: black dashed 1px;
-    cursor: move;
+    @apply outline-1;
+    @apply outline-dashed;
+    @apply outline-black;
+    @apply cursor-move;
 }
 
 .hidden {
@@ -18,13 +20,8 @@
 }
 
 .noSelect {
-    -webkit-touch-callout: none; /* iOS Safari */
-    -webkit-user-select: none; /* Safari */
-    -khtml-user-select: none; /* Konqueror HTML */
-    -moz-user-select: none; /* Old versions of Firefox */
-    -ms-user-select: none; /* Internet Explorer/Edge */
-    user-select: none; /* Non-prefixed version, currently  supported by Chrome, Edge, Opera and Firefox */
-    pointer-events: none;
+    @apply select-none;
+    @apply pointer-events-none;
 }
 
 .resizer {
@@ -33,12 +30,12 @@
 
 .positional-block.editorMode:hover .resizer,
 .resizer:hover  {
-    position: absolute;
-    bottom: -10px;
-    right: -10px;
-    width: 20px;
-    height: 20px;
-    background-color: #0097df;
-    cursor: nwse-resize;
-    touch-action: none;
+    @apply absolute;
+    @apply w-4;
+    @apply h-4;
+    @apply -bottom-2;
+    @apply -right-2;
+    @apply bg-sky-500;
+    @apply cursor-nesw-resize;
+    @apply touch-none;
 }
