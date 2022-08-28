@@ -177,7 +177,7 @@ export function PositionalBlock(props: Props) {
                 {...bind()}
             >
                 <div className="resizer" ref={resizer}/>
-                <div ref={childWrapper}>
+                <div ref={childWrapper} className="w-full h-full">
                     {props.children}
                 </div>
             </animated.div>
