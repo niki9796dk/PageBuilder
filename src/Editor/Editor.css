@@ -30,6 +30,7 @@
 .editor .element-group-items .element-item {
     position: relative;
     box-shadow: rgba(98, 70, 234, 0.4) 0px 0px 0px 2px, rgba(98, 70, 234, 0.65) 0px 4px 6px -2px;
+    @apply select-none;
 }
 
 .editor .element-group-items .element-item .icon {

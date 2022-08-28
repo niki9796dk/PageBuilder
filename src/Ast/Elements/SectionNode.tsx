@@ -1,23 +1,48 @@
 import {BlockFactory} from '../BlockFactory';
 import StyleMap from '../StyleMap';
-import GridNode from '../ElementProperties/GridNode';
-import React, {useEffect, useRef, useState} from 'react';
+import GridNode, {GridNodeAst} from '../ElementProperties/GridNode';
+import React, {createRef, useEffect, useState} from 'react';
 import {AstNode} from '../../types';
 import _ from 'lodash';
 import {BlockNodeAst} from './Blocks/PositionalBlock';
 import './SectionNode.css';
+import {getOffset, Offset} from '../../helpers';
 
 export interface SectionNodeAst {
     type: string;
     style: any;
     blocks: Array<BlockNodeAst>;
-    grid: any;
+    grid: GridNodeAst;
 }
 
-export function SectionNode(props: AstNode<SectionNodeAst>) {
-    const grid = useRef<GridNode | null>(null);
+interface Props extends AstNode<SectionNodeAst>{
+    onGridMove?: (position : Offset) => void;
+    onDestruct?: () => void;
+}
+
+export function SectionNode(props: Props) {
+    const grid = createRef<HTMLDivElement>();
     const style = new StyleMap(props.ast.style);
     const [sectionHeight, setSectionHeight] = useState(-1);
+
+    useEffect(() => {
+        // Always trigger the onGridMove on mount or changes to the grid
+        triggerOnGridMove();
+
+        // Then afterward on every window resize event
+        window.addEventListener('resize', triggerOnGridMove);
+
+        return () => window.removeEventListener('resize', triggerOnGridMove);
+    }, [grid]);
+
+    const triggerOnGridMove = () => {
+        if (grid.current === null || props.onGridMove === undefined) {
+            return;
+        }
+
+        // Trigger the callback
+        props.onGridMove(getOffset(grid.current));
+    };
 
     useEffect(() => {
         if (sectionHeight == -1) {

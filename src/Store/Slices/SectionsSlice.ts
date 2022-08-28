@@ -1,5 +1,4 @@
-import {createSlice, Draft, PayloadAction} from "@reduxjs/toolkit";
-import {keys} from "lodash";
+import {createSlice, Draft, PayloadAction} from '@reduxjs/toolkit';
 
 interface Section {
     index: number,
@@ -17,7 +16,7 @@ export const SectionsSlice = createSlice({
     name: 'sections',
     initialState: {
         sections: {},
-    },
+    } as SectionsState,
     reducers: {
         // Registers a section into the store.
         registerSection: (state : Draft<SectionsState>, action : PayloadAction<Section>) => {

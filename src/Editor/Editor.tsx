@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {ReactElement, useEffect, useState} from 'react';
 import './Editor.css';
 import {DocumentNodeAst} from '../Ast/Elements/DocumentNode';
 import {defaultTextNodeAst} from '../Ast/Elements/Blocks/TextNode';
@@ -8,7 +8,11 @@ import {defaultQuoteNodeAst} from '../Ast/Elements/Blocks/QuoteNode';
 import {defaultLineNodeAst} from '../Ast/Elements/Blocks/LineNode';
 import {defaultCodeNodeAst} from '../Ast/Elements/Blocks/CodeNode';
 import {defaultTextCarouselNodeAst} from '../Ast/Elements/Blocks/TextCarouselNode';
-import EditorItem from "./EditorItem";
+import EditorItem from './EditorItem';
+import MouseTracker, {TrackedPosition} from './MouseTracker';
+import {useAppSelector} from '../Store/hooks';
+import {round} from 'lodash';
+import {BlockFactory} from '../Ast/BlockFactory';
 
 interface Props {
     style?: any,
@@ -17,49 +21,122 @@ interface Props {
 }
 
 export default function Editor(props: Props) {
-    const spawnBlock = (nodeSpawner: () => BlockNodeAst) => {
-        // TODO: Figure out how to update other sections
-        props.ast.sections[0].blocks.push(nodeSpawner());
+    const [newBlock, setNewBlock] = useState<ReactElement | null>(null);
+    const [trackedPosition, setTrackedPosition] = useState<TrackedPosition | null>(null);
+    const {sections} = useAppSelector(state => state.sections);
+    const [nodeToSpawn, setNodeToSpawn] = useState<BlockNodeAst>();
+    // TODO: Do not hardcode grid size locally like this...
+    const gridSize = {
+        cellWidth: 1200 / 24,
+        cellHeight: 25,
+    };
+
+    const spawnBlock = (nodeSpawner: () => BlockNodeAst, event: React.MouseEvent) => {
+        const nodeToSpawn = nodeSpawner();
+        setNodeToSpawn(nodeToSpawn);
+
+        const width = nodeToSpawn.position.width * gridSize.cellWidth;
+        const height = nodeToSpawn.position.height * gridSize.cellHeight;
+
+        setNewBlock(
+            <MouseTracker spawnEvent={event} onMove={(position) => setTrackedPosition(position)}>
+                <div style={{marginTop: `-${height/2}px`, marginLeft: `-${width/2}px`}}>
+                    <div
+                        children={BlockFactory.create(0, nodeToSpawn, 99, true, gridSize, () => {return;})}
+                        className="opacity-75"
+                        style={{
+                            width: `${width}px`,
+                            height: `${height}px`,
+                        }}
+                    />
+                </div>
+            </MouseTracker>
+        );
+    };
+
+    useEffect(() => {
+        if (newBlock !== null) {
+            // Mount
+            document.addEventListener('dragend', despawnBlock);
+            document.addEventListener('mouseup', despawnBlock);
+
+            // Unmount
+            return () => {
+                document.removeEventListener('dragend', despawnBlock);
+                document.removeEventListener('mouseup', despawnBlock);
+            };
+        }
+    }, [sections, trackedPosition, newBlock]);
+
+    const despawnBlock = () => {
+        setNewBlock(null);
+        setTrackedPosition(null);
+
+        if (! trackedPosition || ! nodeToSpawn) {
+            return;
+        }
+
+        // TODO: Make this more dynamic, and dont hardcode grid size locally like this...
+        const elementPos = trackedPosition;
+        const sectionPos = sections[0];
+
+        const top = round(Math.max((elementPos.top - sectionPos.top) / gridSize.cellHeight, 0));
+        const left = round(Math.max((elementPos.left - sectionPos.left) / gridSize.cellWidth, 0));
+
+        // If outside of grid then do nothing
+        if (
+            elementPos.top < sectionPos.top ||
+            elementPos.left < sectionPos.left ||
+            left > 23
+        ) {
+            return;
+        }
+
+        nodeToSpawn.position = {...nodeToSpawn.position, left, top};
+        props.ast.sections[0].blocks.push(nodeToSpawn);
         props.astUpdater(props.ast);
     };
 
     return (
-        <div className="editor" style={props.style ?? {}}>
-            <div className="element-group">
-                <div className="element-group-title">Textual</div>
-                <div className="element-group-items">
-                    <EditorItem onClick={() => spawnBlock(defaultTextNodeAst)}>
-                        <i className="fa-solid fa-font icon"/>
-                        <span className="icon-text">Text</span>
-                    </EditorItem>
-                    <EditorItem onClick={() => spawnBlock(defaultQuoteNodeAst)}>
-                        <i className="fa-solid fa-quote-left icon"/>
-                        <span className="icon-text">Quote</span>
-                    </EditorItem>
-                    <EditorItem onClick={() => spawnBlock(defaultCodeNodeAst)}>
-                        <i className="fa-solid fa-code icon"/>
-                        <span className="icon-text">Code</span>
-                    </EditorItem>
-                    <EditorItem onClick={() => spawnBlock(defaultTextCarouselNodeAst)}>
-                        <i className="fa-regular fa-keyboard icon"/>
-                        <span className="icon-text">Text Carousel</span>
-                    </EditorItem>
+        <>
+            {newBlock}
+            <div className="editor" style={props.style ?? {}}>
+                <div className="element-group">
+                    <div className="element-group-title">Textual</div>
+                    <div className="element-group-items">
+                        <EditorItem onMouseDown={(event) => spawnBlock(defaultTextNodeAst, event)}>
+                            <i className="fa-solid fa-font icon"/>
+                            <span className="icon-text">Text</span>
+                        </EditorItem>
+                        <EditorItem onMouseDown={(event) => spawnBlock(defaultQuoteNodeAst, event)}>
+                            <i className="fa-solid fa-quote-left icon"/>
+                            <span className="icon-text">Quote</span>
+                        </EditorItem>
+                        <EditorItem onMouseDown={(event) => spawnBlock(defaultCodeNodeAst, event)}>
+                            <i className="fa-solid fa-code icon"/>
+                            <span className="icon-text">Code</span>
+                        </EditorItem>
+                        <EditorItem onMouseDown={(event) => spawnBlock(defaultTextCarouselNodeAst, event)}>
+                            <i className="fa-regular fa-keyboard icon"/>
+                            <span className="icon-text">Text Carousel</span>
+                        </EditorItem>
+                    </div>
                 </div>
-            </div>
 
-            <div className="element-group">
-                <div className="element-group-title">Graphical</div>
-                <div className="element-group-items">
-                    <EditorItem onClick={() => spawnBlock(defaultImageNodeAst)}>
-                        <i className="fa-regular fa-image icon"/>
-                        <span className="icon-text">Image</span>
-                    </EditorItem>
-                    <EditorItem onClick={() => spawnBlock(defaultLineNodeAst)}>
-                        <i className="fa-regular fa-window-minimize icon" style={{position: 'relative', top: '-33%'}}/>
-                        <span className="icon-text">Line</span>
-                    </EditorItem>
+                <div className="element-group">
+                    <div className="element-group-title">Graphical</div>
+                    <div className="element-group-items">
+                        <EditorItem onMouseDown={(event) => spawnBlock(defaultImageNodeAst, event)}>
+                            <i className="fa-regular fa-image icon"/>
+                            <span className="icon-text">Image</span>
+                        </EditorItem>
+                        <EditorItem onMouseDown={(event) => spawnBlock(defaultLineNodeAst, event)}>
+                            <i className="fa-regular fa-window-minimize icon" style={{position: 'relative', top: '-33%'}}/>
+                            <span className="icon-text">Line</span>
+                        </EditorItem>
+                    </div>
                 </div>
             </div>
-        </div>
+        </>
     );
 }

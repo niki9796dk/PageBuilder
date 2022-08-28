@@ -5,6 +5,8 @@ import React from 'react';
 import {AstNode} from '../../types';
 import _ from 'lodash';
 import './DocumentNode.css';
+import {useAppDispatch} from '../../Store/hooks';
+import {registerSection} from '../../Store/Slices/SectionsSlice';
 
 export interface DocumentNodeAst {
     type: string;
@@ -19,6 +21,7 @@ interface Props extends AstNode<DocumentNodeAst>{
 
 export default function DocumentNode(props: Props) {
     const style = new StyleMap(props.ast.style);
+    const dispatch = useAppDispatch();
 
     const updateSectionAst = (key: number, updatedAst: any) => {
         props.ast.sections[key] = updatedAst;
@@ -33,6 +36,7 @@ export default function DocumentNode(props: Props) {
                 ast={section}
                 editorMode={props.editorMode}
                 astUpdater={(updatedAst) => updateSectionAst(key, updatedAst)}
+                onGridMove={(position) => dispatch(registerSection({index: key, ...position}))}
             />;
         });
     };
