@@ -50,6 +50,11 @@ export function PositionalBlock(props: Props) {
     useEffect(() => {
         props.ast.position = position;
         props.astUpdater(props.ast);
+
+        // Make sure that the child element cannot be taller than the actual block
+        if ((childWrapper.current?.clientHeight ?? 0) > (block.current?.clientHeight ?? 0)) {
+            setPosition(new BlockPosition({...position, height: position.height + 1}));
+        }
     }, [position]);
 
     const bind = useDrag(async (state) => {
