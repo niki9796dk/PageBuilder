@@ -10,7 +10,7 @@ import React from 'react';
 import TextCarouselNode from './Elements/Blocks/TextCarouselNode';
 
 export class BlockFactory {
-    static create(key: number, block: any, zIndex: number, editorMode: boolean, gridSize: GridSize, astUpdater: (updatedAst: any) => void): JSX.Element {
+    static create(block: any, zIndex: number, editorMode: boolean, gridSize: GridSize, astUpdater: (updatedAst: any) => void): JSX.Element {
         const factories: BlockFactoryList = {
             text: TextNode,
             textCarousel: TextCarouselNode,
@@ -25,7 +25,7 @@ export class BlockFactory {
         assert(BlockSubType !== undefined, `No block factory found for [${block.type}]`);
 
         return <BlockSubType
-            key={key}
+            key={block.id}
             ast={block}
             editorMode={editorMode}
             zIndex={zIndex}

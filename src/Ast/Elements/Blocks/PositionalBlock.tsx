@@ -16,6 +16,7 @@ export interface Position {
 }
 
 export interface BlockNodeAst {
+    id: string;
     type: string;
     subType: string;
     position: Position;
@@ -44,6 +45,7 @@ export function PositionalBlock(props: Props) {
     const childWrapper = useRef<HTMLDivElement | null>(null);
     const resizer = useRef<HTMLDivElement | null>(null);
     const block = useRef<HTMLDivElement | null>(null);
+    const quickEditor = useRef<HTMLDivElement | null>(null);
     const [position, setPosition] = useState(new BlockPosition(props.ast.position));
     const [previewPosition, setPreviewPosition] = useState(new BlockPosition(props.ast.position));
 
@@ -58,7 +60,7 @@ export function PositionalBlock(props: Props) {
     }, [position]);
 
     const bind = useDrag(async (state) => {
-        if (! props.editorMode) {
+        if (! props.editorMode || quickEditor.current?.contains(state.event.target as Element)) {
             return;
         }
 
@@ -153,22 +155,26 @@ export function PositionalBlock(props: Props) {
         return {};
     };
 
+    const handleDelete = () => {
+        props.astUpdater(null);
+    };
+
+    const handleEdit = () => {
+        console.log('Edit');
+    };
+
     return (
         <>
-            {props.editorMode &&
+            {props.editorMode && (resizing || moving) &&
                 <div
                     ref={preview}
-                    className={`block-drag-preview ${resizing || moving ? '' : 'hidden'}`}
+                    className="block-drag-preview"
                     style={previewPosition.getStyleMap()}
                 />
             }
             <animated.div
                 ref={block}
-                className={`
-                    positional-block 
-                    ${resizing || moving ? 'noSelect' : ''} 
-                    ${props.editorMode ? 'editorMode' : ''}
-                `}
+                className={`positional-block ${resizing || moving ? 'noSelect' : ''} ${props.editorMode ? 'editorMode group' : ''}`}
                 style={{
                     ...position.getStyleMap(),
                     zIndex: props.zIndex,
@@ -176,6 +182,13 @@ export function PositionalBlock(props: Props) {
                 }}
                 {...bind()}
             >
+                <div ref={quickEditor} className="hidden group-hover:block block-quick-settings absolute min-w-full cursor-default pt-3" style={{transform: 'translateY(calc(-100%))', paddingBottom: '1px'}}>
+                    <div className="bg-background shadow-dynamic-stroke border-b-0 w-fit mx-auto px-1 rounded-t-lg whitespace-nowrap">
+                        <i className="fa-solid fa-pencil px-3 cursor-pointer hover:text-blue-700" onClick={handleEdit}/>
+                        <span className="w-1 border-r border-stroke cursor-default"/>
+                        <i className="fa-solid fa-trash-can px-3 cursor-pointer hover:text-red-700" onClick={handleDelete}/>
+                    </div>
+                </div>
                 <div className="resizer" ref={resizer}/>
                 <div ref={childWrapper} className="w-full h-full">
                     {props.children}

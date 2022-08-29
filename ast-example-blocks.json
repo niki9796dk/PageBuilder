@@ -18,6 +18,7 @@
             },
             "blocks": [
                 {
+                    "id": "2c670206-f881-4a44-9d28-48434e5bc6bc",
                     "type": "block",
                     "subType": "quote",
                     "quote": "We cannot solve our problems with the same thinking we used when we created them.",
@@ -30,6 +31,7 @@
                     }
                 },
                 {
+                    "id": "502c4149-fe92-49cf-8a89-cb48012076b9",
                     "type": "block",
                     "subType": "code",
                     "value": "let hello = 'world';\nconsole.log(hello);",
@@ -41,6 +43,7 @@
                     }
                 },
                 {
+                    "id": "1be08942-27a1-4e40-b159-bb00806253cd",
                     "type": "block",
                     "subType": "code",
                     "value": "$hello = 'world';\necho $hello;",
@@ -52,6 +55,7 @@
                     }
                 },
                 {
+                    "id": "a5ac8b10-28fe-4305-a305-f0bffc15ad5d",
                     "type": "block",
                     "subType": "image",
                     "src": "https://iotwiki.dk/images/3/3b/Test_billede.jpg",
@@ -64,6 +68,7 @@
                     }
                 },
                 {
+                    "id": "203293cd-a234-4d41-9b0c-cf02f4c56585",
                     "type": "block",
                     "subType": "line",
                     "position": {
@@ -74,6 +79,7 @@
                     }
                 },
                 {
+                    "id": "55259042-7fc2-48f8-9d27-6ef7f120a426",
                     "type": "block",
                     "subType": "text",
                     "value": "1x1",
@@ -85,6 +91,7 @@
                     }
                 },
                 {
+                    "id": "e2fff5e7-850b-4de9-b24d-41807205ec9d",
                     "type": "block",
                     "subType": "text",
                     "value": "A beautiful bridge",
@@ -100,6 +107,7 @@
                     }
                 },
                 {
+                    "id": "3e1c37af-e382-4f72-b8c9-deb444a55042",
                     "type": "block",
                     "subType": "text",
                     "value": "Provide more detail here",
@@ -111,6 +119,7 @@
                     }
                 },
                 {
+                    "id": "31aef109-d3cb-4b75-aa21-3f609d45cffe",
                     "type": "block",
                     "subType": "textCarousel",
                     "staticText": "I'm a",

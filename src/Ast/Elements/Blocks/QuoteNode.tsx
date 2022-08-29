@@ -4,6 +4,7 @@ import {useState} from 'react';
 import {PositionalBlock} from './PositionalBlock';
 import './QuoteNode.css';
 import React from 'react';
+import {v4 as uuidv4} from 'uuid';
 
 interface QuoteNodeAst extends BlockNodeAst {
     quote: string;
@@ -29,6 +30,7 @@ export default function QuoteNode(props: BlockNodeProps<QuoteNodeAst>) {
 
 export function defaultQuoteNodeAst(): QuoteNodeAst {
     return {
+        'id': uuidv4(),
         'type': 'block',
         'subType': 'quote',
         'quote': 'We cannot solve our problems with the same thinking we used when we created them.',

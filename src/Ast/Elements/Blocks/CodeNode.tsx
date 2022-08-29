@@ -7,6 +7,7 @@ import {useState} from 'react';
 import {PositionalBlock} from './PositionalBlock';
 import './CodeNode.css';
 import React from 'react';
+import {v4 as uuidv4} from 'uuid';
 
 hljs.registerLanguage('javascript', javascript);
 hljs.registerLanguage('php', php);
@@ -39,6 +40,7 @@ export default function CodeNode(props: BlockNodeProps<CodeNodeAst>) {
 
 export function defaultCodeNodeAst(): CodeNodeAst {
     return {
+        'id': uuidv4(),
         'type': 'block',
         'subType': 'code',
         'value': 'console.log(\'Hello World!\');',

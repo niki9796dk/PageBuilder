@@ -131,6 +131,10 @@ export class Validator {
                         required: false,
                         type: 'object',
                     },
+                    id: {
+                        required: true,
+                        type: 'string'
+                    }
                 },
 
                 text: {

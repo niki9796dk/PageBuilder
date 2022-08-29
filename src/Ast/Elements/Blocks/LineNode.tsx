@@ -4,6 +4,7 @@ import StyleMap from '../../StyleMap';
 import {useState} from 'react';
 import {PositionalBlock} from './PositionalBlock';
 import './LineNode.css';
+import {v4 as uuidv4} from 'uuid';
 
 interface LineNodeAst extends BlockNodeAst {
     color?: string
@@ -24,6 +25,7 @@ export default function LineNode(props: BlockNodeProps<LineNodeAst>) {
 
 export function defaultLineNodeAst(): LineNodeAst {
     return {
+        'id': uuidv4(),
         'type': 'block',
         'subType': 'line',
         'position': {

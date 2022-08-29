@@ -13,7 +13,7 @@ import MouseTracker, {TrackedPosition} from './MouseTracker';
 import {useAppSelector} from '../Store/hooks';
 import {round} from 'lodash';
 import {BlockFactory} from '../Ast/BlockFactory';
-import {Section} from "../Store/Slices/SectionsSlice";
+import {Section} from '../Store/Slices/SectionsSlice';
 
 interface Props {
     style?: any,
@@ -43,7 +43,7 @@ export default function Editor(props: Props) {
             <MouseTracker spawnEvent={event} onMove={(position) => setTrackedPosition(position)}>
                 <div style={{marginTop: `-${height/2}px`, marginLeft: `-${width/2}px`}}>
                     <div
-                        children={BlockFactory.create(0, nodeToSpawn, 99, true, gridSize, () => {return;})}
+                        children={BlockFactory.create(nodeToSpawn, 99, true, gridSize, () => {return;})}
                         className="opacity-75"
                         style={{
                             width: `${width}px`,
@@ -83,12 +83,10 @@ export default function Editor(props: Props) {
             }
 
             let relevantSection : Section|null = null;
-            let minDistance = Number.MAX_VALUE;
+            const minDistance = Number.MAX_VALUE;
 
-            for (const [key, section] of Object.entries(sections)) {
+            for (const [, section] of Object.entries(sections)) {
                 let distance = trackedPosition.top - section.top;
-
-                console.log(section, distance);
 
                 // We do not care about negative distances
                 // since this means our element is released above this section
@@ -101,7 +99,6 @@ export default function Editor(props: Props) {
                 // If this section is closer to our drop point,
                 // then remember this section for later return
                 if (distance < minDistance) {
-                    console.log(key);
                     relevantSection = section;
                 }
             }
@@ -135,7 +132,7 @@ export default function Editor(props: Props) {
     return (
         <>
             {newBlock}
-            <div className={"editor " + props.className ?? ""} style={props.style ?? {}}>
+            <div className={'editor ' + props.className ?? ''} style={props.style ?? {}}>
                 <div className="element-group">
                     <div className="element-group-title">Textual</div>
                     <div className="element-group-items">

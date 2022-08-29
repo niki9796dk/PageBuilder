@@ -5,6 +5,7 @@ import {PositionalBlock} from './PositionalBlock';
 import './TextCarouselNode.css';
 import React from 'react';
 import {clamp} from 'lodash';
+import {v4 as uuidv4} from 'uuid';
 
 interface TextCarouselNodeAst extends BlockNodeAst{
     staticText: string;
@@ -74,6 +75,7 @@ export default function TextCarouselNode(props: BlockNodeProps<TextCarouselNodeA
 
 export function defaultTextCarouselNodeAst(): TextCarouselNodeAst {
     return {
+        'id': uuidv4(),
         'type': 'block',
         'subType': 'textCarousel',
         'staticText': 'I\'m a',

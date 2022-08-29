@@ -65,16 +65,19 @@ export function SectionNode(props: Props) {
     };
 
     const updateBlockAst = (key: number, updatedAst: any) => {
-        props.ast.blocks[key] = updatedAst;
-        setSectionHeight(getSectionHeight());
+        if (updatedAst === null) {
+            props.ast.blocks.splice(key, 1);
+        } else {
+            props.ast.blocks[key] = updatedAst;
+        }
 
+        setSectionHeight(getSectionHeight());
         props.astUpdater(props.ast);
     };
 
     const renderBlocks = () => {
-        return _.map(props.ast.blocks, (block: any, key: number) => {
+        return _.map(props.ast.blocks, (block, key: number) => {
             return BlockFactory.create(
-                key,
                 block,
                 1,
                 props.editorMode,
