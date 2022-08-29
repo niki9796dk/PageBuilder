@@ -141,7 +141,7 @@ export function PositionalBlock(props: Props) {
         });
     };
 
-    const styleThing = () => {
+    const positionStyles = () => {
         if (resizing) {
             return {width, height};
         }
@@ -172,7 +172,7 @@ export function PositionalBlock(props: Props) {
                 style={{
                     ...position.getStyleMap(),
                     zIndex: props.zIndex,
-                    ...styleThing()
+                    ...positionStyles()
                 }}
                 {...bind()}
             >
