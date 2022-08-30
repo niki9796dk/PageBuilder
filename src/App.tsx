@@ -36,8 +36,6 @@ export default function App() {
             return;
         }
 
-        console.log(editHistory.current?.getCurrentIndex());
-
         if (goBackBinding) {
             updateAst(editHistory.current?.goBack(), false);
         } else if (goForwardBinding) {

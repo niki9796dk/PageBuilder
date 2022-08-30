@@ -60,7 +60,6 @@ export default class EditHistory {
      */
     private updateCurrentIndexBy(amount : number) {
         this.currentIndex = clamp(this.currentIndex + amount, 0, this.history.length - 1);
-        console.log(this.currentIndex);
     }
 
     /**
