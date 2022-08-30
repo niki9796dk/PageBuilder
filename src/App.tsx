@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import DocumentNode, {DocumentNodeAst} from './Ast/Elements/DocumentNode';
 import {Validator} from './Ast/Validator';
 import axios from 'axios';
@@ -9,22 +9,31 @@ import '@fortawesome/fontawesome-free/css/brands.min.css';
 import '@fortawesome/fontawesome-free/css/regular.min.css';
 import '@fortawesome/fontawesome-free/css/solid.min.css';
 import '@fortawesome/fontawesome-free/css/v4-shims.min.css';
+import {assert} from './Ast/Assert';
+import EditHistory from './EditHistory';
 
 export default function App() {
     const [ast, setAst] = useState<DocumentNodeAst | null>(null);
     const [editorMode, setEditorMode] = useState(true);
+    const editHistory = useRef<EditHistory|null>(null);
 
     useEffect(() => {
         if (ast) {
             localStorage.setItem('saved_ast', JSON.stringify(ast));
         } else {
-            fetchAst().then((ast: DocumentNodeAst) => updateAst(ast));
+            fetchAst().then((ast: DocumentNodeAst) => {
+                updateAst(ast);
+                editHistory.current = new EditHistory(ast);
+            });
         }
     }, [ast]);
 
-    const updateAst = (ast: DocumentNodeAst) => {
+    const updateAst = (ast: DocumentNodeAst|null) => {
+        assert(ast !== null, 'Root AST cannot be null');
+
         Validator.validate(ast);
-        setAst(ast);
+        setAst({...ast});
+        editHistory.current?.pushChange(ast);
     };
 
     const fetchAst = async () => {
@@ -58,7 +67,7 @@ export default function App() {
             <DocumentNode
                 ast={ast}
                 editorMode={editorMode}
-                astUpdater={(ast: DocumentNodeAst) => updateAst({...ast})}
+                astUpdater={(ast) => updateAst(ast)}
                 style={{
                     position: 'absolute',
                     top: 0,
