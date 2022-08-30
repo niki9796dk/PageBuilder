@@ -50,7 +50,7 @@ export function PositionalBlock(props: Props) {
     const [previewPosition, setPreviewPosition] = useState(new BlockPosition(props.ast.position));
 
     useEffect(() => {
-        props.ast.position = position;
+        props.ast.position = {...props.ast.position, ...position.toJson()};
         props.astUpdater(props.ast);
 
         // Make sure that the child element cannot be taller than the actual block
@@ -90,6 +90,7 @@ export function PositionalBlock(props: Props) {
         setPreviewPosition(() => calculateMovePosition(position));
 
         if (! state.dragging) {
+            console.log('handleMove');
             setPosition(calculateMovePosition(position));
         }
     };
@@ -107,6 +108,7 @@ export function PositionalBlock(props: Props) {
         setPreviewPosition(() => calculateResizePosition(position, delta));
 
         if (! state.dragging) {
+            console.log('handleResize');
             setPosition(calculateResizePosition(position, delta));
         }
     };

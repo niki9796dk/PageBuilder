@@ -1,5 +1,5 @@
 import {DocumentNodeAst} from './Ast/Elements/DocumentNode';
-import {clamp} from 'lodash';
+import {clamp, cloneDeep} from 'lodash';
 
 export default class EditHistory {
     protected currentIndex = 0;
@@ -22,7 +22,7 @@ export default class EditHistory {
         // that was kept in memory in case the user
         // would change their mind about reverting a change.
         this.history.splice(this.currentIndex + 1);
-        this.history.push(ast);
+        this.history.push(cloneDeep(ast));
 
         // Set current index to the latest element
         this.currentIndex = this.history.length - 1;
@@ -60,6 +60,7 @@ export default class EditHistory {
      */
     private updateCurrentIndexBy(amount : number) {
         this.currentIndex = clamp(this.currentIndex + amount, 0, this.history.length - 1);
+        console.log(this.currentIndex);
     }
 
     /**
@@ -67,5 +68,9 @@ export default class EditHistory {
      */
     public getCurrent(): DocumentNodeAst {
         return this.history[this.currentIndex];
+    }
+
+    public getCurrentIndex(): number {
+        return this.currentIndex;
     }
 }

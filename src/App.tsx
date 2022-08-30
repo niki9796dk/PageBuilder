@@ -11,29 +11,57 @@ import '@fortawesome/fontawesome-free/css/solid.min.css';
 import '@fortawesome/fontawesome-free/css/v4-shims.min.css';
 import {assert} from './Ast/Assert';
 import EditHistory from './EditHistory';
+import {cloneDeep, isEqual} from 'lodash';
 
 export default function App() {
     const [ast, setAst] = useState<DocumentNodeAst | null>(null);
     const [editorMode, setEditorMode] = useState(true);
-    const editHistory = useRef<EditHistory|null>(null);
+    const editHistory = useRef<EditHistory | null>(null);
+    const goBackBinding = useKeyPress(event => event.key.toLowerCase() == 'z' && event.ctrlKey && !event.shiftKey);
+    const goForwardBinding = useKeyPress(event => (event.key.toLowerCase() == 'z' && event.ctrlKey && event.shiftKey) || (event.key.toLowerCase() == 'y' && event.ctrlKey));
 
     useEffect(() => {
         if (ast) {
             localStorage.setItem('saved_ast', JSON.stringify(ast));
         } else {
             fetchAst().then((ast: DocumentNodeAst) => {
-                updateAst(ast);
+                updateAst(ast, true);
                 editHistory.current = new EditHistory(ast);
             });
         }
     }, [ast]);
 
-    const updateAst = (ast: DocumentNodeAst|null) => {
+    useEffect(() => {
+        if (editHistory.current === null) {
+            return;
+        }
+
+        console.log(editHistory.current?.getCurrentIndex());
+
+        if (goBackBinding) {
+            updateAst(editHistory.current?.goBack(), false);
+        } else if (goForwardBinding) {
+            updateAst(editHistory.current?.goForward(), false);
+        }
+    }, [goBackBinding, goForwardBinding]);
+
+    const updateAst = (ast: DocumentNodeAst | null, isNotEditHistoryChange: boolean) => {
         assert(ast !== null, 'Root AST cannot be null');
 
-        Validator.validate(ast);
-        setAst({...ast});
-        editHistory.current?.pushChange(ast);
+        // Do nothing if the given AST is equal to the current one
+        if (isNotEditHistoryChange && isEqual(ast, editHistory.current?.getCurrent())) {
+            return;
+        }
+
+        // Deep clone to avoid passing references around to nested keys
+        const cloneAst = cloneDeep(ast);
+
+        Validator.validate(cloneAst);
+        setAst(cloneAst);
+
+        if (isNotEditHistoryChange) {
+            editHistory.current?.pushChange(cloneAst);
+        }
     };
 
     const fetchAst = async () => {
@@ -58,7 +86,7 @@ export default function App() {
             {editorMode &&
                 <Editor
                     ast={ast}
-                    astUpdater={(ast: DocumentNodeAst) => updateAst({...ast})}
+                    astUpdater={(ast: DocumentNodeAst) => updateAst({...ast}, true)}
                     className="fixed top-0 left-0 h-screen"
                     style={{width: '350px'}}
                 />
@@ -67,7 +95,7 @@ export default function App() {
             <DocumentNode
                 ast={ast}
                 editorMode={editorMode}
-                astUpdater={(ast) => updateAst(ast)}
+                astUpdater={(ast) => updateAst(ast, true)}
                 style={{
                     position: 'absolute',
                     top: 0,
@@ -94,4 +122,30 @@ export default function App() {
             </button>
         </div>
     );
+}
+
+function useKeyPress(condition: (event: KeyboardEvent) => boolean) {
+    const [targetKeysIsPressed, setTargetKeysIsPressed] = useState<boolean>(false);
+
+    useEffect(() => {
+        // Mount
+        document.addEventListener('keydown', handleKeyDown);
+        document.addEventListener('keyup', handleKeyUp);
+
+        // Unmount
+        return () => {
+            document.removeEventListener('keydown', handleKeyDown);
+            document.removeEventListener('keyup', handleKeyUp);
+        };
+    }, []);
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+        setTargetKeysIsPressed(condition(event));
+    };
+
+    const handleKeyUp = () => {
+        setTargetKeysIsPressed(false);
+    };
+
+    return targetKeysIsPressed;
 }
