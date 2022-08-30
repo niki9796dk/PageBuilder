@@ -1,10 +1,10 @@
 import { animated, useSpring } from '@react-spring/web';
 import { useDrag } from '@use-gesture/react';
 import BlockPosition from './BlockPosition';
-import {ReactElement, useEffect, useRef, useState} from 'react';
+import {ReactElement, useMemo, useRef, useState} from 'react';
 import './PositionalBlock.css';
 import {DragState, SharedGestureState} from '@use-gesture/core/src/types/state';
-import {ceil, clamp, round} from 'lodash';
+import {ceil, clamp, cloneDeep, round} from 'lodash';
 import {AstNode} from '../../../types';
 import React from 'react';
 
@@ -46,18 +46,20 @@ export function PositionalBlock(props: Props) {
     const resizer = useRef<HTMLDivElement | null>(null);
     const block = useRef<HTMLDivElement | null>(null);
     const quickEditor = useRef<HTMLDivElement | null>(null);
-    const [position, setPosition] = useState(new BlockPosition(props.ast.position));
+    const position = useMemo(() => new BlockPosition(props.ast.position), [props]);
     const [previewPosition, setPreviewPosition] = useState(new BlockPosition(props.ast.position));
 
-    useEffect(() => {
-        props.ast.position = {...props.ast.position, ...position.toJson()};
-        props.astUpdater(props.ast);
+    const setPosition = (newPosition: BlockPosition) => {
+        const astClone = cloneDeep(props.ast);
+
+        astClone.position = {...props.ast.position, ...newPosition.toJson()};
+        props.astUpdater(astClone);
 
         // Make sure that the child element cannot be taller than the actual block
         if ((childWrapper.current?.clientHeight ?? 0) > (block.current?.clientHeight ?? 0)) {
-            setPosition(new BlockPosition({...position, height: position.height + 1}));
+            setPosition(new BlockPosition({...newPosition, height: newPosition.height + 1}));
         }
-    }, [position]);
+    };
 
     const bind = useDrag(async (state) => {
         if (! props.editorMode || quickEditor.current?.contains(state.event.target as Element)) {
