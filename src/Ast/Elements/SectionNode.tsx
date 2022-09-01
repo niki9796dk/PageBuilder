@@ -64,7 +64,7 @@ export function SectionNode(props: Props) {
         };
     };
 
-    const updateBlockAst = (key: number, updatedAst: any) => {
+    const updateBlockAst = (key: number, updatedAst: any, saveChange: boolean) => {
         if (updatedAst === null) {
             props.ast.blocks.splice(key, 1);
         } else {
@@ -72,7 +72,7 @@ export function SectionNode(props: Props) {
         }
 
         setSectionHeight(getSectionHeight());
-        props.astUpdater(props.ast);
+        props.astUpdater(props.ast, saveChange);
     };
 
     const renderBlocks = () => {
@@ -82,7 +82,7 @@ export function SectionNode(props: Props) {
                 1,
                 props.editorMode,
                 getGridSize(),
-                updatedAst => updateBlockAst(key, updatedAst)
+                (updatedAst, saveChange) => updateBlockAst(key, updatedAst, saveChange)
             );
         });
     };

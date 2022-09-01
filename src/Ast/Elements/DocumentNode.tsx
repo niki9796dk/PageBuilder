@@ -23,10 +23,10 @@ export default function DocumentNode(props: Props) {
     const style = new StyleMap(props.ast.style);
     const dispatch = useAppDispatch();
 
-    const updateSectionAst = (key: number, updatedAst: any) => {
+    const updateSectionAst = (key: number, updatedAst: any, saveChange: boolean) => {
         props.ast.sections[key] = updatedAst;
 
-        props.astUpdater(props.ast);
+        props.astUpdater(props.ast, saveChange);
     };
 
     const renderSections = () => {
@@ -35,7 +35,7 @@ export default function DocumentNode(props: Props) {
                 key={key}
                 ast={section}
                 editorMode={props.editorMode}
-                astUpdater={(updatedAst) => updateSectionAst(key, updatedAst)}
+                astUpdater={(updatedAst, saveChange) => updateSectionAst(key, updatedAst, saveChange)}
                 onGridMove={(position) => dispatch(registerSection({index: key, ...position}))}
             />;
         });

@@ -49,15 +49,15 @@ export function PositionalBlock(props: Props) {
     const position = useMemo(() => new BlockPosition(props.ast.position), [props]);
     const [previewPosition, setPreviewPosition] = useState(new BlockPosition(props.ast.position));
 
-    const setPosition = (newPosition: BlockPosition) => {
+    const setPosition = (newPosition: BlockPosition, saveChange: boolean) => {
         const astClone = cloneDeep(props.ast);
 
         astClone.position = {...props.ast.position, ...newPosition.toJson()};
-        props.astUpdater(astClone);
+        props.astUpdater(astClone, saveChange);
 
         // Make sure that the child element cannot be taller than the actual block
         if ((childWrapper.current?.clientHeight ?? 0) > (block.current?.clientHeight ?? 0)) {
-            setPosition(new BlockPosition({...newPosition, height: newPosition.height + 1}));
+            setPosition(new BlockPosition({...newPosition, height: newPosition.height + 1}), false);
         }
     };
 
@@ -92,7 +92,7 @@ export function PositionalBlock(props: Props) {
         setPreviewPosition(() => calculateMovePosition(position));
 
         if (! state.dragging) {
-            setPosition(calculateMovePosition(position));
+            setPosition(calculateMovePosition(position), true);
         }
     };
 
@@ -109,7 +109,7 @@ export function PositionalBlock(props: Props) {
         setPreviewPosition(() => calculateResizePosition(position, delta));
 
         if (! state.dragging) {
-            setPosition(calculateResizePosition(position, delta));
+            setPosition(calculateResizePosition(position, delta), true);
         }
     };
 
@@ -158,7 +158,7 @@ export function PositionalBlock(props: Props) {
     };
 
     const handleDelete = () => {
-        props.astUpdater(null);
+        props.astUpdater(null, true);
     };
 
     const handleEdit = () => {

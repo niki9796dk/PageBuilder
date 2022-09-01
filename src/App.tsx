@@ -93,7 +93,7 @@ export default function App() {
             <DocumentNode
                 ast={ast}
                 editorMode={editorMode}
-                astUpdater={(ast) => updateAst(ast, true)}
+                astUpdater={(updatedAst, saveChange) => updateAst(updatedAst, saveChange)}
                 style={{
                     position: 'absolute',
                     top: 0,
