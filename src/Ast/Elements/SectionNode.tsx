@@ -1,12 +1,13 @@
 import {BlockFactory} from '../BlockFactory';
 import StyleMap from '../StyleMap';
 import GridNode, {GridNodeAst} from '../ElementProperties/GridNode';
-import React, {createRef, useEffect, useState} from 'react';
+import React, {createRef, useEffect, useRef, useState} from 'react';
 import {AstNode} from '../../types';
-import _ from 'lodash';
+import _, {round} from 'lodash';
 import {BlockNodeAst} from './Blocks/PositionalBlock';
 import './SectionNode.css';
-import {getOffset, Offset} from '../../helpers';
+import {getDocumentOffset, Offset} from '../../helpers';
+import {subscribe, unsubscribe} from '../../events';
 
 export interface SectionNodeAst {
     type: string;
@@ -22,6 +23,7 @@ interface Props extends AstNode<SectionNodeAst>{
 
 export function SectionNode(props: Props) {
     const grid = createRef<HTMLDivElement>();
+    const sectionDiv = useRef<HTMLDivElement | null>(null);
     const style = new StyleMap(props.ast.style);
     const [sectionHeight, setSectionHeight] = useState(-1);
 
@@ -38,9 +40,25 @@ export function SectionNode(props: Props) {
     useEffect(() => {
         // Update section height on every rerender, while in editor mode
         if (props.editorMode) {
-            setSectionHeight(getSectionHeight());
+            setSectionHeight(getSectionHeight(false));
         }
-    })
+    }, [props.ast.blocks]);
+
+    useEffect(() => {
+        if (! grid.current) {
+            return;
+        }
+
+        const gridNode = grid.current;
+
+        subscribe(gridNode, 'blockMove', handleBlockMove);
+
+        return () => unsubscribe(gridNode, 'blockMove', handleBlockMove);
+    }, [grid]);
+
+    const handleBlockMove = () => {
+        setSectionHeight(getSectionHeight(true));
+    };
 
     const triggerOnGridMove = () => {
         if (grid.current === null || props.onGridMove === undefined) {
@@ -48,14 +66,45 @@ export function SectionNode(props: Props) {
         }
 
         // Trigger the callback
-        props.onGridMove(getOffset(grid.current));
+        props.onGridMove(getDocumentOffset(grid.current));
     };
 
-    const getSectionHeight = () => {
-        return Math.max(..._.map(
+    const getSectionHeight = (useBlockRendersAsReference : boolean) => {
+        const astMaxGridY = Math.max(..._.map(
             props.ast.blocks,
             (blockNode) => blockNode.position.top + blockNode.position.height + 1),
         );
+
+        if (! useBlockRendersAsReference || grid.current === null) {
+            return astMaxGridY;
+        }
+
+        const renderedBlocksMaxGridY = getRenderedBlocksMaxGridY(grid.current);
+
+        return Math.max(astMaxGridY, renderedBlocksMaxGridY);
+    };
+
+    const getRenderedBlocksMaxGridY = (grid : Element) => {
+        const gridOffset = getDocumentOffset(grid);
+        const children = grid.children;
+        let max = 1;
+
+        for (let i = 0; i < children.length; i++) {
+            const child = children[i];
+            const childOffset = getDocumentOffset(child);
+            const childYGridHeight = round((childOffset.bottom - gridOffset.top) / 25);
+
+            if (! child.classList.contains('positional-block')) {
+                continue;
+            }
+
+            if (max < childYGridHeight) {
+                max = childYGridHeight;
+            }
+        }
+
+        // Plus one, since "end" is offset by one
+        return max + 1;
     };
 
     const getGridSize = () => {
@@ -87,7 +136,7 @@ export function SectionNode(props: Props) {
         });
     };
 
-    return <div className="node-section" style={style.getStyleMap()}>
+    return <div ref={sectionDiv} className="node-section" style={style.getStyleMap()}>
         <GridNode
             ast={props.ast.grid}
             editorMode={props.editorMode}

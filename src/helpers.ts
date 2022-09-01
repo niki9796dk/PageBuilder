@@ -1,18 +1,18 @@
 export interface Offset {
     top: number;
     left: number;
+    bottom: number;
+    right: number;
 }
 
-export function getOffset( element: any ): Offset {
-    let x = 0;
-    let y = 0;
+export function getDocumentOffset(element: Element ): Offset {
+    const rect = element.getBoundingClientRect();
 
-    while( element && !isNaN( element.offsetLeft ) && !isNaN( element.offsetTop ) ) {
-        x += element.offsetLeft - element.scrollLeft;
-        y += element.offsetTop - element.scrollTop;
-        element = element.offsetParent;
-    }
-
-    return { top: y, left: x };
+    return {
+        top: rect.top + window.scrollY,
+        left: rect.left + window.scrollX,
+        bottom: rect.bottom + window.scrollY,
+        right: rect.right + window.scrollX,
+    };
 }
 

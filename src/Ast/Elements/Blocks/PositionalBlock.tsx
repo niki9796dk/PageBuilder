@@ -1,12 +1,13 @@
 import { animated, useSpring } from '@react-spring/web';
 import { useDrag } from '@use-gesture/react';
 import BlockPosition from './BlockPosition';
-import {ReactElement, useMemo, useRef, useState} from 'react';
+import {ReactElement, useCallback, useMemo, useRef, useState} from 'react';
 import './PositionalBlock.css';
 import {DragState, SharedGestureState} from '@use-gesture/core/src/types/state';
-import {ceil, clamp, cloneDeep, round} from 'lodash';
+import {ceil, clamp, cloneDeep, round, throttle} from 'lodash';
 import {AstNode} from '../../../types';
 import React from 'react';
+import {publish} from '../../../events';
 
 export interface Position {
     height: number;
@@ -48,6 +49,13 @@ export function PositionalBlock(props: Props) {
     const quickEditor = useRef<HTMLDivElement | null>(null);
     const position = useMemo(() => new BlockPosition(props.ast.position), [props]);
     const [previewPosition, setPreviewPosition] = useState(new BlockPosition(props.ast.position));
+    const onDragChange = useCallback(throttle(() => {
+        if (! block.current) {
+            return;
+        }
+
+        publish(block.current, 'blockMove', {});
+    }, 50), [block]);
 
     const setPosition = (newPosition: BlockPosition, saveChange: boolean) => {
         const astClone = cloneDeep(props.ast);
@@ -65,6 +73,8 @@ export function PositionalBlock(props: Props) {
         if (! props.editorMode || quickEditor.current?.contains(state.event.target as Element)) {
             return;
         }
+
+        onDragChange();
 
         if (state.event.target == resizer.current) {
             handleResize(state);
