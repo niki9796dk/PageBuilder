@@ -35,6 +35,13 @@ export function SectionNode(props: Props) {
         return () => window.removeEventListener('resize', triggerOnGridMove);
     }, [grid]);
 
+    useEffect(() => {
+        // Update section height on every rerender, while in editor mode
+        if (props.editorMode) {
+            setSectionHeight(getSectionHeight());
+        }
+    })
+
     const triggerOnGridMove = () => {
         if (grid.current === null || props.onGridMove === undefined) {
             return;
@@ -43,12 +50,6 @@ export function SectionNode(props: Props) {
         // Trigger the callback
         props.onGridMove(getOffset(grid.current));
     };
-
-    useEffect(() => {
-        if (sectionHeight == -1) {
-            setSectionHeight(getSectionHeight());
-        }
-    }, [sectionHeight]);
 
     const getSectionHeight = () => {
         return Math.max(..._.map(
@@ -71,7 +72,6 @@ export function SectionNode(props: Props) {
             props.ast.blocks[key] = updatedAst;
         }
 
-        setSectionHeight(getSectionHeight());
         props.astUpdater(props.ast, saveChange);
     };
 
