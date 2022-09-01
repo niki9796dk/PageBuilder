@@ -43,11 +43,11 @@ export default function App() {
         }
     }, [goBackBinding, goForwardBinding]);
 
-    const updateAst = (ast: DocumentNodeAst | null, isNotEditHistoryChange: boolean) => {
+    const updateAst = (ast: DocumentNodeAst | null, saveChange: boolean) => {
         assert(ast !== null, 'Root AST cannot be null');
 
         // Do nothing if the given AST is equal to the current one
-        if (isNotEditHistoryChange && isEqual(ast, editHistory.current?.getCurrent())) {
+        if (saveChange && isEqual(ast, editHistory.current?.getCurrent())) {
             return;
         }
 
@@ -57,7 +57,7 @@ export default function App() {
         Validator.validate(cloneAst);
         setAst(cloneAst);
 
-        if (isNotEditHistoryChange) {
+        if (saveChange) {
             editHistory.current?.pushChange(cloneAst);
         }
     };
