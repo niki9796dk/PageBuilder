@@ -123,7 +123,7 @@ export default function App() {
 }
 
 function useKeyPress(condition: (event: KeyboardEvent) => boolean) {
-    const [targetKeysIsPressed, setTargetKeysIsPressed] = useState<boolean>(false);
+    const [targetKeysIsPressed, setTargetKeysIsPressed] = useState<number>(0);
 
     useEffect(() => {
         // Mount
@@ -138,11 +138,17 @@ function useKeyPress(condition: (event: KeyboardEvent) => boolean) {
     }, []);
 
     const handleKeyDown = (event: KeyboardEvent) => {
-        setTargetKeysIsPressed(condition(event));
+        setTargetKeysIsPressed(prevState => {
+            if (condition(event)) {
+                return prevState + 1;
+            }
+
+            return 0;
+        });
     };
 
     const handleKeyUp = () => {
-        setTargetKeysIsPressed(false);
+        setTargetKeysIsPressed(0);
     };
 
     return targetKeysIsPressed;
