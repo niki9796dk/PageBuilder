@@ -33,7 +33,7 @@ export default function App() {
     }, [ast]);
 
     useEffect(() => {
-        if (editHistory.current === null) {
+        if (editHistory.current === null || ! editorMode) {
             return;
         }
 
