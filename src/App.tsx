@@ -42,7 +42,7 @@ export default function App() {
         } else if (goForwardKeyPress) {
             updateAst(editHistory.current?.goForward(), false);
         }
-    }, [goBackKeyPress, goForwardKeyPress]);
+    }, [goBackKeyPress, goForwardKeyPress, editorMode]);
 
     const updateAst = (ast: DocumentNodeAst | null, saveChange: boolean) => {
         assert(ast !== null, 'Root AST cannot be null');
