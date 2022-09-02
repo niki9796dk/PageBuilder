@@ -12,13 +12,14 @@ import '@fortawesome/fontawesome-free/css/v4-shims.min.css';
 import {assert} from './Ast/Assert';
 import EditHistory from './EditHistory';
 import {cloneDeep, isEqual} from 'lodash';
+import useKeyPress from './Hooks/UseKeyPress';
 
 export default function App() {
     const [ast, setAst] = useState<DocumentNodeAst | null>(null);
     const [editorMode, setEditorMode] = useState(true);
     const editHistory = useRef<EditHistory | null>(null);
-    const goBackBinding = useKeyPress(event => event.key.toLowerCase() == 'z' && event.ctrlKey && !event.shiftKey);
-    const goForwardBinding = useKeyPress(event => (event.key.toLowerCase() == 'z' && event.ctrlKey && event.shiftKey) || (event.key.toLowerCase() == 'y' && event.ctrlKey));
+    const goBackKeyPress = useKeyPress({key: 'z', ctrl: true, shift: false});
+    const goForwardKeyPress = useKeyPress([{key: 'z', ctrl: true, shift: true}, {key: 'y', ctrl: true}]);
 
     useEffect(() => {
         if (ast) {
@@ -36,12 +37,12 @@ export default function App() {
             return;
         }
 
-        if (goBackBinding) {
+        if (goBackKeyPress) {
             updateAst(editHistory.current?.goBack(), false);
-        } else if (goForwardBinding) {
+        } else if (goForwardKeyPress) {
             updateAst(editHistory.current?.goForward(), false);
         }
-    }, [goBackBinding, goForwardBinding]);
+    }, [goBackKeyPress, goForwardKeyPress]);
 
     const updateAst = (ast: DocumentNodeAst | null, saveChange: boolean) => {
         assert(ast !== null, 'Root AST cannot be null');
@@ -120,36 +121,4 @@ export default function App() {
             </button>
         </div>
     );
-}
-
-function useKeyPress(condition: (event: KeyboardEvent) => boolean) {
-    const [targetKeysIsPressed, setTargetKeysIsPressed] = useState<number>(0);
-
-    useEffect(() => {
-        // Mount
-        document.addEventListener('keydown', handleKeyDown);
-        document.addEventListener('keyup', handleKeyUp);
-
-        // Unmount
-        return () => {
-            document.removeEventListener('keydown', handleKeyDown);
-            document.removeEventListener('keyup', handleKeyUp);
-        };
-    }, []);
-
-    const handleKeyDown = (event: KeyboardEvent) => {
-        setTargetKeysIsPressed(prevState => {
-            if (condition(event)) {
-                return prevState + 1;
-            }
-
-            return 0;
-        });
-    };
-
-    const handleKeyUp = () => {
-        setTargetKeysIsPressed(0);
-    };
-
-    return targetKeysIsPressed;
 }
