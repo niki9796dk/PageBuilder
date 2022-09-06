@@ -7,11 +7,16 @@
     background-color: gray;
 }
 
-.positional-block.editorMode:hover {
+.positional-block.editorMode:hover,
+.positional-block.editorMode.editing
+{
     background-color: rgba(128, 128, 128, 0.25);
     @apply outline-1;
     @apply outline-dashed;
     @apply outline-black;
+}
+
+.positional-block.editorMode.moveable:hover {
     @apply cursor-move;
 }
 
