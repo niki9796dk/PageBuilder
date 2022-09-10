@@ -1,6 +1,6 @@
 import {BlockNodeAst, BlockNodeProps} from './PositionalBlock';
 import StyleMap from '../../StyleMap';
-import {useState} from 'react';
+import {useRef, useState} from 'react';
 import {PositionalBlock} from './PositionalBlock';
 import './QuoteNode.css';
 import React from 'react';
@@ -36,7 +36,7 @@ export function defaultQuoteNodeAst(): QuoteNodeAst {
         'quote': 'We cannot solve our problems with the same thinking we used when we created them.',
         'author': 'Albert Einstein',
         'position': {
-            'height': 3,
+            'height': 4,
             'width': 10,
             'left': 0,
             'top': 0
