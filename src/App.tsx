@@ -11,7 +11,7 @@ import '@fortawesome/fontawesome-free/css/solid.min.css';
 import '@fortawesome/fontawesome-free/css/v4-shims.min.css';
 import {assert} from './Ast/Assert';
 import EditHistory from './EditHistory';
-import {cloneDeep, isEqual} from 'lodash';
+import {cloneDeep, isEqual, merge} from 'lodash';
 import useKeyPress from './Hooks/UseKeyPress';
 
 export default function App() {
@@ -26,7 +26,7 @@ export default function App() {
             localStorage.setItem('saved_ast', JSON.stringify(ast));
         } else {
             fetchAst().then((ast: DocumentNodeAst) => {
-                updateAst(ast, true);
+                updateAst(ast, true, false);
                 editHistory.current = new EditHistory(ast);
             });
         }
@@ -38,14 +38,23 @@ export default function App() {
         }
 
         if (goBackKeyPress) {
-            updateAst(editHistory.current?.goBack(), false);
+            updateAst(editHistory.current?.goBack(), false, false);
         } else if (goForwardKeyPress) {
-            updateAst(editHistory.current?.goForward(), false);
+            updateAst(editHistory.current?.goForward(), false, false);
         }
     }, [goBackKeyPress, goForwardKeyPress, editorMode]);
 
-    const updateAst = (ast: DocumentNodeAst | null, saveChange: boolean) => {
+    const updateAst = (ast: Partial<DocumentNodeAst> | null, saveChange: boolean, isPartial: boolean) => {
         assert(ast !== null, 'Root AST cannot be null');
+
+        if (isPartial) {
+            const clonedUpdate = cloneDeep(ast);
+            const clonedCurrent = cloneDeep(editHistory.current?.getCurrent());
+
+            if (clonedCurrent !== undefined) {
+                ast = merge(clonedCurrent, clonedUpdate);
+            }
+        }
 
         // Do nothing if the given AST is equal to the current one
         if (saveChange && isEqual(ast, editHistory.current?.getCurrent())) {
@@ -53,7 +62,7 @@ export default function App() {
         }
 
         // Deep clone to avoid passing references around to nested keys
-        const cloneAst = cloneDeep(ast);
+        const cloneAst = cloneDeep(ast) as DocumentNodeAst;
 
         Validator.validate(cloneAst);
         setAst(cloneAst);
@@ -85,7 +94,7 @@ export default function App() {
             {editorMode &&
                 <Editor
                     ast={ast}
-                    astUpdater={(ast: DocumentNodeAst) => updateAst({...ast}, true)}
+                    astUpdater={(ast: DocumentNodeAst, isPartial) => updateAst({...ast}, true, isPartial)}
                     className="fixed top-0 left-0 h-screen"
                     style={{width: '350px'}}
                 />
@@ -94,7 +103,7 @@ export default function App() {
             <DocumentNode
                 ast={ast}
                 editorMode={editorMode}
-                astUpdater={(updatedAst, saveChange) => updateAst(updatedAst, saveChange)}
+                astUpdater={(updatedAst, saveChange, isPartial) => updateAst(updatedAst, saveChange, isPartial)}
                 style={{
                     position: 'absolute',
                     top: 0,

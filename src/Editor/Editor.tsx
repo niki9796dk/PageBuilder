@@ -18,7 +18,7 @@ import {Section} from '../Store/Slices/SectionsSlice';
 interface Props {
     style?: any,
     ast: DocumentNodeAst;
-    astUpdater: (updatedAst: DocumentNodeAst) => void;
+    astUpdater: (updatedAst: DocumentNodeAst, isPartial: boolean) => void;
     className?: string;
 }
 
@@ -126,7 +126,7 @@ export default function Editor(props: Props) {
 
         nodeToSpawn.position = {...nodeToSpawn.position, left, top};
         props.ast.sections[section.index].blocks.push(nodeToSpawn);
-        props.astUpdater(props.ast);
+        props.astUpdater(props.ast, false);
     };
 
     return (

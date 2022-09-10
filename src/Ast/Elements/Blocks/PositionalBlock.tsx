@@ -1,5 +1,5 @@
-import { animated, useSpring } from '@react-spring/web';
-import { useDrag } from '@use-gesture/react';
+import {animated, useSpring} from '@react-spring/web';
+import {useDrag} from '@use-gesture/react';
 import BlockPosition from './BlockPosition';
 import {ReactElement, useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import './PositionalBlock.css';
@@ -42,7 +42,7 @@ interface Props extends BlockNodeProps<any> {
 }
 
 export function PositionalBlock(props: Props) {
-    const [{x, y, width, height}, api] = useSpring(() => ({ x: 0, y: 0, width: 0, height: 0}));
+    const [{x, y, width, height}, api] = useSpring(() => ({x: 0, y: 0, width: 0, height: 0}));
     const [moving, setMoving] = useState(false);
     const [resizing, setResizing] = useState(false);
     const [editing, setEditing] = useState(false);
@@ -54,7 +54,7 @@ export function PositionalBlock(props: Props) {
     const position = useMemo(() => new BlockPosition(props.ast.position), [props]);
     const [previewPosition, setPreviewPosition] = useState(new BlockPosition(props.ast.position));
     const onDragChange = useCallback(throttle(() => {
-        if (! block.current) {
+        if (!block.current) {
             return;
         }
 
@@ -65,7 +65,11 @@ export function PositionalBlock(props: Props) {
         const astClone = cloneDeep(props.ast);
 
         astClone.position = {...props.ast.position, ...newPosition.toJson()};
-        props.astUpdater(astClone, saveChange);
+        props.astUpdater(
+            {position: newPosition.toJson()},
+            saveChange,
+            true,
+        );
     };
 
     useEffect(() => autoScaleHeight(), [props.ast.position]);
@@ -88,7 +92,7 @@ export function PositionalBlock(props: Props) {
     };
 
     const bind = useDrag(async (state) => {
-        if (! props.editorMode || quickEditor.current?.contains(state.event.target as Element)) {
+        if (!props.editorMode || quickEditor.current?.contains(state.event.target as Element)) {
             return;
         }
 
@@ -111,7 +115,7 @@ export function PositionalBlock(props: Props) {
         enabled: props.editorMode,
     });
 
-    const handleMove = (state: DragState&SharedGestureState) => {
+    const handleMove = (state: DragState & SharedGestureState) => {
         if (props.disableDragging) {
             return;
         }
@@ -125,12 +129,12 @@ export function PositionalBlock(props: Props) {
 
         setPreviewPosition(() => calculateMovePosition(position));
 
-        if (! state.dragging) {
+        if (!state.dragging) {
             setPosition(calculateMovePosition(position), true);
         }
     };
 
-    const handleResize = (state: DragState&SharedGestureState) => {
+    const handleResize = (state: DragState & SharedGestureState) => {
         setResizing(state.dragging ?? true);
 
         api.set({
@@ -142,13 +146,13 @@ export function PositionalBlock(props: Props) {
 
         setPreviewPosition(() => calculateResizePosition(position, delta));
 
-        if (! state.dragging) {
+        if (!state.dragging) {
             setPosition(calculateResizePosition(position, delta), true);
         }
     };
 
     const calculateMovePosition = (position: BlockPosition) => {
-        if (! moving) {
+        if (!moving) {
             return position;
         }
 
@@ -162,8 +166,8 @@ export function PositionalBlock(props: Props) {
         });
     };
 
-    const calculateResizePosition = (position: BlockPosition, delta : Array<number>) => {
-        if (! resizing) {
+    const calculateResizePosition = (position: BlockPosition, delta: Array<number>) => {
+        if (!resizing) {
             return position;
         }
 
@@ -192,7 +196,7 @@ export function PositionalBlock(props: Props) {
     };
 
     const handleDelete = () => {
-        props.astUpdater(null, true);
+        props.astUpdater(null, true, false);
     };
 
     const handleEdit = () => {
@@ -202,7 +206,7 @@ export function PositionalBlock(props: Props) {
     useEffect(() => {
         if (editing && props.onEditBegin) {
             props.onEditBegin();
-        }  else if (! editing && props.onEditEnd) {
+        } else if (!editing && props.onEditEnd) {
             props.onEditEnd();
 
             return autoScaleHeight();
@@ -210,12 +214,12 @@ export function PositionalBlock(props: Props) {
     }, [editing]);
 
     useEffect(() => {
-        if (! editing) {
+        if (!editing) {
             return;
         }
 
-        const mouseHandler = (event : Event) => {
-            if (! editing || (event.target && block.current?.contains(event.target as Node))) {
+        const mouseHandler = (event: Event) => {
+            if (!editing || (event.target && block.current?.contains(event.target as Node))) {
                 return;
             }
 
@@ -249,7 +253,9 @@ export function PositionalBlock(props: Props) {
                 }}
                 {...bind()}
             >
-                <div ref={quickEditor} className={`${editing ? 'block' : 'hidden group-hover:block'}  block-quick-settings absolute min-w-full cursor-default pt-3`} style={{transform: 'translateY(calc(-100%))', paddingBottom: '1px'}}>
+                <div ref={quickEditor}
+                    className={`${editing ? 'block' : 'hidden group-hover:block'}  block-quick-settings absolute min-w-full cursor-default pt-3`}
+                    style={{transform: 'translateY(calc(-100%))', paddingBottom: '1px'}}>
                     <div className="bg-background shadow-dynamic-stroke border-b-0 w-fit mx-auto px-1 rounded-t-lg whitespace-nowrap">
                         <i className="fa-solid fa-pencil px-3 cursor-pointer hover:text-blue-700" onClick={handleEdit}/>
                         <span className="w-1 border-r border-stroke cursor-default"/>

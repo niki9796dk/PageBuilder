@@ -10,7 +10,7 @@ import React from 'react';
 import TextCarouselNode from './Elements/Blocks/TextCarouselNode';
 
 export class BlockFactory {
-    static create(block: any, zIndex: number, editorMode: boolean, gridSize: GridSize, astUpdater: (updatedAst: any, saveChange: boolean) => void): JSX.Element {
+    static create(block: any, zIndex: number, editorMode: boolean, gridSize: GridSize, astUpdater: (updatedAst: any, saveChange: boolean, isPartial: boolean) => void): JSX.Element {
         const factories: BlockFactoryList = {
             text: TextNode,
             textCarousel: TextCarouselNode,

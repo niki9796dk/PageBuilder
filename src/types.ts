@@ -1,7 +1,7 @@
 interface AstNode<astType> {
     ast: astType;
     editorMode: boolean;
-    astUpdater: (updatedAst: astType|null, saveChange: boolean) => void;
+    astUpdater: (updatedAst: Partial<astType>|null, saveChange: boolean, isPartial: boolean) => void;
 }
 
 export type {AstNode};

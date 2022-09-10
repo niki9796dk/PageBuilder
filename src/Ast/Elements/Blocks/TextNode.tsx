@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useEffect, useRef, useState} from 'react';
 import {BlockNodeAst, BlockNodeProps} from './PositionalBlock';
 import './TextNode.css';
 import StyleMap from '../../StyleMap';
@@ -12,16 +12,49 @@ export interface TextNodeAst extends BlockNodeAst {
 
 export function TextNode(props: BlockNodeProps<TextNodeAst>) {
     const style = new StyleMap(props.ast.style ?? {});
-    const [text] = useState(props.ast.value);
+    const [text, setText] = useState(props.ast.value);
+    const [editing, setEditing] = useState(false);
+    const textarea = useRef<HTMLTextAreaElement | null>(null);
 
-    return (
-        <PositionalBlock {...props}>
+    useEffect(() => {
+        setTimeout(() => textarea.current?.focus(), 50);
+    }, [textarea, editing]);
+
+    const handleEditStart = () => {
+        setText(props.ast.value);
+        setEditing(true);
+    };
+
+    const handleEditEnd = () => {
+        setEditing(false);
+        props.astUpdater({value: text}, true, true);
+    };
+
+    let content;
+
+    if (editing) {
+        content = <textarea
+            ref={textarea}
+            value={text}
+            onChange={(event) => {setText(event.target.value);}}
+            className="outline-none overflow-hidden all-inherit min-h-fit cursor-text"
+            rows={20}
+            style={style.getStyleMap()}
+        />;
+    } else {
+        content = (
             <p
                 className="node-text"
                 style={style.getStyleMap()}
                 // TODO: Figure out how to do this the "react way" instead of "dangerouslySetInnerHTML"
-                dangerouslySetInnerHTML={{__html: text.replaceAll('\n', '<br>')}}
+                dangerouslySetInnerHTML={{__html: props.ast.value.replaceAll('\n', '<br>')}}
             />
+        );
+    }
+
+    return (
+        <PositionalBlock {...props} onEditBegin={handleEditStart} onEditEnd={handleEditEnd} disableDragging={editing}>
+            {content}
         </PositionalBlock>
     );
 }

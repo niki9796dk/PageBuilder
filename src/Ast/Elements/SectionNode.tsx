@@ -3,7 +3,7 @@ import StyleMap from '../StyleMap';
 import GridNode, {GridNodeAst} from '../ElementProperties/GridNode';
 import React, {createRef, useEffect, useRef, useState} from 'react';
 import {AstNode} from '../../types';
-import _, {round} from 'lodash';
+import _, {merge, round} from 'lodash';
 import {BlockNodeAst} from './Blocks/PositionalBlock';
 import './SectionNode.css';
 import {getDocumentOffset, Offset} from '../../helpers';
@@ -114,14 +114,18 @@ export function SectionNode(props: Props) {
         };
     };
 
-    const updateBlockAst = (key: number, updatedAst: any, saveChange: boolean) => {
+    const updateBlockAst = (key: number, updatedAst: any, saveChange: boolean, isPartial: boolean) => {
         if (updatedAst === null) {
             props.ast.blocks.splice(key, 1);
         } else {
+            if (isPartial) {
+                updatedAst = merge(props.ast.blocks[key], updatedAst);
+            }
+
             props.ast.blocks[key] = updatedAst;
         }
 
-        props.astUpdater(props.ast, saveChange);
+        props.astUpdater(props.ast, saveChange, isPartial);
     };
 
     const renderBlocks = () => {
@@ -131,7 +135,7 @@ export function SectionNode(props: Props) {
                 1,
                 props.editorMode,
                 getGridSize(),
-                (updatedAst, saveChange) => updateBlockAst(key, updatedAst, saveChange)
+                (updatedAst, saveChange, isPartial) => updateBlockAst(key, updatedAst, saveChange, isPartial)
             );
         });
     };

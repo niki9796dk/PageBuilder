@@ -3,7 +3,7 @@ import StyleMap from '../StyleMap';
 import './../Styles/obsidian.css';
 import React from 'react';
 import {AstNode} from '../../types';
-import _ from 'lodash';
+import _, {merge} from 'lodash';
 import './DocumentNode.css';
 import {useAppDispatch} from '../../Store/hooks';
 import {registerSection} from '../../Store/Slices/SectionsSlice';
@@ -23,10 +23,14 @@ export default function DocumentNode(props: Props) {
     const style = new StyleMap(props.ast.style);
     const dispatch = useAppDispatch();
 
-    const updateSectionAst = (key: number, updatedAst: any, saveChange: boolean) => {
+    const updateSectionAst = (key: number, updatedAst: any, saveChange: boolean, isPartial: boolean) => {
+        if (isPartial) {
+            updatedAst = merge(props.ast.sections[key], updatedAst);
+        }
+
         props.ast.sections[key] = updatedAst;
 
-        props.astUpdater(props.ast, saveChange);
+        props.astUpdater(props.ast, saveChange, isPartial);
     };
 
     const renderSections = () => {
@@ -35,7 +39,7 @@ export default function DocumentNode(props: Props) {
                 key={key}
                 ast={section}
                 editorMode={props.editorMode}
-                astUpdater={(updatedAst, saveChange) => updateSectionAst(key, updatedAst, saveChange)}
+                astUpdater={(updatedAst, saveChange, isPartial) => updateSectionAst(key, updatedAst, saveChange, isPartial)}
                 onGridMove={(position) => dispatch(registerSection({index: key, ...position}))}
             />;
         });
