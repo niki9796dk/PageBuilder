@@ -17,6 +17,7 @@ module.exports = {
                 highlight: '#6246ea',
                 secondary: '#d1d1e9',
                 tertiary: '#e45858',
+                purple: 'rgba(98, 70, 234, 0.65)'
             },
             boxShadow: {
                 'dynamic-stroke': 'rgba(98, 70, 234, 0.4) 0px 0px 0px 2px, rgba(98, 70, 234, 0.65) 0px 4px 6px -2px',

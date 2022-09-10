@@ -1,9 +1,11 @@
 import {configureStore} from '@reduxjs/toolkit';
 import sectionReducer from './Slices/SectionsSlice';
+import editingReducer from './Slices/EditingSlice';
 
 export const store = configureStore({
     reducer: {
         sections: sectionReducer,
+        editing: editingReducer,
     }
 });
 

@@ -1,27 +1,51 @@
 import {BlockNodeAst, BlockNodeProps} from './PositionalBlock';
 import StyleMap from '../../StyleMap';
-import {useState} from 'react';
 import {PositionalBlock} from './PositionalBlock';
 import './QuoteNode.css';
-import React from 'react';
+import React, {useMemo, useState} from 'react';
 import {v4 as uuidv4} from 'uuid';
+import {useAppDispatch, useAppSelector} from '../../../Store/hooks';
+import {beginEdit, stopEdit} from '../../../Store/Slices/EditingSlice';
+import {cloneDeep} from 'lodash';
 
-interface QuoteNodeAst extends BlockNodeAst {
+export interface QuoteNodeAst extends BlockNodeAst {
     quote: string;
     author: string;
 }
 
 export default function QuoteNode(props: BlockNodeProps<QuoteNodeAst>) {
     const style = new StyleMap(props.ast.style ?? {});
-    const [quote] = useState(props.ast.quote);
-    const [author] = useState(props.ast.author);
+    const [editing, setEditing] = useState(false);
+    const {editorState} = useAppSelector(state => state.editing);
+    const dispatch = useAppDispatch();
+    const quote = useMemo(() => editing ? editorState.quote : props.ast.quote, [props.ast.quote, editing, editorState]);
+    const author = useMemo(() => editing ? editorState.author : props.ast.author, [props.ast.author, editing, editorState]);
+
+    const handleEditBegin = () => {
+        setEditing(true);
+
+        dispatch(beginEdit({
+            editorKey: 'quote',
+            editorState: props.ast,
+        }));
+    };
+
+    const handleEditEnd = () => {
+        if (! editing) {
+            return;
+        }
+
+        props.astUpdater(cloneDeep(editorState), true, false);
+        dispatch(stopEdit());
+        setEditing(false);
+    };
 
     return (
-        <PositionalBlock {...props}>
+        <PositionalBlock {...props} onEditBegin={handleEditBegin} onEditEnd={handleEditEnd}>
             <figure className="node-quote" style={style.getStyleMap()}>
-                <blockquote>{quote}</blockquote>
-                <figcaption style={{float: 'right'}}>
-                    &mdash; <cite>{author}</cite>
+                <blockquote className="whitespace-pre-wrap">{quote}</blockquote>
+                <figcaption className="float-right">
+                    &mdash; <cite className="whitespace-pre-wrap">{author}</cite>
                 </figcaption>
             </figure>
         </PositionalBlock>

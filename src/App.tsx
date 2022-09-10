@@ -91,15 +91,6 @@ export default function App() {
     return (
         <div className="h-full">
 
-            {editorMode &&
-                <Editor
-                    ast={ast}
-                    astUpdater={(ast: DocumentNodeAst, isPartial) => updateAst({...ast}, true, isPartial)}
-                    className="fixed top-0 left-0 h-screen"
-                    style={{width: '350px'}}
-                />
-            }
-
             <DocumentNode
                 ast={ast}
                 editorMode={editorMode}
@@ -112,6 +103,13 @@ export default function App() {
                     height: '100%',
                 }}
             />
+
+            {editorMode &&
+                <Editor
+                    ast={ast}
+                    astUpdater={(ast: DocumentNodeAst, isPartial) => updateAst({...ast}, true, isPartial)}
+                />
+            }
 
             {/* TODO: Remove in the future - Only for development*/}
             <button

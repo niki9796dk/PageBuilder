@@ -26,6 +26,10 @@ export function TextNode(props: BlockNodeProps<TextNodeAst>) {
     };
 
     const handleEditEnd = () => {
+        if (! editing) {
+            return;
+        }
+
         setEditing(false);
         props.astUpdater({value: text}, true, true);
     };

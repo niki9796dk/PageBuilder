@@ -33,12 +33,12 @@ export interface BlockNodeProps<BlockSubTypeAst extends BlockNodeAst> extends As
     zIndex: number;
     gridSize: GridSize,
     disableDragging?: boolean
-    onEditBegin?: () => void;
-    onEditEnd?: () => void;
 }
 
 interface Props extends BlockNodeProps<any> {
     children: ReactElement;
+    onEditBegin?: () => void;
+    onEditEnd?: () => void;
 }
 
 export function PositionalBlock(props: Props) {
@@ -227,8 +227,18 @@ export function PositionalBlock(props: Props) {
         }
 
         const mouseHandler = (event: Event) => {
-            if (!editing || (event.target && block.current?.contains(event.target as Node))) {
-                return;
+            if (event.target) {
+                const target = event.target as Element;
+
+                // Ignore the event, if the target was the block itself
+                if (block.current?.contains(target)) {
+                    return;
+                }
+
+                // Ignore the event, if the target was anywhere in the editor
+                if (target.closest('#editor')) {
+                    return;
+                }
             }
 
             setEditing(false);

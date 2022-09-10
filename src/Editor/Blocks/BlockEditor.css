@@ -1,0 +1,67 @@
+#editor .element-group-title {
+    font-size: 1.25em;
+    @apply text-headline;
+}
+
+#editor .element-group:not(:last-child) {
+    @apply mb-8;
+}
+
+#editor .element-group-items {
+    @apply border-stroke;
+    @apply border-solid;
+    @apply p-1;
+    @apply pt-4;
+    @apply grid;
+    @apply grid-cols-3;
+    @apply justify-center;
+    @apply gap-2;
+}
+
+#editor .element-group-items .element-item {
+    position: relative;
+    @apply select-none;
+    @apply shadow-dynamic-stroke;
+}
+
+#editor .element-group-items .element-item .icon {
+    @apply content-center;
+    @apply w-full;
+    @apply content-center;
+    @apply text-center;
+    @apply text-3xl;
+}
+
+#editor .element-group-items .element-item .icon-text {
+    @apply absolute;
+    @apply bottom-2;
+    @apply w-full;
+    @apply text-center;
+    @apply text-sm;
+}
+
+#editor .element-group-items .element-item:before {
+    content: "";
+    height: 0;
+    display: inline-block;
+    padding-top: 100%;
+    width: 1px;
+    position: relative;
+}
+
+#editor .element-group-items .element-item .content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    display: grid;
+    @apply content-center;
+    @apply justify-center;
+}
+
+#editor .element-group-items .element-item:hover {
+    @apply cursor-pointer;
+    @apply select-none;
+    @apply bg-secondary;
+}
