@@ -4,7 +4,7 @@ import './TextNode.css';
 import StyleMap from '../../StyleMap';
 import {PositionalBlock} from './PositionalBlock';
 import React from 'react';
-import { v4 as uuidv4 } from 'uuid';
+import {v4 as uuidv4} from 'uuid';
 
 export interface TextNodeAst extends BlockNodeAst {
     value: string;
@@ -36,19 +36,14 @@ export function TextNode(props: BlockNodeProps<TextNodeAst>) {
         content = <textarea
             ref={textarea}
             value={text}
-            onChange={(event) => {setText(event.target.value);}}
-            className="outline-none overflow-hidden all-inherit min-h-fit cursor-text"
+            onChange={(event) => setText(event.target.value)}
+            className="node-text outline-none overflow-hidden all-inherit min-h-fit cursor-text"
             rows={20}
             style={style.getStyleMap()}
         />;
     } else {
         content = (
-            <p
-                className="node-text"
-                style={style.getStyleMap()}
-                // TODO: Figure out how to do this the "react way" instead of "dangerouslySetInnerHTML"
-                dangerouslySetInnerHTML={{__html: props.ast.value.replaceAll('\n', '<br>')}}
-            />
+            <p className="node-text whitespace-pre-wrap" style={style.getStyleMap()}>{text}</p>
         );
     }
 

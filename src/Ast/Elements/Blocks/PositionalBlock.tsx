@@ -116,7 +116,15 @@ export function PositionalBlock(props: Props) {
     });
 
     const handleMove = (state: DragState & SharedGestureState) => {
+        // If disabled, then do nothing
         if (props.disableDragging) {
+            setMoving(false);
+            return;
+        }
+
+        // If we haven't previously considered us to have begun moving yet,
+        // and our offset is 0 pixels, then we have only clicked the mouse and not yet begun the dragging.
+        if (! moving && state.offset[0] == 0 && state.offset[1] == 0) {
             return;
         }
 
@@ -245,7 +253,7 @@ export function PositionalBlock(props: Props) {
             <animated.div
                 ref={block}
                 className={`positional-block ${resizing || moving ? 'noSelect' : ''} ${props.editorMode ? 'editorMode group' : ''} ${editing ? 'editing' : ''} ${props.disableDragging ? '' : 'moveable'}`}
-                onDoubleClick={() => setEditing(true)}
+                onDoubleClick={() => setEditing(props.editorMode)}
                 style={{
                     ...position.getStyleMap(),
                     zIndex: props.zIndex,
