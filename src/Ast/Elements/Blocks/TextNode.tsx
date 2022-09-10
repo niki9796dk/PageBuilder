@@ -38,7 +38,6 @@ export function TextNode(props: BlockNodeProps<TextNodeAst>) {
             value={text}
             onChange={(event) => setText(event.target.value)}
             className="node-text outline-none overflow-hidden all-inherit min-h-fit cursor-text"
-            rows={20}
             style={style.getStyleMap()}
         />;
     } else {
