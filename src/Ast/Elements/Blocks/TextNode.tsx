@@ -43,7 +43,7 @@ export function TextNode(props: BlockNodeProps<TextNodeAst>) {
         />;
     } else {
         content = (
-            <p className="node-text whitespace-pre-wrap" style={style.getStyleMap()}>{text}</p>
+            <p className="node-text whitespace-pre-wrap" style={style.getStyleMap()}>{props.ast.value}</p>
         );
     }
 
