@@ -1,6 +1,6 @@
 import {BlockNodeAst, BlockNodeProps} from './PositionalBlock';
 import StyleMap from '../../StyleMap';
-import {useRef, useState} from 'react';
+import {useState} from 'react';
 import {PositionalBlock} from './PositionalBlock';
 import './QuoteNode.css';
 import React from 'react';
