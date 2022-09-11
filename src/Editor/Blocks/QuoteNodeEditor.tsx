@@ -1,6 +1,6 @@
 import React, {ChangeEvent} from 'react';
 import {QuoteNodeAst} from '../../Ast/Elements/Blocks/QuoteNode';
-import {useAppDispatch} from '../../Store/hooks';
+import {useAppDispatch, useAppSelector} from '../../Store/hooks';
 import {updateState} from '../../Store/Slices/EditingSlice';
 import AutoTextarea from '../../Forms/AutoTextarea';
 
@@ -35,12 +35,12 @@ export default function QuoteNodeEditor(props: QuoteNodeEditorProps) {
 
             <div className="mt-5">
                 <label>Author</label>
-                <input type="text" className="w-full" defaultValue={props.editorState.author} onChange={handleAuthorChange}/>
+                <input type="text" className="w-full" value={props.editorState.author} onChange={handleAuthorChange}/>
             </div>
 
             <div className="mt-5">
                 <label>Quote</label>
-                <AutoTextarea rows={4} defaultValue={props.editorState.quote} onChange={handleQuoteChange}/>
+                <AutoTextarea rows={4} value={props.editorState.quote} onChange={handleQuoteChange}/>
             </div>
         </div>
     );

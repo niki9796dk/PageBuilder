@@ -35,7 +35,10 @@ export default function QuoteNode(props: BlockNodeProps<QuoteNodeAst>) {
             return;
         }
 
-        props.astUpdater(cloneDeep(editorState), true, false);
+        const updatedState = cloneDeep(editorState);
+        delete updatedState['position'];
+
+        props.astUpdater(updatedState, true, true);
         dispatch(stopEdit());
         setEditing(false);
     };
