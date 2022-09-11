@@ -14,12 +14,12 @@ export interface QuoteNodeAst extends BlockNodeAst {
 }
 
 export default function QuoteNode(props: BlockNodeProps<QuoteNodeAst>) {
-    const style = new StyleMap(props.ast.style ?? {});
     const [editing, setEditing] = useState(false);
     const {editorState} = useAppSelector(state => state.editing);
     const dispatch = useAppDispatch();
     const quote = useMemo(() => editing ? editorState.quote : props.ast.quote, [props.ast.quote, editing, editorState]);
     const author = useMemo(() => editing ? editorState.author : props.ast.author, [props.ast.author, editing, editorState]);
+    const style = useMemo(() => new StyleMap(editing ? (editorState.style ?? {}) : props.ast.style), [props.ast.style, editing, editorState]);
 
     const handleEditBegin = () => {
         setEditing(true);
