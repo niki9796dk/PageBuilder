@@ -2,12 +2,10 @@ import {BlockNodeAst, BlockNodeProps} from './PositionalBlock';
 import StyleMap from '../../StyleMap';
 import {PositionalBlock} from './PositionalBlock';
 import './QuoteNode.css';
-import React, {useState} from 'react';
+import React from 'react';
 import {v4 as uuidv4} from 'uuid';
-import {useAppDispatch, useAppSelector} from '../../../Store/hooks';
-import {beginEdit, stopEdit} from '../../../Store/Slices/EditingSlice';
-import {cloneDeep} from 'lodash';
 import useEditorState from '../../../Hooks/UseEditorState';
+import useEditor from '../../../Hooks/UseEditor';
 
 export interface QuoteNodeAst extends BlockNodeAst {
     quote: string;
@@ -15,37 +13,13 @@ export interface QuoteNodeAst extends BlockNodeAst {
 }
 
 export default function QuoteNode(props: BlockNodeProps<QuoteNodeAst>) {
-    const [editing, setEditing] = useState(false);
-    const {editorState} = useAppSelector(state => state.editing);
-    const dispatch = useAppDispatch();
+    const {editing, onEditBegin, onEditEnd} = useEditor(props);
     const quote = useEditorState<string, QuoteNodeAst>(editing, props.ast.quote, state => state.quote);
     const author = useEditorState<string, QuoteNodeAst>(editing, props.ast.author, state => state.author);
     const style = useEditorState<StyleMap, QuoteNodeAst>(editing, new StyleMap(props.ast.style), state => new StyleMap(state.style));
 
-    const handleEditBegin = () => {
-        setEditing(true);
-
-        dispatch(beginEdit({
-            editorKey: 'quote',
-            editorState: props.ast,
-        }));
-    };
-
-    const handleEditEnd = () => {
-        if (! editing) {
-            return;
-        }
-
-        const updatedState = cloneDeep(editorState);
-        delete updatedState['position'];
-
-        props.astUpdater(updatedState, true, true);
-        dispatch(stopEdit());
-        setEditing(false);
-    };
-
     return (
-        <PositionalBlock {...props} onEditBegin={handleEditBegin} onEditEnd={handleEditEnd}>
+        <PositionalBlock {...props} onEditBegin={onEditBegin} onEditEnd={onEditEnd}>
             <figure className="node-quote" style={style.getStyleMap()}>
                 <blockquote className="whitespace-pre-wrap">{quote}</blockquote>
                 <figcaption className="float-right">
