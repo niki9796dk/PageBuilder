@@ -1,5 +1,4 @@
 import React from 'react';
-import {QuoteNodeAst} from '../../Ast/Elements/Blocks/QuoteNode';
 import {useAppDispatch} from '../../Store/hooks';
 import {updateState} from '../../Store/Slices/EditingSlice';
 import AutoTextarea from '../../Forms/AutoTextarea';
@@ -7,14 +6,14 @@ import TextPropertiesEditor from './Common/TextPropertiesEditor';
 import Collapsable from './Common/Structure/Collapsable';
 import {TextNodeAst} from '../../Ast/Elements/Blocks/TextNode';
 
-interface QuoteNodeEditorProps {
+interface TextNodeEditorProps {
     editorState: TextNodeAst,
 }
 
-export default function QuoteNodeEditor(props: QuoteNodeEditorProps) {
+export default function TextNodeEditor(props: TextNodeEditorProps) {
     const dispatch = useAppDispatch();
 
-    const handleChange = (state: Partial<QuoteNodeAst>) => {
+    const handleChange = (state: Partial<TextNodeAst>) => {
         dispatch(updateState({
             ...props.editorState,
             ...state,
@@ -38,9 +37,9 @@ export default function QuoteNodeEditor(props: QuoteNodeEditorProps) {
             </div>
 
             <Collapsable label="Content" startExpanded={true} className="mt-5">
-                <div className="mt-5">
+                <div>
                     <label>Text</label>
-                    <AutoTextarea rows={4} value={props.editorState.value} onChange={event => handleChange({quote: event.target.value})}/>
+                    <AutoTextarea rows={4} value={props.editorState.value} onChange={event => handleChange({value: event.target.value})}/>
                 </div>
             </Collapsable>
 

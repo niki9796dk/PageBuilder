@@ -3,6 +3,7 @@ import {DocumentNodeAst} from '../Ast/Elements/DocumentNode';
 import BlockEditor from './Blocks/BlockEditor';
 import {useAppSelector} from '../Store/hooks';
 import QuoteNodeEditor from './Blocks/QuoteNodeEditor';
+import TextNodeEditor from './Blocks/TextNodeEditor';
 
 interface Props {
     ast: DocumentNodeAst;
@@ -14,6 +15,7 @@ export default function Editor(props: Props) {
 
     const editorMap: {[key: string]: (props: any) => JSX.Element} = {
         'quote': QuoteNodeEditor,
+        'text': TextNodeEditor,
     };
 
     const EditorBlock = editorMap[state.editorKey ?? ''] ?? BlockEditor;
