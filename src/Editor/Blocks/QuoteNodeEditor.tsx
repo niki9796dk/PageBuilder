@@ -1,8 +1,10 @@
 import React, {ChangeEvent} from 'react';
 import {QuoteNodeAst} from '../../Ast/Elements/Blocks/QuoteNode';
-import {useAppDispatch, useAppSelector} from '../../Store/hooks';
+import {useAppDispatch} from '../../Store/hooks';
 import {updateState} from '../../Store/Slices/EditingSlice';
 import AutoTextarea from '../../Forms/AutoTextarea';
+import TextPropertiesEditor from './Common/TextPropertiesEditor';
+import Collapsable from './Common/Structure/Collapsable';
 
 interface QuoteNodeEditorProps {
     editorState: QuoteNodeAst,
@@ -11,7 +13,7 @@ interface QuoteNodeEditorProps {
 export default function QuoteNodeEditor(props: QuoteNodeEditorProps) {
     const dispatch = useAppDispatch();
 
-    const handleChange = (state : Partial<QuoteNodeAst>) => {
+    const handleChange = (state: Partial<QuoteNodeAst>) => {
         dispatch(updateState({
             ...props.editorState,
             ...state,
@@ -26,6 +28,15 @@ export default function QuoteNodeEditor(props: QuoteNodeEditorProps) {
         handleChange({author: event.target.value});
     };
 
+    const handleStyleChange = (style: any) => {
+        handleChange({
+            style: {
+                ...props.editorState.style ?? {},
+                ...style
+            }
+        });
+    };
+
     return (
         <div>
             <div className="text-3xl text-center">
@@ -33,15 +44,21 @@ export default function QuoteNodeEditor(props: QuoteNodeEditorProps) {
                 <hr style={{marginTop: '-1px'}}/>
             </div>
 
-            <div className="mt-5">
-                <label>Author</label>
-                <input type="text" className="w-full" value={props.editorState.author} onChange={handleAuthorChange}/>
-            </div>
+            <Collapsable label="Content" startExpanded={true} className="mt-5">
+                <div>
+                    <label>Author</label>
+                    <input type="text" className="w-full" value={props.editorState.author} onChange={handleAuthorChange}/>
+                </div>
 
-            <div className="mt-5">
-                <label>Quote</label>
-                <AutoTextarea rows={4} value={props.editorState.quote} onChange={handleQuoteChange}/>
-            </div>
+                <div className="mt-5">
+                    <label>Quote</label>
+                    <AutoTextarea rows={4} value={props.editorState.quote} onChange={handleQuoteChange}/>
+                </div>
+            </Collapsable>
+
+            <Collapsable label="Text Styling" startExpanded={false} className="mt-5">
+                <TextPropertiesEditor styles={props.editorState.style} handleChange={handleStyleChange}/>
+            </Collapsable>
         </div>
     );
 }

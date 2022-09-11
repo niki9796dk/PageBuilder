@@ -6,21 +6,25 @@
     @apply border-r-2;
     @apply p-4;
 }
-
 #editor textarea,
-#editor input {
+#editor input:not([type='color']),
+#editor .color-picker {
     @apply block;
-    @apply p-2.5;
     @apply w-full;
     @apply text-sm;
     @apply text-gray-900;
-    @apply bg-gray-50;
     @apply rounded-lg;
     @apply border;
     @apply outline-0;
     @apply border-gray-300;
     @apply focus:ring-purple;
     @apply focus:border-purple;
+}
+
+#editor textarea,
+#editor input:not([type='color']) {
+    @apply p-2.5;
+    @apply bg-gray-50;
 }
 
 #editor label {

@@ -1,0 +1,12 @@
+.collapsable {
+    @apply w-full;
+}
+
+.collapsable-label {
+    cursor: pointer;
+}
+
+.collapsable-content {
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+}
