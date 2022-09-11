@@ -2,11 +2,12 @@ import {BlockNodeAst, BlockNodeProps} from './PositionalBlock';
 import StyleMap from '../../StyleMap';
 import {PositionalBlock} from './PositionalBlock';
 import './QuoteNode.css';
-import React, {useMemo, useState} from 'react';
+import React, {useState} from 'react';
 import {v4 as uuidv4} from 'uuid';
 import {useAppDispatch, useAppSelector} from '../../../Store/hooks';
 import {beginEdit, stopEdit} from '../../../Store/Slices/EditingSlice';
 import {cloneDeep} from 'lodash';
+import useEditorState from '../../../Hooks/UseEditorState';
 
 export interface QuoteNodeAst extends BlockNodeAst {
     quote: string;
@@ -17,9 +18,9 @@ export default function QuoteNode(props: BlockNodeProps<QuoteNodeAst>) {
     const [editing, setEditing] = useState(false);
     const {editorState} = useAppSelector(state => state.editing);
     const dispatch = useAppDispatch();
-    const quote = useMemo(() => editing ? editorState.quote : props.ast.quote, [props.ast.quote, editing, editorState]);
-    const author = useMemo(() => editing ? editorState.author : props.ast.author, [props.ast.author, editing, editorState]);
-    const style = useMemo(() => new StyleMap(editing ? (editorState.style ?? {}) : props.ast.style), [props.ast.style, editing, editorState]);
+    const quote = useEditorState<string, QuoteNodeAst>(editing, props.ast.quote, state => state.quote);
+    const author = useEditorState<string, QuoteNodeAst>(editing, props.ast.author, state => state.author);
+    const style = useEditorState<StyleMap, QuoteNodeAst>(editing, new StyleMap(props.ast.style), state => new StyleMap(state.style));
 
     const handleEditBegin = () => {
         setEditing(true);
