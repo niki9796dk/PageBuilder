@@ -3,11 +3,11 @@ import hljs from 'highlight.js/lib/core';
 import javascript from 'highlight.js/lib/languages/javascript';
 import php from 'highlight.js/lib/languages/php';
 import StyleMap from '../../StyleMap';
-import {useState} from 'react';
 import {PositionalBlock} from './PositionalBlock';
 import './CodeNode.css';
 import React from 'react';
 import {v4 as uuidv4} from 'uuid';
+import useEditor from '../../../Hooks/UseEditor';
 
 hljs.registerLanguage('javascript', javascript);
 hljs.registerLanguage('php', php);
@@ -17,18 +17,18 @@ interface CodeNodeAst extends BlockNodeAst{
 }
 
 export default function CodeNode(props: BlockNodeProps<CodeNodeAst>) {
-    const style = new StyleMap(props.ast.style ?? {});
-    const [code] = useState(props.ast.value);
+    const {ast, block} = useEditor(props);
+    const style = new StyleMap(ast.style);
 
     const getRenderedCode = () => {
-        const renderedCode = hljs.highlightAuto(code).value;
+        const renderedCode = hljs.highlightAuto(ast.value).value;
 
         // TODO: Figure out how to do this the react way, instead of "dangerouslySetInnerHTML"
         return <code className="hljs" dangerouslySetInnerHTML={{__html: renderedCode}}/>;
     };
 
     return (
-        <PositionalBlock {...props}>
+        <PositionalBlock {...props} {...block}>
             <pre
                 className="node-code"
                 style={style.getStyleMap()}
