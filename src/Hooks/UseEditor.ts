@@ -4,13 +4,16 @@ import {beginEdit, stopEdit} from '../Store/Slices/EditingSlice';
 import {cloneDeep} from 'lodash';
 import {BlockNodeAst, BlockNodeProps} from '../Ast/Elements/Blocks/PositionalBlock';
 
-interface EditorHook {
+interface EditorHook<AST> {
     editing: boolean,
-    onEditBegin: () => void;
-    onEditEnd: () => void;
+    ast: AST,
+    block: {
+        onEditBegin: () => void;
+        onEditEnd: () => void;
+    }
 }
 
-export default function useEditor<T extends BlockNodeAst>(blockNode: BlockNodeProps<T>): EditorHook {
+export default function useEditor<T extends BlockNodeAst>(blockNode: BlockNodeProps<T>): EditorHook<T> {
     const [editing, setEditing] = useState(false);
     const {editorState} = useAppSelector(state => state.editing);
     const dispatch = useAppDispatch();
@@ -38,8 +41,11 @@ export default function useEditor<T extends BlockNodeAst>(blockNode: BlockNodePr
     };
 
     return {
-        editing,
-        onEditBegin: handleEditBegin,
-        onEditEnd: handleEditEnd,
+        editing: editing,
+        ast: editing ? editorState : blockNode.ast,
+        block: {
+            onEditBegin: handleEditBegin,
+            onEditEnd: handleEditEnd,
+        }
     };
 }

@@ -4,7 +4,6 @@ import {PositionalBlock} from './PositionalBlock';
 import './QuoteNode.css';
 import React from 'react';
 import {v4 as uuidv4} from 'uuid';
-import useEditorState from '../../../Hooks/UseEditorState';
 import useEditor from '../../../Hooks/UseEditor';
 
 export interface QuoteNodeAst extends BlockNodeAst {
@@ -13,17 +12,15 @@ export interface QuoteNodeAst extends BlockNodeAst {
 }
 
 export default function QuoteNode(props: BlockNodeProps<QuoteNodeAst>) {
-    const {editing, onEditBegin, onEditEnd} = useEditor(props);
-    const quote = useEditorState<string, QuoteNodeAst>(editing, props.ast.quote, state => state.quote);
-    const author = useEditorState<string, QuoteNodeAst>(editing, props.ast.author, state => state.author);
-    const style = useEditorState<StyleMap, QuoteNodeAst>(editing, new StyleMap(props.ast.style), state => new StyleMap(state.style));
+    const {ast, block} = useEditor(props);
+    const style = new StyleMap(ast.style);
 
     return (
-        <PositionalBlock {...props} onEditBegin={onEditBegin} onEditEnd={onEditEnd}>
+        <PositionalBlock {...props} {...block}>
             <figure className="node-quote" style={style.getStyleMap()}>
-                <blockquote className="whitespace-pre-wrap">{quote}</blockquote>
+                <blockquote className="whitespace-pre-wrap">{ast.quote}</blockquote>
                 <figcaption className="float-right">
-                    &mdash; <cite className="whitespace-pre-wrap">{author}</cite>
+                    &mdash; <cite className="whitespace-pre-wrap">{ast.author}</cite>
                 </figcaption>
             </figure>
         </PositionalBlock>
