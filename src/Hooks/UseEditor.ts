@@ -36,12 +36,12 @@ export default function useEditor<T extends BlockNodeAst>(blockNode: BlockNodePr
             return;
         }
 
-        // Otherwise, update the AST of the block
-        blockNode.astUpdater(cloneDeep(blockNode.ast), true, false);
+        const clone: Partial<T> = cloneDeep(blockNode.ast);
+        delete clone['position'];
+
+        blockNode.astUpdater(clone, true, true);
         setEditing(false);
 
-        // If somehow the editor block id does not match with this component
-        // then simply discard any pending change which will revert to the pre editor state.
         if (id === blockNode.ast.id) {
             dispatch(stopEdit());
         }
