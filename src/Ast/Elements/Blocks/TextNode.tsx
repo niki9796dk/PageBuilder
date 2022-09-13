@@ -11,12 +11,12 @@ export interface TextNodeAst extends BlockNodeAst {
 }
 
 export function TextNode(props: BlockNodeProps<TextNodeAst>) {
-    const {ast, block} = useEditor(props);
-    const style = new StyleMap(ast.style);
+    const editor = useEditor(props);
+    const style = new StyleMap(props.ast.style);
 
     return (
-        <PositionalBlock {...props} {...block}>
-            <p className="node-text whitespace-pre-wrap" style={style.getStyleMap()}>{ast.value}</p>
+        <PositionalBlock {...props} {...editor}>
+            <p className="node-text whitespace-pre-wrap" style={style.getStyleMap()}>{props.ast.value}</p>
         </PositionalBlock>
     );
 }

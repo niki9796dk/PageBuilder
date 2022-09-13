@@ -12,15 +12,15 @@ export interface QuoteNodeAst extends BlockNodeAst {
 }
 
 export default function QuoteNode(props: BlockNodeProps<QuoteNodeAst>) {
-    const {ast, block} = useEditor(props);
-    const style = new StyleMap(ast.style);
+    const editor = useEditor(props);
+    const style = new StyleMap(props.ast.style);
 
     return (
-        <PositionalBlock {...props} {...block}>
+        <PositionalBlock {...props} {...editor}>
             <figure className="node-quote" style={style.getStyleMap()}>
-                <blockquote className="whitespace-pre-wrap">{ast.quote}</blockquote>
+                <blockquote className="whitespace-pre-wrap">{props.ast.quote}</blockquote>
                 <figcaption className="float-right">
-                    &mdash; <cite className="whitespace-pre-wrap">{ast.author}</cite>
+                    &mdash; <cite className="whitespace-pre-wrap">{props.ast.author}</cite>
                 </figcaption>
             </figure>
         </PositionalBlock>

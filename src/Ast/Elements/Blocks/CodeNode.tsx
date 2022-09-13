@@ -17,18 +17,18 @@ interface CodeNodeAst extends BlockNodeAst{
 }
 
 export default function CodeNode(props: BlockNodeProps<CodeNodeAst>) {
-    const {ast, block} = useEditor(props);
-    const style = new StyleMap(ast.style);
+    const editor = useEditor(props);
+    const style = new StyleMap(props.ast.style);
 
     const getRenderedCode = () => {
-        const renderedCode = hljs.highlightAuto(ast.value).value;
+        const renderedCode = hljs.highlightAuto(props.ast.value).value;
 
         // TODO: Figure out how to do this the react way, instead of "dangerouslySetInnerHTML"
         return <code className="hljs" dangerouslySetInnerHTML={{__html: renderedCode}}/>;
     };
 
     return (
-        <PositionalBlock {...props} {...block}>
+        <PositionalBlock {...props} {...editor}>
             <pre
                 className="node-code"
                 style={style.getStyleMap()}
