@@ -35,6 +35,7 @@
                     "type": "block",
                     "subType": "code",
                     "value": "let hello = 'world';\nconsole.log(hello);",
+                    "language": "javascript",
                     "position": {
                         "height": 4,
                         "width": 5,
@@ -47,6 +48,7 @@
                     "type": "block",
                     "subType": "code",
                     "value": "$hello = 'world';\necho $hello;",
+                    "language": "php",
                     "position": {
                         "height": 4,
                         "width": 5,

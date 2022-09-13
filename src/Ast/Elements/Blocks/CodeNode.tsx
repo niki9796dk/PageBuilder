@@ -14,6 +14,7 @@ hljs.registerLanguage('php', php);
 
 interface CodeNodeAst extends BlockNodeAst{
     value: string;
+    language: string;
 }
 
 export default function CodeNode(props: BlockNodeProps<CodeNodeAst>) {
@@ -21,7 +22,7 @@ export default function CodeNode(props: BlockNodeProps<CodeNodeAst>) {
     const style = new StyleMap(props.ast.style);
 
     const getRenderedCode = () => {
-        const renderedCode = hljs.highlightAuto(props.ast.value).value;
+        const renderedCode = hljs.highlightAuto(props.ast.value, [props.ast.language]).value;
 
         // TODO: Figure out how to do this the react way, instead of "dangerouslySetInnerHTML"
         return <code className="hljs" dangerouslySetInnerHTML={{__html: renderedCode}}/>;
@@ -44,6 +45,7 @@ export function defaultCodeNodeAst(): CodeNodeAst {
         'type': 'block',
         'subType': 'code',
         'value': 'console.log(\'Hello World!\');',
+        'language': 'javascript',
         'position': {
             'height': 3,
             'width': 7,

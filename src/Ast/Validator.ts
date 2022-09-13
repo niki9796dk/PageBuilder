@@ -166,6 +166,10 @@ export class Validator {
                     value: {
                         required: true,
                         type: 'string',
+                    },
+                    language: {
+                        required: true,
+                        type: 'string',
                     }
                 },
 
