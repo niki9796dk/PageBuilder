@@ -3,10 +3,10 @@ import StyleMap from '../StyleMap';
 import GridNode, {GridNodeAst} from '../ElementProperties/GridNode';
 import React, {createRef, useEffect, useRef, useState} from 'react';
 import {AstNode} from '../../types';
-import _, {merge, round} from 'lodash';
+import _, {map, round} from 'lodash';
 import {BlockNodeAst} from './Blocks/PositionalBlock';
 import './SectionNode.css';
-import {getDocumentOffset, Offset} from '../../helpers';
+import {getDocumentOffset, mergeObjects, Offset} from '../../helpers';
 import {subscribe, unsubscribe} from '../../events';
 
 export interface SectionNodeAst {
@@ -70,7 +70,7 @@ export function SectionNode(props: Props) {
     };
 
     const getSectionHeight = (useBlockRendersAsReference : boolean) => {
-        const astMaxGridY = Math.max(..._.map(
+        const astMaxGridY = Math.max(...map(
             props.ast.blocks,
             (blockNode) => blockNode.position.top + blockNode.position.height + 1),
         );
@@ -119,7 +119,9 @@ export function SectionNode(props: Props) {
             props.ast.blocks.splice(key, 1);
         } else {
             if (isPartial) {
-                updatedAst = merge(props.ast.blocks[key], updatedAst);
+                updatedAst = mergeObjects(props.ast.blocks[key], updatedAst);
+            } else {
+                console.log('hmm');
             }
 
             props.ast.blocks[key] = updatedAst;

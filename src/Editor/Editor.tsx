@@ -5,6 +5,7 @@ import {useAppSelector} from '../Store/hooks';
 import QuoteNodeEditor from './Blocks/QuoteNodeEditor';
 import TextNodeEditor from './Blocks/TextNodeEditor';
 import CodeNodeEditor from './Blocks/CodeNodeEditor';
+import TextCarouselNodeEditor from './Blocks/TextCarouselNodeEditor';
 
 interface Props {
     ast: DocumentNodeAst;
@@ -18,6 +19,7 @@ export default function Editor(props: Props) {
         'quote': QuoteNodeEditor,
         'text': TextNodeEditor,
         'code': CodeNodeEditor,
+        'textCarousel': TextCarouselNodeEditor,
     };
 
     const EditorBlock = editorMap[state.editorKey ?? ''] ?? BlockEditor;

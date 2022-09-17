@@ -11,8 +11,9 @@ import '@fortawesome/fontawesome-free/css/solid.min.css';
 import '@fortawesome/fontawesome-free/css/v4-shims.min.css';
 import {assert} from './Ast/Assert';
 import EditHistory from './EditHistory';
-import {cloneDeep, isEqual, merge} from 'lodash';
+import {cloneDeep, isEqual} from 'lodash';
 import useKeyPress from './Hooks/UseKeyPress';
+import {mergeObjects} from './helpers';
 
 export default function App() {
     const [ast, setAst] = useState<DocumentNodeAst | null>(null);
@@ -52,7 +53,7 @@ export default function App() {
             const clonedCurrent = cloneDeep(editHistory.current?.getCurrent());
 
             if (clonedCurrent !== undefined) {
-                ast = merge(clonedCurrent, clonedUpdate);
+                ast = mergeObjects(clonedCurrent, clonedUpdate);
             }
         }
 

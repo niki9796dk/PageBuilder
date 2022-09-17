@@ -3,10 +3,11 @@ import StyleMap from '../StyleMap';
 import './../Styles/obsidian.css';
 import React from 'react';
 import {AstNode} from '../../types';
-import _, {merge} from 'lodash';
+import {map} from 'lodash';
 import './DocumentNode.css';
 import {useAppDispatch} from '../../Store/hooks';
 import {registerSection} from '../../Store/Slices/SectionsSlice';
+import {mergeObjects} from '../../helpers';
 
 export interface DocumentNodeAst {
     type: string;
@@ -25,7 +26,7 @@ export default function DocumentNode(props: Props) {
 
     const updateSectionAst = (key: number, updatedAst: any, saveChange: boolean, isPartial: boolean) => {
         if (isPartial) {
-            updatedAst = merge(props.ast.sections[key], updatedAst);
+            updatedAst = mergeObjects(props.ast.sections[key], updatedAst);
         }
 
         props.ast.sections[key] = updatedAst;
@@ -34,7 +35,7 @@ export default function DocumentNode(props: Props) {
     };
 
     const renderSections = () => {
-        return _.map(props.ast.sections, (section: SectionNodeAst, key: number) => {
+        return map(props.ast.sections, (section: SectionNodeAst, key: number) => {
             return <SectionNode
                 key={key}
                 ast={section}

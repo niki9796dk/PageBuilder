@@ -4,6 +4,7 @@ import App from './App';
 import {store} from './Store/store';
 import './index.css';
 import {Provider} from 'react-redux';
+import './Polyfill';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
     <React.StrictMode>
