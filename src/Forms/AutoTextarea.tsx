@@ -1,9 +1,8 @@
-import React, {ChangeEvent, TextareaHTMLAttributes, useEffect, useRef, useState} from 'react';
+import React, {ChangeEvent, TextareaHTMLAttributes, useEffect, useRef} from 'react';
 
 type TextareaProps = TextareaHTMLAttributes<HTMLTextAreaElement>
 
 export default function AutoTextarea(props: TextareaProps) {
-    const [value, setValue] = useState(props.value || props.defaultValue);
     const textareaRef = useRef<HTMLTextAreaElement | null>(null);
 
     useEffect(() => {
@@ -14,11 +13,9 @@ export default function AutoTextarea(props: TextareaProps) {
         textareaRef.current.style.height = '0px';
         const scrollHeight = textareaRef.current.scrollHeight + 2;
         textareaRef.current.style.height = scrollHeight + 'px';
-    }, [value]);
+    }, [props.value]);
 
     const handleOnChange = (event : ChangeEvent<HTMLTextAreaElement>) => {
-        setValue(event.target.value);
-
         if (props.onChange) {
             props.onChange(event);
         }
@@ -29,7 +26,7 @@ export default function AutoTextarea(props: TextareaProps) {
             {...props}
             ref={textareaRef}
             className={props.className + ' resize-none'}
-            value={value}
+            value={props.value}
             onChange={handleOnChange}
         />
     );

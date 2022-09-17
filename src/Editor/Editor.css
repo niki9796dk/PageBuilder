@@ -7,6 +7,7 @@
     @apply p-4;
 }
 #editor textarea,
+#editor select,
 #editor input:not([type='color']),
 #editor .color-picker {
     @apply block;
@@ -22,6 +23,7 @@
 }
 
 #editor textarea,
+#editor select,
 #editor input:not([type='color']) {
     @apply p-2.5;
     @apply bg-gray-50;

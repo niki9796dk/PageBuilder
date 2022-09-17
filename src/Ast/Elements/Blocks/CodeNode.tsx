@@ -12,7 +12,7 @@ import useEditor from '../../../Hooks/UseEditor';
 hljs.registerLanguage('javascript', javascript);
 hljs.registerLanguage('php', php);
 
-interface CodeNodeAst extends BlockNodeAst{
+export interface CodeNodeAst extends BlockNodeAst {
     value: string;
     language: string;
 }
