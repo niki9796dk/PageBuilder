@@ -5,6 +5,7 @@ import AutoTextarea from '../../Forms/AutoTextarea';
 import Collapsable from './Common/Structure/Collapsable';
 import {CodeNodeAst} from '../../Ast/Elements/Blocks/CodeNode';
 import EditorSelect from './Common/Inputs/EditorSelect';
+import FontSizeInput from './Common/Inputs/FontSizeInput';
 
 interface TextNodeEditorProps {
     editorState: CodeNodeAst,
@@ -42,6 +43,13 @@ export default function CodeNodeEditor(props: TextNodeEditorProps) {
                 <div className="mt-5">
                     <label>Code</label>
                     <AutoTextarea rows={4} value={props.editorState.value} onChange={event => handleChange({value: event.target.value})}/>
+                </div>
+            </Collapsable>
+
+            <Collapsable label="Text Styling" startExpanded={true} className="mt-5">
+                <div>
+                    <label>Size</label>
+                    <FontSizeInput value={(props.editorState.style ?? {})['font-size'] ?? '1rem'} onChange={(size) => handleChange({style: {...props.editorState.style ?? {}, 'font-size': size}})}/>
                 </div>
             </Collapsable>
         </div>
