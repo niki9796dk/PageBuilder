@@ -204,6 +204,12 @@ export function PositionalBlock(props: Props) {
     };
 
     const handleDelete = () => {
+        // Signal edit end
+        if (props.onEditEnd && editing) {
+            props.onEditEnd();
+        }
+
+        // Delete the node from the tree
         props.astUpdater(null, true, false);
     };
 
