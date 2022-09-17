@@ -120,8 +120,6 @@ export function SectionNode(props: Props) {
         } else {
             if (isPartial) {
                 updatedAst = mergeObjects(props.ast.blocks[key], updatedAst);
-            } else {
-                console.log('hmm');
             }
 
             props.ast.blocks[key] = updatedAst;

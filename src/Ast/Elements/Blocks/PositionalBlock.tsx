@@ -65,7 +65,6 @@ export function PositionalBlock(props: Props) {
         const astClone = cloneDeep(props.ast);
 
         astClone.position = {...props.ast.position, ...newPosition.toJson()};
-        console.log('posBlock setPos');
         props.astUpdater(
             {position: newPosition.toJson()},
             saveChange,
@@ -211,7 +210,6 @@ export function PositionalBlock(props: Props) {
         }
 
         // Delete the node from the tree
-        console.log('posBlock delete');
         props.astUpdater(null, true, false);
     };
 
