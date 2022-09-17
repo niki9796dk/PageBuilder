@@ -26,7 +26,6 @@
 
 .noSelect {
     @apply select-none;
-    @apply pointer-events-none;
 }
 
 .resizer {

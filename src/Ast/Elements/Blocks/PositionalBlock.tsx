@@ -233,6 +233,8 @@ export function PositionalBlock(props: Props) {
         }
 
         const mouseHandler = (event: Event) => {
+            console.log(event.target);
+
             if (event.target) {
                 const target = event.target as Element;
 
@@ -268,7 +270,7 @@ export function PositionalBlock(props: Props) {
             }
             <animated.div
                 ref={block}
-                className={`positional-block ${resizing || moving ? 'noSelect' : ''} ${props.editorMode ? 'editorMode group' : ''} ${editing ? 'editing' : ''} ${props.disableDragging ? '' : 'moveable'}`}
+                className={`positional-block ${props.editorMode ? 'noSelect' : ''} ${props.editorMode ? 'editorMode group' : ''} ${editing ? 'editing' : ''} ${props.disableDragging ? '' : 'moveable'}`}
                 onDoubleClick={() => setEditing(props.editorMode)}
                 style={{
                     ...position.getStyleMap(),
