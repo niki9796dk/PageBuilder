@@ -270,7 +270,7 @@ export function PositionalBlock(props: Props) {
             }
             <animated.div
                 ref={block}
-                className={`positional-block ${props.editorMode ? 'noSelect' : ''} ${props.editorMode ? 'editorMode group' : ''} ${editing ? 'editing' : ''} ${props.disableDragging ? '' : 'moveable'}`}
+                className={`positional-block ${props.editorMode ? 'editorMode group noSelect' : ''} ${editing ? 'editing' : ''} ${props.disableDragging ? '' : 'moveable'}`}
                 onDoubleClick={() => setEditing(props.editorMode)}
                 style={{
                     ...position.getStyleMap(),
