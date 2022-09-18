@@ -8,8 +8,10 @@ import {BlockNodeAst} from './Blocks/PositionalBlock';
 import './SectionNode.css';
 import {getDocumentOffset, mergeObjects, Offset} from '../../helpers';
 import {subscribe, unsubscribe} from '../../events';
+import {v4 as uuidv4} from 'uuid';
 
 export interface SectionNodeAst {
+    id: string;
     type: string;
     style: any;
     blocks: Array<BlockNodeAst>;
@@ -150,4 +152,22 @@ export function SectionNode(props: Props) {
             astUpdater={() => {}} // eslint-disable-line
         />
     </div>;
+}
+
+export function defaultSectionNodeAst(): SectionNodeAst {
+    return {
+        id: uuidv4(),
+        type: 'section',
+        grid: {
+            type: 'gridSettings',
+            gap: {
+                type: 'gridSettings',
+                subType: 'gap',
+                column: 0,
+                row: 0
+            }
+        },
+        blocks: [],
+        style: {}
+    };
 }

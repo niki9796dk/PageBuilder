@@ -6,6 +6,11 @@
     @apply border-r-2;
     @apply p-4;
 }
+
+#editor:not(:hover) {
+    @apply select-none;
+}
+
 #editor textarea,
 #editor select,
 #editor input:not([type='color']),

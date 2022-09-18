@@ -3,6 +3,7 @@
     "version": "1.0.0",
     "sections": [
         {
+            "id": "2c670206-f881-4a44-9d28-48434e5bc6bc",
             "type": "section",
             "grid": {
                 "type": "gridSettings",
@@ -15,6 +16,148 @@
             },
             "style": {
                 "background-color": "lightgray"
+            },
+            "blocks": [
+                {
+                    "id": "2c670206-f881-4a44-9d28-48434e5bc6bc",
+                    "type": "block",
+                    "subType": "quote",
+                    "quote": "We cannot solve our problems with the same thinking we used when we created them.",
+                    "author": "Albert Einstein",
+                    "position": {
+                        "height": 3,
+                        "width": 10,
+                        "left": 0,
+                        "top": 9
+                    }
+                },
+                {
+                    "id": "502c4149-fe92-49cf-8a89-cb48012076b9",
+                    "type": "block",
+                    "subType": "code",
+                    "value": "let hello = 'world';\nconsole.log(hello);",
+                    "language": "javascript",
+                    "position": {
+                        "height": 4,
+                        "width": 5,
+                        "left": 5,
+                        "top": 0
+                    }
+                },
+                {
+                    "id": "1be08942-27a1-4e40-b159-bb00806253cd",
+                    "type": "block",
+                    "subType": "code",
+                    "value": "$hello = 'world';\necho $hello;",
+                    "language": "php",
+                    "position": {
+                        "height": 4,
+                        "width": 5,
+                        "left": 5,
+                        "top": 4
+                    }
+                },
+                {
+                    "id": "a5ac8b10-28fe-4305-a305-f0bffc15ad5d",
+                    "type": "block",
+                    "subType": "image",
+                    "src": "https://iotwiki.dk/images/3/3b/Test_billede.jpg",
+                    "alt": "The Alt",
+                    "position": {
+                        "height": 8,
+                        "width": 7,
+                        "left": 11,
+                        "top": 0
+                    }
+                },
+                {
+                    "id": "203293cd-a234-4d41-9b0c-cf02f4c56585",
+                    "type": "block",
+                    "subType": "line",
+                    "color": "#000000",
+                    "height": 1,
+                    "position": {
+                        "height": 2,
+                        "width": 4,
+                        "left": 0,
+                        "top": 2
+                    }
+                },
+                {
+                    "id": "55259042-7fc2-48f8-9d27-6ef7f120a426",
+                    "type": "block",
+                    "subType": "text",
+                    "value": "1x1",
+                    "position": {
+                        "height": 1,
+                        "width": 1,
+                        "left": 0,
+                        "top": 0
+                    }
+                },
+                {
+                    "id": "e2fff5e7-850b-4de9-b24d-41807205ec9d",
+                    "type": "block",
+                    "subType": "text",
+                    "value": "A beautiful bridge",
+                    "position": {
+                        "type": "position",
+                        "height": 2,
+                        "width": 5,
+                        "left": 1,
+                        "top": 0
+                    },
+                    "style": {
+                        "color": "#FF0000"
+                    }
+                },
+                {
+                    "id": "3e1c37af-e382-4f72-b8c9-deb444a55042",
+                    "type": "block",
+                    "subType": "text",
+                    "value": "Provide more detail here",
+                    "position": {
+                        "height": 2,
+                        "width": 5,
+                        "left": 0,
+                        "top": 2
+                    }
+                },
+                {
+                    "id": "31aef109-d3cb-4b75-aa21-3f609d45cffe",
+                    "type": "block",
+                    "subType": "textCarousel",
+                    "staticText": "I'm a",
+                    "staticColor": "#000000",
+                    "dynamicColor": "#008000",
+                    "dynamicText": ["Youtuber", "Designer", "Developer", "Freelancer"],
+                    "time": 150,
+                    "style": {
+                        "font-size": "2em"
+                    },
+                    "position": {
+                        "height": 2,
+                        "width": 8,
+                        "left": 0,
+                        "top": 15
+                    }
+                }
+            ]
+        },
+        {
+            "id": "502c4149-fe92-49cf-8a89-cb48012076b9",
+            "type": "section",
+            "grid": {
+                "type": "gridSettings",
+                "gap": {
+                    "type": "gridSettings",
+                    "subType": "gap",
+                    "column": "0px",
+                    "row": "0px"
+                }
+            },
+            "style": {
+                "background-color": "lightblue"
             },
             "blocks": [
                 {
