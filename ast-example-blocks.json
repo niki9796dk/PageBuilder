@@ -73,6 +73,8 @@
                     "id": "203293cd-a234-4d41-9b0c-cf02f4c56585",
                     "type": "block",
                     "subType": "line",
+                    "color": "#000000",
+                    "height": 1,
                     "position": {
                         "height": 2,
                         "width": 4,

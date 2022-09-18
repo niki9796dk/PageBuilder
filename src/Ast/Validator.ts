@@ -157,8 +157,12 @@ export class Validator {
 
                 line: {
                     color: {
-                        required: false,
+                        required: true,
                         type: 'string',
+                    },
+                    height: {
+                        required: true,
+                        type: 'number',
                     }
                 },
 

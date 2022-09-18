@@ -233,8 +233,6 @@ export function PositionalBlock(props: Props) {
         }
 
         const mouseHandler = (event: Event) => {
-            console.log(event.target);
-
             if (event.target) {
                 const target = event.target as Element;
 

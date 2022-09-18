@@ -6,6 +6,7 @@ import QuoteNodeEditor from './Blocks/QuoteNodeEditor';
 import TextNodeEditor from './Blocks/TextNodeEditor';
 import CodeNodeEditor from './Blocks/CodeNodeEditor';
 import TextCarouselNodeEditor from './Blocks/TextCarouselNodeEditor';
+import LineNodeEditor from './Blocks/LineNodeEditor';
 
 interface Props {
     ast: DocumentNodeAst;
@@ -20,6 +21,7 @@ export default function Editor(props: Props) {
         'text': TextNodeEditor,
         'code': CodeNodeEditor,
         'textCarousel': TextCarouselNodeEditor,
+        'line': LineNodeEditor,
     };
 
     const EditorBlock = editorMap[state.editorKey ?? ''] ?? BlockEditor;

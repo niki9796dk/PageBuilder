@@ -1,23 +1,24 @@
 import React from 'react';
 import {BlockNodeAst, BlockNodeProps} from './PositionalBlock';
 import StyleMap from '../../StyleMap';
-import {useState} from 'react';
 import {PositionalBlock} from './PositionalBlock';
 import './LineNode.css';
 import {v4 as uuidv4} from 'uuid';
+import useEditor from '../../../Hooks/UseEditor';
 
-interface LineNodeAst extends BlockNodeAst {
-    color?: string
+export interface LineNodeAst extends BlockNodeAst {
+    color: string;
+    height: number;
 }
 
 export default function LineNode(props: BlockNodeProps<LineNodeAst>) {
+    const editor = useEditor(props);
     const style = new StyleMap(props.ast.style ?? {});
-    const [color] = useState(props.ast.color);
 
     return (
-        <PositionalBlock {...props}>
+        <PositionalBlock {...props} {...editor}>
             <div className="node-line" style={style.getStyleMap()}>
-                <hr style={{borderColor: color ?? 'black'}}/>
+                <hr style={{borderColor: props.ast.color, borderTopWidth: props.ast.height + 'px'}}/>
             </div>
         </PositionalBlock>
     );
@@ -28,6 +29,8 @@ export function defaultLineNodeAst(): LineNodeAst {
         'id': uuidv4(),
         'type': 'block',
         'subType': 'line',
+        'color': '#000000',
+        'height': 1,
         'position': {
             'height': 2,
             'width': 4,
