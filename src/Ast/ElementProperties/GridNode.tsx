@@ -17,7 +17,7 @@ const GridNode = forwardRef((props: GridNodeProps, ref : ForwardedRef<HTMLDivEle
     const [gap] = useState(new GridGap(props.ast.gap));
 
     return (
-        <div style={gap.getStyleMap()} ref={ref}>
+        <div className="section-content" style={gap.getStyleMap()} ref={ref}>
             <GridPattern gap={gap} editorMode={props.editorMode} gridHeight={props.gridHeight}/>
             {props.children}
         </div>

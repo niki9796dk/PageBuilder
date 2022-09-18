@@ -1,5 +1,6 @@
-import React, {useEffect, useRef} from 'react';
+import React, {useCallback, useEffect, useRef} from 'react';
 import './Editor.css';
+import {throttle} from 'lodash';
 
 export interface TrackedPosition {
     top: number;
@@ -31,7 +32,7 @@ export default function MouseTracker(props: Props) {
         };
     }, []);
 
-    const trackMouse = (event : MouseEvent) => {
+    const trackMouse = useCallback(throttle((event : MouseEvent) => {
         if (follower.current === null || follower.current?.style === null) {
             return;
         }
@@ -49,7 +50,7 @@ export default function MouseTracker(props: Props) {
                 width: wrapper.current.children[0]?.getBoundingClientRect()?.width ?? 0,
             });
         }
-    };
+    }, 5), [follower, wrapper]);
 
     return (
         <div ref={follower} className="absolute cursor-move z-30 select-none touch-none">

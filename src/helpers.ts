@@ -3,16 +3,25 @@ export interface Offset {
     left: number;
     bottom: number;
     right: number;
+    height: number;
+    width: number;
 }
 
 export function getDocumentOffset(element: Element ): Offset {
     const rect = element.getBoundingClientRect();
 
+    const top = rect.top + window.scrollY;
+    const left = rect.left + window.scrollX;
+    const bottom = rect.bottom + window.scrollY;
+    const right = rect.right + window.scrollX;
+
     return {
-        top: rect.top + window.scrollY,
-        left: rect.left + window.scrollX,
-        bottom: rect.bottom + window.scrollY,
-        right: rect.right + window.scrollX,
+        top,
+        left,
+        bottom,
+        right,
+        width: right - left,
+        height: bottom - top,
     };
 }
 

@@ -45,12 +45,11 @@ export default function DocumentNode(props: Props) {
     const renderSections = () => {
         return map(props.ast.sections, (section: SectionNodeAst, key: number) => {
             return (
-                <div>
+                <div key={section.id}>
                     {key == 0 &&
                         <AddSectionButton editorMode={props.editorMode} position={'top'} onClick={() => addSection(key - 1)}/>
                     }
                     <SectionNode
-                        key={section.id}
                         ast={section}
                         editorMode={props.editorMode}
                         astUpdater={(updatedAst, saveChange, isPartial) => updateSectionAst(key, updatedAst, saveChange, isPartial)}

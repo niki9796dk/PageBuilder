@@ -28,6 +28,7 @@ export function SectionNode(props: Props) {
     const sectionDiv = useRef<HTMLDivElement | null>(null);
     const style = new StyleMap(props.ast.style);
     const [sectionHeight, setSectionHeight] = useState(-1);
+    const [quickEditOffset, setQuickEditOffset] = useState(0);
 
     useEffect(() => {
         // Always trigger the onGridMove on mount or changes to the grid
@@ -142,15 +143,46 @@ export function SectionNode(props: Props) {
         });
     };
 
-    return <div ref={sectionDiv} className="node-section" style={style.getStyleMap()}>
-        <GridNode
-            ast={props.ast.grid}
-            editorMode={props.editorMode}
-            gridHeight={sectionHeight}
-            children={renderBlocks()}
-            ref={grid}
-            astUpdater={() => {}} // eslint-disable-line
-        />
+    useEffect(() => {
+        if (! grid.current) {
+            setQuickEditOffset(0);
+
+            return;
+        }
+
+        setQuickEditOffset((getDocumentOffset(grid.current).height / 2) - 1);
+    }, [grid]);
+
+    return <div ref={sectionDiv} className="node-section flex" style={style.getStyleMap()}>
+        <div className="flex-grow flex-1"/>
+        <div style={{width: '1200px'}}>
+            <GridNode
+                ast={props.ast.grid}
+                editorMode={props.editorMode}
+                gridHeight={sectionHeight}
+                children={renderBlocks()}
+                ref={grid}
+                astUpdater={() => {}} // eslint-disable-line
+            />
+        </div>
+        <div className="flex-grow flex content-center flex-1">
+            <div className={`absolute ${props.editorMode ? 'block' : 'hidden'}`}>
+                <div className="w-fit my-auto ml-1 section-quick-edit relative" style={{transform: 'translateY(-50%)', marginTop: quickEditOffset + 'px'}}>
+                    <span className="fa-stack text-black hover:text-purple active:text-black cursor-pointer block">
+                        <i className="fa-solid fa-square fa-stack-2x"></i>
+                        <i className="fa-solid fa-caret-up fa-stack-1x fa-inverse"></i>
+                    </span>
+                    <span className="fa-stack text-black hover:text-purple active:text-black cursor-pointer block">
+                        <i className="fa-solid fa-square fa-stack-2x"></i>
+                        <i className="fa-solid fa-trash-can fa-stack-1x fa-inverse"></i>
+                    </span>
+                    <span className="fa-stack text-black hover:text-purple active:text-black cursor-pointer block">
+                        <i className="fa-solid fa-square fa-stack-2x"></i>
+                        <i className="fa-solid fa-caret-down fa-stack-1x fa-inverse"></i>
+                    </span>
+                </div>
+            </div>
+        </div>
     </div>;
 }
 
