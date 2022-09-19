@@ -20,7 +20,7 @@ export interface SectionNodeAst {
 
 interface Props extends AstNode<SectionNodeAst>{
     onGridMove?: (position : Offset) => void;
-    onDestruct?: () => void;
+    onAction: (type : 'up'|'down'|'edit'|'delete') => void;
 }
 
 export function SectionNode(props: Props) {
@@ -168,18 +168,26 @@ export function SectionNode(props: Props) {
         <div className="flex-grow flex content-center flex-1">
             <div className={`absolute ${props.editorMode ? 'block' : 'hidden'}`}>
                 <div className="w-fit my-auto ml-1 section-quick-edit relative" style={{transform: 'translateY(-50%)', marginTop: quickEditOffset + 'px'}}>
-                    <span className="fa-stack text-black hover:text-purple active:text-black cursor-pointer block">
-                        <i className="fa-solid fa-square fa-stack-2x"></i>
-                        <i className="fa-solid fa-caret-up fa-stack-1x fa-inverse"></i>
-                    </span>
-                    <span className="fa-stack text-black hover:text-purple active:text-black cursor-pointer block">
-                        <i className="fa-solid fa-square fa-stack-2x"></i>
-                        <i className="fa-solid fa-trash-can fa-stack-1x fa-inverse"></i>
-                    </span>
-                    <span className="fa-stack text-black hover:text-purple active:text-black cursor-pointer block">
-                        <i className="fa-solid fa-square fa-stack-2x"></i>
-                        <i className="fa-solid fa-caret-down fa-stack-1x fa-inverse"></i>
-                    </span>
+                    <div className="inline-block" style={{maxWidth: '2em'}}>
+                        <span className="fa-stack text-black hover:text-purple active:text-black cursor-pointer block" onClick={() => props.onAction('up')}>
+                            <i className="fa-solid fa-square fa-stack-2x"></i>
+                            <i className="fa-solid fa-caret-up fa-stack-1x fa-inverse"></i>
+                        </span>
+                        <span className="fa-stack text-black hover:text-purple active:text-black cursor-pointer block" onClick={() => props.onAction('down')}>
+                            <i className="fa-solid fa-square fa-stack-2x"></i>
+                            <i className="fa-solid fa-caret-down fa-stack-1x fa-inverse"></i>
+                        </span>
+                    </div>
+                    <div className="inline-block" style={{maxWidth: '2em'}}>
+                        <span className="fa-stack text-black hover:text-green-800 active:text-black cursor-pointer block" onClick={() => props.onAction('edit')}>
+                            <i className="fa-solid fa-square fa-stack-2x"></i>
+                            <i className="fa-solid fa-pencil fa-stack-1x fa-inverse"></i>
+                        </span>
+                        <span className="fa-stack text-black hover:text-red-900 active:text-black cursor-pointer block" onClick={() => props.onAction('delete')}>
+                            <i className="fa-solid fa-square fa-stack-2x"></i>
+                            <i className="fa-solid fa-trash-can fa-stack-1x fa-inverse"></i>
+                        </span>
+                    </div>
                 </div>
             </div>
         </div>

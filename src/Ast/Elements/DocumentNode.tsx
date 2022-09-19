@@ -42,6 +42,42 @@ export default function DocumentNode(props: Props) {
         props.astUpdater(props.ast, true, false);
     };
 
+    const handleSectionAction = (action: 'up'|'down'|'edit'|'delete', index : number) => {
+        switch (action) {
+        case 'delete':
+            props.ast.sections.splice(index, 1);
+            props.astUpdater(props.ast, true, false);
+
+            return;
+
+        case 'up': {
+            if (index <= 0) {
+                return;
+            }
+
+            const section = props.ast.sections[index];
+            props.ast.sections[index] = props.ast.sections[index-1];
+            props.ast.sections[index-1] = section;
+            props.astUpdater(props.ast, true, false);
+
+            return;
+        }
+
+        case 'down': {
+            if ((index + 1) >= props.ast.sections.length) {
+                return;
+            }
+
+            const section = props.ast.sections[index];
+            props.ast.sections[index] = props.ast.sections[index+1];
+            props.ast.sections[index+1] = section;
+            props.astUpdater(props.ast, true, false);
+
+            return;
+        }
+        }
+    };
+
     const renderSections = () => {
         return map(props.ast.sections, (section: SectionNodeAst, key: number) => {
             return (
@@ -54,6 +90,7 @@ export default function DocumentNode(props: Props) {
                         editorMode={props.editorMode}
                         astUpdater={(updatedAst, saveChange, isPartial) => updateSectionAst(key, updatedAst, saveChange, isPartial)}
                         onGridMove={(position) => dispatch(registerSection({index: key, ...position}))}
+                        onAction={type => handleSectionAction(type, key)}
                     />
                     <AddSectionButton editorMode={props.editorMode} position={'center'} onClick={() => addSection(key)}/>
                 </div>
